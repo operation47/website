@@ -97,8 +97,8 @@ app.get('/', async (req, res) => {
     const html = cheerio.load(fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'));
     const stegiChat = html('.chat-scrollable-stegi')
 
-    const stegiMessages = await getMessages('stegi');
-    const di1araasMessages = await getMessages('di1araas');
+    const stegiMessages = (await getMessages('stegi')).sort((a, b) => a.timestamp - b.timestamp);
+    const di1araasMessages = (await getMessages('di1araas')).sort((a, b) => a.timestamp - b.timestamp);
 
     stegiMessages.forEach(message => {
         stegiChat.append(buildChatMessageHTML(unixTimeTo2Hour2Minute(message.timestamp), message.user, message.content));
