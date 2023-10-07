@@ -160,6 +160,7 @@ app.get('/apitest', async (req, res) => {
     const fetch = require('node-fetch')
     const url = 'https://op47api.up.railway.app/v1/twitch/messages/stegi';
     const result = await fetch(url);
+    console.log("resul: ", result);
     res.json(result);
 });
 
