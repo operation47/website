@@ -118,6 +118,9 @@ app.get('/style.css', (req, res) => {
 app.get('/prime', (req, res) => {
     res.sendFile(path.join(__dirname, 'prime.html'))
 })
+app.get('/lilly', (req, res) => {
+    res.sendFile(path.join(__dirname, 'lilly.html'))
+})
 
 async function getMessages(channel) {
     const url = `https://api.op47.de/v1/twitch/messages/${channel}`;
