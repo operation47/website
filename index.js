@@ -14,7 +14,7 @@ const httpServer = http.createServer(app)
 
 app.use(express.static(path.join(__dirname, "/public")))
 app.use(express.static(path.join(__dirname, "/files")))
-app.use(express.static(path.join(__dirname, '/')))
+// app.use(express.static(path.join(__dirname, '/')))
 
 const io = new Server(httpServer, { cors: { origin: "*" }, allowEIO3: true });
 
@@ -71,6 +71,15 @@ function appendDateMessage(date) {
     }
 }
 
+function buildChatMessageHTML(time, username, message) {
+    return `
+        <div class="chat-message">
+        <span class="chat-timestamp">${time}</span>
+        <span class="chat-username chat-username-${username}">${username}:</span>
+        <span class="chat-text">${message}</span>
+        </div>`
+}
+
 cron.schedule('0 0 * * *', () => {
     console.log('Appending date message...');
     const time = console_time()
@@ -81,13 +90,28 @@ cron.schedule('0 0 * * *', () => {
 }, {
     timezone: 'Europe/Berlin'
 });
+function unixTimeTo2Hour2Minute(time) { // was ein drecks name
+    return moment.unix(time).locale("de").format('LT');
+}
+app.get('/', async (req, res) => {
+    const html = cheerio.load(fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'));
+    const stegiChat = html('.chat-scrollable-stegi')
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'))
-})
+    const stegiMessages = await getMessages('stegi');
+    const di1araasMessages = await getMessages('di1araas');
+
+    stegiMessages.forEach(message => {
+        stegiChat.append(buildChatMessageHTML(unixTimeTo2Hour2Minute(message.timestamp), message.user, message.content));
+    });
+    di1araasMessages.forEach(message => {
+        di1araasChat.append(buildChatMessageHTML(unixTimeTo2Hour2Minute(message.timestamp), message.user, message.content));
+    });
+
+    res.send(html.html());
+});
 app.get('/script.js', (req, res) => {
     res.sendFile(path.join(__dirname, 'script.js'))
-})
+});
 app.get('/style.css', (req, res) => {
     res.sendFile(path.join(__dirname, 'style.css'))
 })
@@ -108,14 +132,7 @@ app.post('/api/send', express.json(), (req, res) => {
     channel = channel.substring(1)
 
     const chatContainerSelector = '.chat-scrollable-' + channel
-    const chatMessageHTML = `
-        <div class="chat-message">
-        <span class="chat-timestamp">${time}</span>
-        <span class="chat-username chat-username-${username}">${username}:</span>
-        <span class="chat-text">${message}</span>
-        </div>
-        `
-
+    const chatMessageHTML = buildChatMessageHTML(time, username, message)
     try {
         appendMessage(chatContainerSelector, chatMessageHTML)
     } catch (err) {
@@ -125,6 +142,7 @@ app.post('/api/send', express.json(), (req, res) => {
     }
     res.status(200).json({ message: 'Message added successfully' })
 });
+
 
 app.delete('/api/delete', (req, res) => {
     let { channel } = req.body
