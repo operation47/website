@@ -108,7 +108,11 @@
         .bottom-right-text-div:hover .bottom-right-text {
             display: block; /* Show on hover */
         }
-        /* mirrored svg */
+        @keyframes blink {
+            50% {
+                visibility: hidden;
+            }
+        }
         .arrow {
             position: absolute;
             top: 10%;
@@ -116,6 +120,7 @@
             width: 10%;
             rotate: 75deg;
             transform: scaleY(-1);
+            animation: blink 0.9s steps(1, start) infinite;
         }
     </style>
 </head>
