@@ -161,7 +161,7 @@ app.get('/apitest', async (req, res) => {
     const url = 'https://op47api.up.railway.app/v1/twitch/messages/stegi';
     const response = await fetch(url);
     const body = await response.text();
-    res.json(result);
+    res.json(body);
 });
 
 httpServer.listen(port, () => {
