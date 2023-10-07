@@ -29,8 +29,6 @@ io.on('connection', (socket) => {
     });
 });
 
-const channels = ['stegi', 'di1araas']
-
 
 function console_time() {
     return moment().locale("de").format('LT')
