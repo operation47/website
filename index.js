@@ -1,4 +1,5 @@
 const http = require('http')
+const fetch = require('node-fetch')
 const express = require('express')
 const fs = require('fs')
 const cheerio = require('cheerio')
@@ -156,14 +157,11 @@ app.delete('/api/delete', (req, res) => {
     }
 })
 
-app.get('/apitest', async (req, res) => {
-    const fetch = require('node-fetch')
-    const url = 'https://op47api.up.railway.app/v1/twitch/messages/stegi';
+async function getMessages(channel) {
+    const url = `https://op47api.up.railway.app/v1/twitch/messages/${channel}`;
     const response = await fetch(url);
-    const body = await response.text();
-    const json = JSON.parse(body);
-    res.send(json);
-});
+    return JSON.parse(await response.text());
+}
 
 httpServer.listen(port, () => {
     console.log(`Server running on port ${port}`)
