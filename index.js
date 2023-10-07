@@ -159,8 +159,8 @@ app.delete('/api/delete', (req, res) => {
 app.get('/apitest', async (req, res) => {
     const fetch = require('node-fetch')
     const url = 'https://op47api.up.railway.app/v1/twitch/messages/stegi';
-    const result = await fetch(url);
-    console.log("resul: ", result);
+    const response = await fetch(url);
+    const body = await response.text();
     res.json(result);
 });
 
