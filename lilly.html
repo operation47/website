@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>Operation 47</title>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <script type="text/javascript" src="./script.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        @keyframes changeBackground {
+            0%, 100% {
+                background-image: url('https://media.tenor.com/m2G79TK4HmAAAAAM/cat.gif');
+            }
+            50% {
+                background-image: url('https://i.gifer.com/origin/94/94f9e0e2f6fc5ce413d63cf464bf9704_w200.gif');
+            }
+        }
+        
+        .background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: changeBackground 10s infinite alternate;
+            background: url('');
+            background-size: auto; /* or specify a percentage or specific dimensions */
+        }
+
+        @keyframes rainbow {
+            0% {
+                color: red;
+            }
+            16% {
+                color: orange;
+            }
+            33% {
+                color: yellow;
+            }
+            50% {
+                color: green;
+            }
+            66% {
+                color: blue;
+            }
+            83% {
+                color: indigo;
+            }
+            100% {
+                color: violet;
+            }
+        }
+
+        .rainbow-text {
+            animation: rainbow 5s linear infinite;
+            text-shadow: -2px -2px 4px black, 2px -2px 4px black, -2px 2px 4px black, 2px 2px 4px black; /* Black outline */
+            display: inline;
+        }
+
+        .rainbow-link {
+            animation: rainbow 5s linear infinite;
+            text-shadow: -2px -2px 4px black, 2px -2px 4px black, -2px 2px 4px black, 2px 2px 4px black; /* Black outline */
+            text-decoration: underline;
+            display: inline;
+        }
+
+        .rainbow-link:hover {
+            text-decoration: none;
+        }
+
+        .text-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .big-text {
+            font-size: 4rem;
+            color: white;
+        }
+
+        .bottom-right-text {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            display: none; /* Initially hidden */
+        }
+        .bottom-right-text-div {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 250px;
+            height: 50px;
+        }
+
+        .bottom-right-text-div:hover .bottom-right-text {
+            display: block; /* Show on hover */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background"></div>
+    
+    <div class="text-container">
+        <h1 class="big-text rainbow-text">Shorts liken und kommentieren! <a class="rainbow-link" href="https://www.youtube.com/@StegiShorts/videos">ZU DEN SHORTS HIER</a></h1>
+    </div>
+
+    <div class="bottom-right-text-div">
+        <div class="bottom-right-text">Lilly ist die beste peepoHappy</div>
+    </div>
+
+</body></html>
