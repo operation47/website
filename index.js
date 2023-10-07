@@ -119,62 +119,6 @@ app.get('/prime', (req, res) => {
     res.sendFile(path.join(__dirname, 'prime.html'))
 })
 
-app.post('/api/send', express.json(), (req, res) => {
-    let { channel, time, username, message } = req.body
-    if (!channel || !time || !username || !message) {
-        res.json({ error: 'channel, time, username, message must be defined' })
-        return
-    }
-    if (!isValidChannel(channel)) {
-        res.json({ error: 'invalid channel' })
-        return
-    }
-    channel = channel.substring(1)
-
-    const chatContainerSelector = '.chat-scrollable-' + channel
-    const chatMessageHTML = buildChatMessageHTML(time, username, message)
-    try {
-        appendMessage(chatContainerSelector, chatMessageHTML)
-    } catch (err) {
-        console.error(err)
-        res.status(500).json({ error: 'Internal server error' })
-        return
-    }
-    res.status(200).json({ message: 'Message added successfully' })
-});
-
-
-app.delete('/api/delete', (req, res) => {
-    let { channel } = req.body
-    if (!isValidChannel(channel)) {
-        res.json({ error: 'invalid channel' })
-        return
-    }
-    const chatContainerSelector = '.chat-scrollable-' + channel.substring(1)
-    try {
-        const filePath = path.join(__dirname, 'index.html')
-        let htmlContent = fs.readFileSync(filePath, 'utf8');
-        const $ = cheerio.load(htmlContent);
-
-        const chatContainer = $(chatContainerSelector);
-        if (chatContainer.length > 0) {
-            const lastMessage = chatContainer.find('.chat-message').last();
-            if (lastMessage.length > 0 && lastMessage.find(".chat-text").length > 0) {
-                lastMessage.remove();
-                fs.writeFileSync(filePath, $.html(), 'utf8');
-                res.status(200).json({ message: 'Latest message deleted successfully' })
-            } else {
-                res.status(404).json({ error: 'No messages found in the chat container' })
-            }
-        } else {
-            res.status(404).json({ error: 'Chat container not found' })
-        }
-    } catch (err) {
-        console.error(err)
-        res.status(500).json({ error: 'Internal server error' })
-    }
-})
-
 async function getMessages(channel) {
     const url = `https://op47api.up.railway.app/v1/twitch/messages/${channel}`;
     const response = await fetch(url);
