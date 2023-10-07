@@ -1,0 +1,127 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+.chat-wrapper {
+    display: flex;
+    height: 100dvh;
+    width: 100%;
+}
+
+.chat-container {
+    width: 50%;
+    padding: 0px;
+    background-color: #000000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    flex-grow: 1;
+}
+
+.chat-scrollable {
+    overflow-y: auto;
+}
+
+.chat-scrollable::-webkit-scrollbar {
+    width: 7px;
+}
+
+.chat-scrollable::-webkit-scrollbar-thumb {
+    background-color: #4d4d4d;
+}
+
+.chat-scrollable::-webkit-scrollbar-thumb:hover {
+    background-color: #333;
+}
+
+.chat-scrollable::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.chat-window-title {
+    padding: 5px;
+    font-size: 24px;
+    color: #81b8d9;
+    position: sticky;
+    top: 0;
+    background-color: #1a1a1a;
+    z-index: 1;
+}
+
+.addon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+.button {
+    background-color: #26C281; 
+    color: #ffffff; 
+    border: none; 
+    padding: 6px 12px;
+    border-radius: 5px; 
+    cursor: pointer
+}
+
+.viewer-count {
+    font-size: 16px;
+    align-self: baseline;
+}
+
+.chat-message {
+    font-size: 17px;
+    display: flex;
+    padding: 7px;
+    overflow-wrap: break-word;
+    word-break: break-all;
+}
+
+.chat-message img {
+    max-width: 100%;
+    vertical-align: -webkit-baseline-middle;
+}
+
+.chat-username {
+    font-weight: bold;
+    padding-right: 5px;
+    white-space: nowrap;
+}
+
+.chat-username-stegi {
+    color: #ff0000;
+}
+
+.chat-username-di1araas {
+    color: #006000;
+}
+
+.chat-text {
+    flex-grow: 1;
+}
+
+.chat-timestamp {
+    color: #aaaaaa;
+    margin-right: 5px;
+    white-space: nowrap;
+}
+
+.chat-message:nth-child(even) {
+    background-color: #000000;
+}
+
+.chat-message:nth-child(odd) {
+    background-color: #0f0f0f;
+}
+
+@media (max-width: 768px) {
+    .chat-wrapper {
+        flex-direction: column;
+        height: 50dvh;
+    }
+    .chat-container {
+        width: 100%;
+    }
+}

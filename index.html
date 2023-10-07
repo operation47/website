@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>Operation 47</title>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <script type="text/javascript" src="./script.js"></script>
+</head>
+
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.min.js"></script>
+    <script>
+        const socket = io();
+
+        socket.on('connect', () => {
+            console.log('Connected to the server');
+        });
+
+        socket.on('disconnect', () => {
+            console.log('Disconnected from the server');
+        });
+
+        function getCountText(count) {
+            return count == 1 ? count + ' hat grad FOMO' : count + ' haben grad FOMO'
+        }
+
+        socket.on('viewerCount', (count) => {
+            document.getElementById('viewer-count').textContent = getCountText(count)
+        });
+    </script>
+
+    <div class="chat-wrapper">
+        <div class="chat-container">
+            <div class="chat-window-title">
+                #stegi (beim Nachbarn)
+                <button onclick="toggleReload()" id="reload-button" class="addon button">Auto Reload <b>ON</b></button>
+            </div>
+            <div class="chat-scrollable chat-scrollable-stegi">
+                <div class="chat-message">
+                    <span class="chat-timestamp">00:00 Donnerstag, 5. Oktober 2023</span>
+                </div>
+                <div class="chat-message">
+                    <span class="chat-timestamp">14:02</span>
+                    <span class="chat-username chat-username-stegi">stegi:</span>
+                    <span class="chat-text">!game jsut chatting</span>
+                </div>
+                <div class="chat-message">
+                    <span class="chat-timestamp">14:02</span>
+                    <span class="chat-username chat-username-stegi">stegi:</span>
+                    <span class="chat-text">!game just chatting</span>
+                </div>
+
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">18:59</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Hab stream unterhalten vorher</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">18:59</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Stegosch</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">18:59</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Alooo</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:00</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Was war vor 1 sek</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:00</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Stegosch ! Andere tterin ?</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:01</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Hmmmmmm</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:02</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Achso also lüge stegi ?</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:02</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Clip chat !!!</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:03</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Veyla ?</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:04</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Ufff</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:04</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Wtf</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:04</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Oh gotg</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:04</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Ah oki checke</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:04</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Bin TWITCHERIN</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:05</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">wann schaut ihr</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:05</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Schreib pls auf wa bevor ihr schaut</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:05</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Will auch dabei sein</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:06</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Yess 2 st noch 😭</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:06</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">What ?!?wie krass</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:06</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Hätte ich stegi eltern besuchen können ?</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:07</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Der fahrer war soooooooo cool man. So 60 oder so</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:08</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Oki bis nachher ! Chat erinnert ihn pls</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:08</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Kuss chat💚</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:34</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Milfcum</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:38</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Allooo</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:38</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Internet immer weg</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:42</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Trailer immer so detailliert, dass man gefühlt nicht mehr schauen muss
+                        …</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:44</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Sprache !!</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:44</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Wtf</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:54</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Da</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:54</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Anwesend</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:56</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">FlushE</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:57</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Marketing</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:58</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Rote haare</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:59</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Digga wie schnell ist chat heute</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:01</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Erklärt mal jemand</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:01</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Checke michts</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:02</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Kann das nicht mehr</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:02</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Reicht langsam</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:03</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Das war ich</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:03</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Hab ich auch gesehen</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:03</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Save !!</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:04</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">“Sexy” top</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:06</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Machen wir 1 min timer wie bei rumatra?</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:07</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">ABWESEND</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:08</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Sie ist so süss</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:09</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Sprache</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:09</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Sie ist so cute ahhh</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:10</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Video zusammen</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:10</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Ich zeigs ihr</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:10</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Hahahahhaha</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:11</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">@veyla Lets goooooi</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:12</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Zu kurze zeit für neuen kanal</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:12</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Lass das noch 30 tage dann</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:13</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">HÖR AUF DAS ÜBER DICH ZU SAGEN</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:14</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Ja wieso wohl …</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:14</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Frfr donowall</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:16</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Aufofahrt gleich vorbei wir Haben immernoch nicht fertig geschaut</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:16</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Mavh mich mod</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:16</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Will kein vip</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:16</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Will mod</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:18</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">o7</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:18</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Traumi weg</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:19</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Wtf</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:19</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Wtf</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:19</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">TRAUMI</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:20</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Traumi wagt es</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:21</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Werde jedes einzelne short melden traumi</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:22</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Mega cute man !!!😍🥹😭😭😭</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:22</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">DANKE !!!</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:41</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">aha</span>
+                </div>
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:43</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Oh warte bin noch gar nicht fertig um 21</span>
+                </div>
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:45</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Oh..</span>
+                </div>
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:45</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Ok ok sorry chille</span>
+                </div>
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:46</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Omg tano hahah </span>
+                </div>
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:48</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Hat sie link ?</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:50</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Huh ?</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:50</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Was das</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:50</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Weg damit</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:51</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">@daniel_vero … what</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">20:52</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Grün?</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">21:39</span>
+                    <span class="chat-username chat-username-stegi">stegi:</span>
+                    <span class="chat-text">wichtigermike@gmail.com</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">22:22</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Was ist hier schon wieder los man</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">22:24</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Wieso chillst du aber auf der falschen seite</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">22:27</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Stegi bitte wechsel zur anderen seite 😭</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">22:28</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">@daniel_vero wie immer ?</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">00:00 Freitag, 6. Oktober 2023</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">16:39</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Der plushiieeeeeee ahhh 😂😂😂</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">16:39</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Wie süss hahahahhaa</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">16:39</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Dinosch</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">16:46</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Wtf</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">16:46</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Was hab ich da gerade gelesen</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">18:24</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Was passiert hier</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">18:24</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Dustin neuer ju ?</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">18:24</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Bitte what ?</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">18:24</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Hääää hahahha wie krass</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">18:25</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Ihr habt stegi bezahlt damit er blau macht lol</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">18:26</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Wie krass hahaha drehen jetzt yt video</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">18:26</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Wir drehen 3 videos</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">18:26</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Für jeden channel</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">18:26</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Könnt auch welche aussuchen für mich. Hatte noch nicht die zeit</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">18:27</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Ne nur für mich wer würde eher</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">18:27</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Ja kann dir schicken</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">18:28</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">Hmm sucht dann einfach noch paar aus für mich. Von der Community aus</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">23:22</span>
+                    <span class="chat-username chat-username-stegi">stegi:</span>
+                    <span class="chat-text">Wenn er gronkh so gut managed, wie er Brücken baut, sollte gronkh sich
+                        schonmal einen anderen Job suchen</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">00:00 Samstag, 7. Oktober 2023</span>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="chat-container">
+            <div class="chat-window-title">
+                #di1araas
+                <div id="viewer-count" class="addon viewer-count">0 haben grad FOMO</div>
+            </div>
+            <div class="chat-scrollable chat-scrollable-di1araas">
+                <div class="chat-message">
+                    <span class="chat-timestamp">00:00 Donnerstag, 5. Oktober 2023</span>
+                </div>
+                <div class="chat-message">
+                    <span class="chat-timestamp">09:09</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">hiii💚</span>
+                </div>
+                <div class="chat-message">
+                    <span class="chat-timestamp">09:10</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">ich hab gut geschlafen zu kurz aber</span>
+                </div>
+                <div class="chat-message">
+                    <span class="chat-timestamp">09:10</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">ihr</span>
+                </div>
+                <div class="chat-message">
+                    <span class="chat-timestamp">09:10</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">ab ins bettt !</span>
+                </div>
+
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:09</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">was gehtttt</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:09</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">hab sooo geilen vlog gedreht</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:09</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">glaub ich</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:09</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">der tt atze emote hahaha</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:10</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">hahaha ihr seid so funny</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:11</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">leider kein streami. der tag war sooooo anstrengend ( cool aber anstrengend)
+                        und müssen novh 2 st heim</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:11</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">sorry 🥲ich vermisse es auch !</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:12</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">mehr schlaf für euch bis ich wieder komme</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">19:12</span>
+                    <span class="chat-username chat-username-di1araas">di1araas:</span>
+                    <span class="chat-text">hab auch streami entzug</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">00:00 Freitag, 6. Oktober 2023</span>
+                </div>
+
+                <div class="chat-message">
+                    <span class="chat-timestamp">00:00 Samstag, 7. Oktober 2023</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body></html>
