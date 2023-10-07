@@ -88,9 +88,11 @@ cron.schedule('0 0 * * *', () => {
 }, {
     timezone: 'Europe/Berlin'
 });
+
 function unixTimeTo2Hour2Minute(time) { // was ein drecks name
     return moment.unix(time).locale("de").format('LT');
 }
+
 app.get('/', async (req, res) => {
     const html = cheerio.load(fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'));
     const stegiChat = html('.chat-scrollable-stegi')
