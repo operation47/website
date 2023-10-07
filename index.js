@@ -3,7 +3,6 @@ const fetch = require('node-fetch')
 const express = require('express')
 const fs = require('fs')
 const cheerio = require('cheerio')
-const cron = require('node-cron')
 const moment = require('moment')
 const path = require('path')
 const { Server } = require('socket.io')
@@ -77,17 +76,6 @@ function buildChatMessageHTML(time, username, message) {
         <span class="chat-text">${message}</span>
         </div>`
 }
-
-cron.schedule('0 0 * * *', () => {
-    console.log('Appending date message...');
-    const time = console_time()
-    const weekday = moment().locale("de").format('dddd').toString()
-    const fullDate = moment().locale("de").format('LL').toString()
-
-    appendDateMessage(`${time} ${weekday}, ${fullDate}`);
-}, {
-    timezone: 'Europe/Berlin'
-});
 
 function unixTimeTo2Hour2Minute(time) { // was ein drecks name
     return moment.unix(time).locale("de").format('LT');
