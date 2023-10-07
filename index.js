@@ -120,7 +120,7 @@ app.get('/prime', (req, res) => {
 })
 
 async function getMessages(channel) {
-    const url = `https://op47api.up.railway.app/v1/twitch/messages/${channel}`;
+    const url = `https://api.op47.de/v1/twitch/messages/${channel}`;
     const response = await fetch(url);
     return JSON.parse(await response.text());
 }
