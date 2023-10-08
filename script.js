@@ -32,6 +32,16 @@ function toggleReload() {
 startReloadInterval()
 
 function scrollToBottom() {
+  const chats = document.getElementsByClassName("chat-scrollable")
+  
+  for (let i = 0; i < chats.length; i++) {
+    if (chats[i].lastElementChild) {
+      chats[i].lastElementChild.scrollIntoView()
+    } else {
+      console.log("No chiled element found for " + chats[i])
+    }
+  }
+
   var sChat = document.getElementsByClassName("chat-scrollable-stegi")
   sChat[0].lastElementChild.scrollIntoView()
   var dChat = document.getElementsByClassName('chat-scrollable-di1araas')
