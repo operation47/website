@@ -117,7 +117,7 @@ async function customFetch(url, options) {
     if (!options['headers']) {
         options['headers'] = {};
     }
-    options['headers']['authorization'] = this.API_KEY
+    options['headers']['authorization'] = API_KEY
     return await fetch(url, options)
 }
 
