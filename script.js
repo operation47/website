@@ -48,4 +48,4 @@ function scrollToBottom() {
   dChat[0].lastElementChild.scrollIntoView()
 }
 
-window.onload = scrollToBottom
+window.onload = scrollToBottom()
