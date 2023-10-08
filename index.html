@@ -125,7 +125,7 @@
                 messages.forEach(message => {
                     if (!isSameDayGermanTime(lastTimestamp, message.timestamp)) insertNewDayMessage(container, message.timestamp);
                     lastTimestamp = message.timestamp;
-                    const chatMessage = buildChatMessage(buildMessageTimeString(message.timestamp), message.user, message.content);
+                    const chatMessage = buildChatMessage(buildMessageTimeString(message.timestamp), message.display_name, message.content);
                     container.appendChild(chatMessage);
                 });
             }
