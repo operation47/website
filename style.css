@@ -125,7 +125,7 @@ a {
 @media (max-width: 768px) {
     .chat-wrapper {
         flex-direction: column;
-        height: 50dvh;
+        min-height: 50dvh;
     }
     .chat-container {
         width: 100%;
