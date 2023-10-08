@@ -94,7 +94,7 @@
             async function getMessages(channel) {
                 const response = await fetch(`https://api.op47.de/v1/twitch/messages/${channel}`);
                 const json = await response.json();
-                console.log("json: type: " + typeof json + " value:\n" + JSON.stringify(json));
+                return json;
             }
             async function insertMessages(container, channel) {
                 const messages = await getMessages(channel);
@@ -106,13 +106,8 @@
             const stegiChat = document.querySelector(".chat-scrollable-stegi");
             const di1araasChat = document.querySelector(".chat-scrollable-di1araas");
 
-            const stegiChatMess = getMessages("stegi");
-            const di1araasChatMessages = getMessages("di1araas");
-
             insertMessages(stegiChat, "stegi");
             insertMessages(di1araasChat, "di1araas");
-
-
         </script>
     </body>
 </html>
