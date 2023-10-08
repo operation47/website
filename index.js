@@ -13,7 +13,6 @@ const httpServer = http.createServer(app)
 
 app.use(express.static(path.join(__dirname, "/public")))
 app.use(express.static(path.join(__dirname, "/files")))
-// app.use(express.static(path.join(__dirname, '/')))
 
 const io = new Server(httpServer, { cors: { origin: "*" }, allowEIO3: true });
 
@@ -77,8 +76,8 @@ function buildChatMessageHTML(time, username, message) {
         </div>`
 }
 
-function unixTimeTo2Hour2Minute(time) { // was ein drecks name
-    return moment.unix(time).locale("de").format('LT');
+function unixTimeTo2Hour2Minute(time, timeZone) { // was ein drecks name
+    return new Date(time).toLocaleTimeString(timeZone, { hour: '2-digit', minute: '2-digit' });
 }
 
 app.get('/', async (req, res) => {
@@ -89,10 +88,10 @@ app.get('/', async (req, res) => {
     const di1araasMessages = (await getMessages('di1araas')).sort((a, b) => a.timestamp - b.timestamp);
 
     stegiMessages.forEach(message => {
-        stegiChat.append(buildChatMessageHTML(unixTimeTo2Hour2Minute(message.timestamp), message.user, message.content));
+        stegiChat.append(buildChatMessageHTML(unixTimeTo2Hour2Minute(message.timestamp, "de-DE"), message.user, message.content));
     });
     di1araasMessages.forEach(message => {
-        di1araasChat.append(buildChatMessageHTML(unixTimeTo2Hour2Minute(message.timestamp), message.user, message.content));
+        di1araasChat.append(buildChatMessageHTML(unixTimeTo2Hour2Minute(message.timestamp, "de-DE"), message.user, message.content));
     });
 
     res.send(html.html());
