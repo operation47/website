@@ -6,6 +6,9 @@ a {
     text-decoration: none;
     color: inherit;
 }
+.link {
+    text-decoration: underline;
+}
 .chat-wrapper {
     display: flex;
     height: 100dvh;
@@ -80,7 +83,7 @@ a {
 .chat-message {
     font-size: 17px;
     display: flex;
-    padding: 7px;
+    padding: 9px;
     overflow-wrap: break-word;
     word-break: break-all;
 }
