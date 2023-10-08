@@ -70,26 +70,8 @@ function buildChatMessageHTML(time, username, message) {
         </div>`
 }
 
-function unixTimeTo2Hour2Minute(time, timeZone) { // was ein drecks name
-    return new Date(time).toLocaleTimeString(timeZone, { hour: '2-digit', minute: '2-digit' });
-}
-
 app.get('/', async (req, res) => {
-    const html = cheerio.load(fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'));
-    const stegiChat = html('.chat-scrollable-stegi')
-    const di1araasChat = html('.chat-scrollable-di1araas')
-
-    const stegiMessages = (await getMessages('stegi')).sort((a, b) => a.timestamp - b.timestamp);
-    const di1araasMessages = (await getMessages('di1araas')).sort((a, b) => a.timestamp - b.timestamp);
-
-    stegiMessages.forEach(message => {
-        stegiChat.append(buildChatMessageHTML(unixTimeTo2Hour2Minute(message.timestamp, "de-DE"), message.user, message.content));
-    });
-    di1araasMessages.forEach(message => {
-        di1araasChat.append(buildChatMessageHTML(unixTimeTo2Hour2Minute(message.timestamp, "de-DE"), message.user, message.content));
-    });
-
-    res.send(html.html());
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 app.get('/script.js', (req, res) => {
     res.sendFile(path.join(__dirname, 'script.js'))
