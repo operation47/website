@@ -83,7 +83,7 @@ a {
 .chat-message {
     font-size: 17px;
     display: flex;
-    padding: 9px;
+    padding: 8px;
     overflow-wrap: break-word;
     word-break: break-all;
 }
