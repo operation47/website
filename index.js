@@ -13,7 +13,6 @@ const httpServer = http.createServer(app)
 
 app.use(express.static(path.join(__dirname, "/public")))
 app.use(express.static(path.join(__dirname, "/files")))
-// app.use(express.static(path.join(__dirname, '/')))
 
 const io = new Server(httpServer, { cors: { origin: "*" }, allowEIO3: true });
 
