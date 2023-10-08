@@ -78,9 +78,6 @@ function buildChatMessageHTML(time, username, message) {
 
 function unixTimeTo2Hour2Minute(time, timeZone) { // was ein drecks name
     console.log(time);
-    time = parseInt(time);
-    console.log(time);
-    time = 4342;
     console.log(new Date(time * 1000).toLocaleTimeString(timeZone, { hour: '2-digit', minute: '2-digit' }));
 }
 
