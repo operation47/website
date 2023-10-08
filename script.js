@@ -44,11 +44,6 @@ function scrollToBottom() {
       console.log("No chiled element found for " + chats[i])
     }
   }
-
-  var sChat = document.getElementsByClassName("chat-scrollable-stegi")
-  sChat[0].lastElementChild.scrollIntoView()
-  var dChat = document.getElementsByClassName('chat-scrollable-di1araas')
-  dChat[0].lastElementChild.scrollIntoView()
 }
 
 window.onload = scrollToBottom()
