@@ -76,8 +76,8 @@ function buildChatMessageHTML(time, username, message) {
         </div>`
 }
 
-function unixTimeTo2Hour2Minute(time) { // was ein drecks name
-    return moment.unix(time).locale("de").format('LT');
+function unixTimeTo2Hour2Minute(time, timeZone) { // was ein drecks name
+    return new Date(time * 1000).toLocaleTimeString('de-DE', { timeZone: timeZone, hour: '2-digit', minute: '2-digit' })
 }
 
 app.get('/', async (req, res) => {
