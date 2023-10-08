@@ -84,6 +84,7 @@ function unixTimeTo2Hour2Minute(time, timeZone) { // was ein drecks name
 app.get('/', async (req, res) => {
     const html = cheerio.load(fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'));
     const stegiChat = html('.chat-scrollable-stegi')
+    const di1araasChat = html('.chat-scrollable-di1araas')
 
     const stegiMessages = (await getMessages('stegi')).sort((a, b) => a.timestamp - b.timestamp);
     const di1araasMessages = (await getMessages('di1araas')).sort((a, b) => a.timestamp - b.timestamp);
