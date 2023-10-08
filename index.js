@@ -81,6 +81,7 @@ function unixTimeTo2Hour2Minute(time, timeZone) { // was ein drecks name
 }
 
 app.get('/', async (req, res) => {
+    console.log(unixTimeTo2Hour2Minute(34242342, "de-DE"));
     const html = cheerio.load(fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'));
     const stegiChat = html('.chat-scrollable-stegi')
 
