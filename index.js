@@ -77,7 +77,7 @@ function buildChatMessageHTML(time, username, message) {
 }
 
 function unixTimeTo2Hour2Minute(time, timeZone) { // was ein drecks name
-    return new Date(time * 1000).toLocaleTimeString('de-DE', { timeZone: timeZone, hour: '2-digit', minute: '2-digit' })
+    return new Date(time * 1000).toLocaleTimeString(timeZone, { hour: '2-digit', minute: '2-digit' })
 }
 
 app.get('/', async (req, res) => {
@@ -88,10 +88,10 @@ app.get('/', async (req, res) => {
     const di1araasMessages = (await getMessages('di1araas')).sort((a, b) => a.timestamp - b.timestamp);
 
     stegiMessages.forEach(message => {
-        stegiChat.append(buildChatMessageHTML(unixTimeTo2Hour2Minute(message.timestamp), message.user, message.content));
+        stegiChat.append(buildChatMessageHTML(unixTimeTo2Hour2Minute(message.timestamp, "de-DE"), message.user, message.content));
     });
     di1araasMessages.forEach(message => {
-        di1araasChat.append(buildChatMessageHTML(unixTimeTo2Hour2Minute(message.timestamp), message.user, message.content));
+        di1araasChat.append(buildChatMessageHTML(unixTimeTo2Hour2Minute(message.timestamp, "de-DE"), message.user, message.content));
     });
 
     res.send(html.html());
