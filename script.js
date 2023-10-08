@@ -33,19 +33,17 @@ startReloadInterval()
 
 function scrollToBottom() {
   const chats = document.getElementsByClassName("chat-scrollable")
-  console.log(chats);
   
   for (let i = 0; i < chats.length; i++) {
-    console.log(chats[i]);
-    console.log(chats[i].lastChild);
-    if (chats[i].lastChild) {
-      window.scrollTo({
-        top: chats[i].lastChild.offsetTop,
-        behavior: "smooth"
-      });
-    } else {
-      console.log("No chiled element found for " + chats[i])
+    let children = chats[i].children
+    if (children.length < 1) {
+      console.log("No children found);
+      continue;
     }
+    window.scrollTo({
+      top: children[children.length - 1],
+      behavior: "smooth"
+    });
   }
 }
 
