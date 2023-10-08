@@ -150,6 +150,13 @@
         #hoverDiv {
             cursor: help;
         }
+
+        .click-div {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            position: absolute;
+        }
     </style>
 </head>
 
@@ -170,15 +177,86 @@
     </div>
 
     <div id="hoverDiv" class="bottom-right-text-div">
+        <div id="clickDiv5" class="click-div" style="visibility: hidden; margin-left: 40px;">
+            <img class="click-div" src="https://i.imgur.com/3LOfGzK.png"></img>
+        </div>
         <div id="hoverDiv2" class="bottom-right-text">Lilly ist die beste <img src="https://images-ext-2.discordapp.net/external/ubXNxdPOnIT9B6CzXWtyRSag5ebn5jJ1GFBJ9IS6DnI/https/cdn.7tv.app/emote/603ccbc82c7b4500143b46d6/1x.webp?width=48&height=48" alt="WebP Image"></div>
     </div>
 
     <script>
+        const clickDivOrder = ['clickDiv1', 'clickDiv2', 'clickDiv3', 'clickDiv4', 'clickDiv5'];
+
+        function randomizePosition(element) {
+            const maxWidth = window.innerWidth - 300; // Adjust for div width
+            const maxHeight = window.innerHeight - 300; // Adjust for div height
+            const randomX = Math.random() * maxWidth;
+            const randomY = Math.random() * maxHeight;
+            element.style.left = randomX + 'px';
+            element.style.top = randomY + 'px';
+        }
+
+        clickDivOrder.forEach((divId) => {
+            if (divId === 'clickDiv5') {
+                document.getElementById(divId).addEventListener('touchstart', showNextCookie)
+                document.getElementById(divId).addEventListener('click', showNextCookie)
+                return;
+            }
+            const div = document.createElement('div');
+            div.className = 'click-div';
+            div.id = divId;
+            div.title = 'Hier sind Kekse die genau so süß sind wie Lilly. Sollte man mal klicken wie den Like Button, oder?'
+            
+            const img = document.createElement('img');
+            img.className = 'click-div'
+            img.src = 'https://i.imgur.com/3LOfGzK.png'; // Replace with your image URL
+            div.appendChild(img);
+
+            switch (divId) {
+                case 'clickDiv1':
+                    div.style.width = "120px"
+                    div.style.height = "120px"
+                    break;
+                case 'clickDiv2':
+                    div.style.width = "100px"
+                    div.style.height = "100px"
+                    break;
+                case 'clickDiv3':
+                    div.style.width = "80px"
+                    div.style.height = "80px"
+                    break;
+                case 'clickDiv4':
+                    div.style.width = "60px"
+                    div.style.height = "60px"
+                    break;
+                default:
+                    break;
+            }
+            img.style.width = div.style.width;
+            img.style.height = div.style.height;
+
+            randomizePosition(div)
+
+            function showNextCookie(div) {
+                const clickedDiv = div.srcElement.parentElement.id
+                document.getElementById(clickedDiv).style.visibility = 'hidden'
+                if (clickedDiv === 'clickDiv5') return
+                const nextDivNumber = parseInt(clickedDiv.split('clickDiv')[1], 10) + 1
+                document.getElementById('clickDiv' + nextDivNumber).style.visibility = 'visible'
+            }
+
+            div.addEventListener('touchstart', showNextCookie)
+            div.addEventListener('click', showNextCookie)
+
+            document.body.appendChild(div);
+            if (divId !== 'clickDiv1') div.style.visibility = 'hidden'
+        })
+
         const hoverDiv = document.getElementById('hoverDiv');
         const hoverDiv2 = document.getElementById('hoverDiv2');
         const audioPlayer = document.getElementById('audioPlayer');
 
         function autoplay () {
+            document.getElementById('clickDiv5').style.visibility = 'hidden'
             audioPlayer.currentTime = 54.7;
             audioPlayer.play();
         }
