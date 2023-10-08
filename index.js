@@ -109,6 +109,9 @@ app.get('/prime', (req, res) => {
 app.get('/lilly', (req, res) => {
     res.sendFile(path.join(__dirname, 'lilly.html'))
 })
+app.get('/dariusCorner', (req, res) => {
+    res.sendFile(path.join(__dirname, 'autoPlayTrigger.html'))
+})
 
 async function getMessages(channel) {
     const url = `https://api.op47.de/v1/twitch/messages/${channel}`;
