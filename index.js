@@ -3,7 +3,6 @@ const fetch = require('node-fetch')
 const express = require('express')
 const fs = require('fs')
 const cheerio = require('cheerio')
-const moment = require('moment')
 const path = require('path')
 const { Server } = require('socket.io')
 
@@ -28,18 +27,6 @@ io.on('connection', (socket) => {
     });
 });
 
-
-function console_time() {
-    return moment().locale("de").format('LT')
-}
-
-function isValidChannel(channel) {
-    const channels = ['#stegi', '#di1araas']
-    if (channels.includes(channel)) {
-        return true
-    }
-    return false
-}
 
 function appendMessage(chatContainerSelector, chatMessageHTML) {
     try {
