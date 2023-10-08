@@ -36,7 +36,10 @@ function scrollToBottom() {
   
   for (let i = 0; i < chats.length; i++) {
     if (chats[i].lastElementChild) {
-      chats[i].lastElementChild.scrollIntoView()
+      window.scrollTo({
+        top: chats[i].lastElementChild.offsetTop,
+        behavior: "smooth"
+      });
     } else {
       console.log("No chiled element found for " + chats[i])
     }
