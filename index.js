@@ -88,7 +88,7 @@ app.get('/', async (req, res) => {
     const di1araasMessages = (await getMessages('di1araas')).sort((a, b) => a.timestamp - b.timestamp);
 
     stegiMessages.forEach(message => {
-        stegiChat.append(buildChatMessageHTML(unixTimeTo2Hour2Minute(message.timestamp, "de-DE"), message.user, message.content));
+        stegiChat.append(buildChatMessageHTML(unixTimeTo2Hour2Minute(34242342, "de-DE"), message.user, message.content));
     });
     di1araasMessages.forEach(message => {
         di1araasChat.append(buildChatMessageHTML(unixTimeTo2Hour2Minute(message.timestamp, "de-DE"), message.user, message.content));
