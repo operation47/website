@@ -81,7 +81,6 @@ function unixTimeTo2Hour2Minute(time, timeZone) { // was ein drecks name
 }
 
 app.get('/', async (req, res) => {
-    console.log(unixTimeTo2Hour2Minute(34242342, "de-DE"));
     const html = cheerio.load(fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'));
     const stegiChat = html('.chat-scrollable-stegi')
 
@@ -89,7 +88,8 @@ app.get('/', async (req, res) => {
     const di1araasMessages = (await getMessages('di1araas')).sort((a, b) => a.timestamp - b.timestamp);
 
     stegiMessages.forEach(message => {
-        stegiChat.append(buildChatMessageHTML(unixTimeTo2Hour2Minute(34242342, "de-DE"), message.user, message.content));
+        console.log(message.timestamp);
+        stegiChat.append(buildChatMessageHTML(unixTimeTo2Hour2Minute(message.timestamp, "de-DE"), message.user, message.content));
     });
     di1araasMessages.forEach(message => {
         di1araasChat.append(buildChatMessageHTML(unixTimeTo2Hour2Minute(message.timestamp, "de-DE"), message.user, message.content));
