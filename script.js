@@ -33,8 +33,11 @@ startReloadInterval()
 
 function scrollToBottom() {
   const chats = document.getElementsByClassName("chat-scrollable")
+  console.log(chats);
   
   for (let i = 0; i < chats.length; i++) {
+    console.log(chats[i]);
+    console.log(chats[i].lastChild);
     if (chats[i].lastChild) {
       window.scrollTo({
         top: chats[i].lastChild.offsetTop,
