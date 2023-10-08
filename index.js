@@ -17,11 +17,12 @@ app.use(express.static(path.join(__dirname, "/files")))
 
 const io = new Server(httpServer, { cors: { origin: "*" }, allowEIO3: true });
 
-function customFetch(url, options) {
+async function customFetch(url, options) {
     if (!options['headers']) {
         options['headers'] = {};
     }
     options['headers']['authorization'] = this.API_KEY
+    return await fetch(url, options)
 }
 
 let viewerCount = 0;
