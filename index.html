@@ -7,6 +7,7 @@
     <title>Operation 47</title>
     <link rel="icon" type="image/x-icon" href="https://imgur.com/GiBb5YN.png">
     <link rel="stylesheet" type="text/css" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript" src="./script.js"></script>
 </head>
 
@@ -35,7 +36,37 @@
     <div class="chat-wrapper">
         <div class="chat-container">
             <div class="chat-window-title">
-                <a href="https://www.twitch.tv/stegi">#stegi (beim Nachbarn)</a>
+                <nav role="navigation">
+                    <div id="menuToggle">
+                      <!--
+                      A fake / hidden checkbox is used as click reciever,
+                      so you can use the :checked selector on it.
+                      -->
+                      <input type="checkbox" />
+                      
+                      <!--
+                      Some spans to act as a hamburger.
+                      
+                      They are acting like a real hamburger,
+                      not that McDonalds stuff.
+                      -->
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      
+                      <!--
+                      Too bad the menu has to be inside of the button
+                      but hey, it's pure CSS magic.
+                      -->
+                      <ul id="menu">
+                        <a href="prime"><li>Prime</li></a>
+                      </ul>
+                    </div>
+                  </nav>
+                  <div class="centered-content">
+                    <a href="https://www.twitch.tv/stegi">#stegi</a>
+                </div>
+                
                 <button onclick="toggleReload()" id="reload-button" class="addon button">Auto Reload <b>ON</b></button>
             </div>
             <div class="chat-scrollable chat-scrollable-stegi">
@@ -44,7 +75,9 @@
 
         <div class="chat-container">
             <div class="chat-window-title">
-                <a href="https://www.twitch.tv/di1araas">#di1araas</a>
+                <div class="centered-content">
+                    <a href="https://www.twitch.tv/di1araas">#di1araas</a>
+                </div>
                 <div id="viewer-count" class="addon viewer-count">0 haben grad FOMO</div>
             </div>
             <div class="chat-scrollable chat-scrollable-di1araas">
