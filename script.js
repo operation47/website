@@ -35,9 +35,9 @@ function scrollToBottom() {
   const chats = document.getElementsByClassName("chat-scrollable")
   
   for (let i = 0; i < chats.length; i++) {
-    if (chats[i].lastElementChild) {
+    if (chats[i].lastChild) {
       window.scrollTo({
-        top: chats[i].lastElementChild.offsetTop,
+        top: chats[i].lastChild.offsetTop,
         behavior: "smooth"
       });
     } else {
