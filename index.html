@@ -97,10 +97,10 @@
                 return doc.body.firstChild;
             }
             function buildMessageTimeString(timestamp) {
-                return new Date(timestamp*1000).toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
+                return new Date(timestamp).toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
             }
             function buildNewDayMessageDateTimeString(timestamp) {
-                return new Date(timestamp*1000).toLocaleDateString("de-DE", { weekday: "long", day: "2-digit", month: "2-digit", year: "numeric" });
+                return new Date(timestamp).toLocaleDateString("de-DE", { weekday: "long", day: "2-digit", month: "2-digit", year: "numeric" });
             }
             async function getMessages(channel) {
                 const response = await fetch(`https://api.op47.de/v1/twitch/messages/${channel}`);
