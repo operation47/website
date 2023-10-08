@@ -17,14 +17,6 @@ app.use(express.static(path.join(__dirname, "/files")))
 
 const io = new Server(httpServer, { cors: { origin: "*" }, allowEIO3: true });
 
-async function customFetch(url, options) {
-    if (!options['headers']) {
-        options['headers'] = {};
-    }
-    options['headers']['authorization'] = this.API_KEY
-    return await fetch(url, options)
-}
-
 let viewerCount = 0;
 io.on('connection', (socket) => {
     viewerCount++
@@ -123,7 +115,7 @@ app.get('/dariusCorner', (req, res) => {
 
 async function getMessages(channel) {
     const url = `https://api.op47.de/v1/twitch/messages/${channel}`;
-    const response = await customFetch(url);
+    const response = await fetch(url);
     return JSON.parse(await response.text());
 }
 
