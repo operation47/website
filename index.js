@@ -5,12 +5,18 @@ const fs = require('fs')
 const cheerio = require('cheerio')
 const path = require('path')
 const { Server } = require('socket.io')
+const cors = require('cors')
 
 const app = express()
 const port = process.env.PORT || 6969
 const httpServer = http.createServer(app)
 const API_KEY = 'thgp673DPP3hFJHoTMMS!s4hRhgxLtN@';
 
+app.use(cors(
+    {
+        origin: "https://op47.de"
+    }
+))
 app.use(express.static(path.join(__dirname, "/public")))
 app.use(express.static(path.join(__dirname, "/files")))
 
