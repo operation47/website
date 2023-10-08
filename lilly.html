@@ -174,9 +174,15 @@
         const hoverDiv2 = document.getElementById('hoverDiv2');
         const audioPlayer = document.getElementById('audioPlayer');
 
-        hoverDiv.addEventListener('click', () => {
+        function autoplay () {
             audioPlayer.play();
-        });
+        }
+
+        hoverDiv.addEventListener("touchstart", autoplay);
+        hoverDiv2.addEventListener("touchstart", autoplay);
+
+        hoverDiv.addEventListener('click', autoplay);
+        hoverDiv2.addEventListener('click', autoplay);
     </script>
 
 </body></html>
