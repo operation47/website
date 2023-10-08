@@ -100,6 +100,7 @@
                 return new Date(timestamp).toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
             }
             function buildNewDayMessageDateTimeString(timestamp) {
+                console.log("timestamp ", timestamp);
                 return new Date(timestamp).toLocaleDateString("de-DE", { weekday: "long", day: "2-digit", month: "2-digit", year: "numeric" });
             }
             async function getMessages(channel) {
@@ -113,6 +114,7 @@
                 return d1.getDate() == d2.getDate() && d1.getMonth() == d2.getMonth() && d1.getFullYear() == d2.getFullYear();
             }
             function insertNewDayMessage(container, timestamp) {
+                console.log("timestamp ", timestamp);
                 const newDayString = buildNewDayMessageDateTimeString(timestamp);
                 const newDayMessage = buildNewDayMessage(newDayString);
                 container.appendChild(newDayMessage);
