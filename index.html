@@ -122,7 +122,6 @@
 
                 let lastTimestamp = 0;
                 messages.forEach(message => {
-                    console.log("timestamp: ", message.timestamp);
                     if (!isSameDayGermanTime(lastTimestamp, message.timestamp)) insertNewDayMessage(container, message.timestamp);
                     lastTimestamp = message.timestamp;
                     const chatMessage = buildChatMessage(buildMessageTimeString(message.timestamp), message.user, message.content);
