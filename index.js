@@ -89,6 +89,7 @@ app.get('/', async (req, res) => {
 
     stegiMessages.forEach(message => {
         console.log(message.timestamp);
+        console.log(unixTimeTo2Hour2Minute(message.timestamp, "de-DE"));
         stegiChat.append(buildChatMessageHTML(unixTimeTo2Hour2Minute(message.timestamp, "de-DE"), message.user, message.content));
     });
     di1araasMessages.forEach(message => {
