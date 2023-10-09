@@ -1,3 +1,5 @@
+import { parseMessage } from "./message-parser.js";
+
 function buildChatMessage(timeString, username, message) {
     const urlRegex =
         /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g;
@@ -77,11 +79,12 @@ async function insertMessages(container, channel) {
         if (!isSameDayGermanTime(lastTimestamp, message.timestamp))
             insertNewDayMessage(container, message.timestamp);
         lastTimestamp = message.timestamp;
-        const chatMessage = buildChatMessage(
+        /*const chatMessage = buildChatMessage(
             buildMessageTimeString(message.timestamp),
             message.display_name,
             message.content,
-        );
+        );*/
+        const chatMessage = parseMessage(message.display_name, message.content, message.timestamp);
         container.appendChild(chatMessage);
     });
 }

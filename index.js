@@ -41,6 +41,9 @@ app.get('/', async (req, res) => {
 app.get('/script.js', (req, res) => {
     res.sendFile(join(__dirname, 'script.js'))
 });
+app.get('/message-parser.js', (req, res) => {
+    res.sendFile(join(__dirname, 'message-parser.js'))
+});
 app.get('/style.css', (req, res) => {
     res.sendFile(join(__dirname, 'style.css'))
 })
