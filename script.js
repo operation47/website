@@ -36,6 +36,7 @@ setTimeout(() => {
         console.log("newMessage");
         const channels = ["stegi", "di1araas"];
         for (const channel of channels) {
+            const container = document.querySelector(`.chat-scrollable-${channel}`);
             const response = await fetch(`https://api.op47.de/v1/twitch/messages/${channel}/since/${lastTimestamp}`);
             const messages = await response.json();
     
