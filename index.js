@@ -50,8 +50,15 @@ app.get('/style.css', (req, res) => {
 app.get('/prime', (req, res) => {
     res.sendFile(join(__dirname, 'prime.html'))
 })
+app.get('/comm/new_message', (req, res) => {
+    if (req.API_KEY !== API_KEY) {
+        res.status(401).send("Unauthorized")
+        return;
+    }
+    io.emit('newMessage');
+});
 
-
+setInterval(() => io.emit('newMessage'), 5000);
 async function customFetch(url, options) {
     if (!options) {
         options = {};
