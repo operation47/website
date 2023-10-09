@@ -1,11 +1,14 @@
-const http = require('http')
-const fetch = require('node-fetch')
-const express = require('express')
-const fs = require('fs')
-const cheerio = require('cheerio')
-const path = require('path')
-const { Server } = require('socket.io')
-const cors = require('cors')
+import http from 'http';
+import fetch from 'node-fetch';
+import express from 'express';
+import fs from 'fs';
+import cheerio from 'cheerio';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
+import { Server } from 'socket.io';
+import cors from 'cors';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express()
 const port = process.env.PORT || 6969
@@ -17,8 +20,8 @@ app.use(cors(
         origin: "https://op47.de"
     }
 ))
-app.use(express.static(path.join(__dirname, "/public")))
-app.use(express.static(path.join(__dirname, "/files")))
+app.use(express.static(join(__dirname, "/public")))
+app.use(express.static(join(__dirname, "/files")))
 
 const io = new Server(httpServer, { cors: { origin: "*" }, allowEIO3: true });
 
@@ -36,7 +39,7 @@ io.on('connection', (socket) => {
 
 function appendMessage(chatContainerSelector, chatMessageHTML) {
     try {
-        const htmlFilePath = path.join(__dirname, 'index.html')
+        const htmlFilePath = join(__dirname, 'index.html')
         const htmlContent = fs.readFileSync(htmlFilePath, 'utf8')
         const $ = cheerio.load(htmlContent)
         const chatContainer = $(chatContainerSelector)
@@ -71,19 +74,19 @@ function buildChatMessageHTML(time, username, message) {
 }
 
 app.get('/', async (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(join(__dirname, 'index.html'));
 });
 app.get('/script.js', (req, res) => {
-    res.sendFile(path.join(__dirname, 'script.js'))
+    res.sendFile(join(__dirname, 'script.js'))
 });
 app.get('/style.css', (req, res) => {
-    res.sendFile(path.join(__dirname, 'style.css'))
+    res.sendFile(join(__dirname, 'style.css'))
 })
 app.get('/prime', (req, res) => {
-    res.sendFile(path.join(__dirname, 'prime.html'))
+    res.sendFile(join(__dirname, 'prime.html'))
 })
 app.get('/lilly', (req, res) => {
-    res.sendFile(path.join(__dirname, 'lilly.html'))
+    res.sendFile(join(__dirname, 'lilly.html'))
 })
 
 async function customFetch(url, options) {
