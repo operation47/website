@@ -11,7 +11,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express()
 const port = process.env.PORT || 6969
 const httpServer = http.createServer(app)
-const API_KEY = 'thgp673DPP3hFJHoTMMS!s4hRhgxLtN@';
+const API_KEY = process.env.API_KEY;
 
 app.use(cors(
     {
