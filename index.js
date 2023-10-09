@@ -50,10 +50,6 @@ app.get('/style.css', (req, res) => {
 app.get('/prime', (req, res) => {
     res.sendFile(join(__dirname, 'prime.html'))
 })
-app.get('/lilly', (req, res) => {
-    res.sendFile(join(__dirname, 'lilly.html'))
-})
-
 async function customFetch(url, options) {
     if (!options) {
         options = {};
