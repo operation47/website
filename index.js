@@ -1,8 +1,6 @@
 import http from 'http';
 import fetch from 'node-fetch';
 import express from 'express';
-import fs from 'fs';
-import cheerio from 'cheerio';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { Server } from 'socket.io';
@@ -36,42 +34,6 @@ io.on('connection', (socket) => {
     });
 });
 
-
-function appendMessage(chatContainerSelector, chatMessageHTML) {
-    try {
-        const htmlFilePath = join(__dirname, 'index.html')
-        const htmlContent = fs.readFileSync(htmlFilePath, 'utf8')
-        const $ = cheerio.load(htmlContent)
-        const chatContainer = $(chatContainerSelector)
-        chatContainer.append(chatMessageHTML)
-        fs.writeFileSync(htmlFilePath, $.html(), 'utf8')
-    } catch (err) {
-        throw err
-    }
-}
-
-function appendDateMessage(date) {
-    const dateMessage = `
-    <div class="chat-message">
-        <span class="chat-timestamp">${date}</span>
-    </div>
-    `
-    try {
-        appendMessage('.chat-scrollable-stegi', dateMessage)
-        appendMessage('.chat-scrollable-di1araas', dateMessage)
-    } catch (err) {
-        console.error(`Error appending date message (${date}):`, err);
-    }
-}
-
-function buildChatMessageHTML(time, username, message) {
-    return `
-        <div class="chat-message">
-        <span class="chat-timestamp">${time}</span>
-        <span class="chat-username chat-username-${username}">${username}:</span>
-        <span class="chat-text">${message}</span>
-        </div>`
-}
 
 app.get('/', async (req, res) => {
     res.sendFile(join(__dirname, 'index.html'));
