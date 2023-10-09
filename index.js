@@ -50,8 +50,8 @@ app.get('/style.css', (req, res) => {
 app.get('/prime', (req, res) => {
     res.sendFile(join(__dirname, 'prime.html'))
 })
-app.get('/comm/new_message', (req, res) => {
-    io.emit('newMessage');
+app.post('/comm/new_message', (req, res) => {
+    io.emit('newMessage', res.body.message);
 });
 
 async function customFetch(url, options) {
