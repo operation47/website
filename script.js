@@ -129,10 +129,7 @@ function scrollToBottom() {
             console.log("No children found");
             continue;
         }
-        window.scrollTo({
-            top: children[children.length - 1],
-            behavior: "smooth",
-        });
+        children[children.length-1].scrollIntoView({behavior: 'smooth'});
     }
 }
 
