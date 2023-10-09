@@ -54,7 +54,6 @@ app.get('/comm/new_message', (req, res) => {
     io.emit('newMessage');
 });
 
-setInterval(() => io.emit('newMessage'), 5000);
 async function customFetch(url, options) {
     if (!options) {
         options = {};
