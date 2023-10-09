@@ -89,6 +89,7 @@ function buildEmoteElement(emote) {
     const emoteElement = document.createElement("img");
     emoteElement.classList.add("chat-emote");
     emoteElement.alt = emote.name;
+    emoteElement.title = emote.name;
     emoteElement.src = emote.url + "/1x.webp";
     return emoteElement;
 }
