@@ -103,7 +103,7 @@ function stopReloadInterval() {
     clearInterval(reloadInterval);
 }
 
-function toggleReload() {
+window.toggleReload = function () {
     const reloadButton = document.getElementById("reload-button");
 
     if (isReloadEnabled) {
