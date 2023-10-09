@@ -37,7 +37,7 @@ function scrollToBottom() {
   for (let i = 0; i < chats.length; i++) {
     let children = chats[i].children
     if (children.length < 1) {
-      console.log("No children found);
+      console.log("No children found");
       continue;
     }
     window.scrollTo({
