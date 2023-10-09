@@ -1,5 +1,68 @@
 import { parseMessage, loadEmotes } from "./message-parser.js";
 
+function sendPushNotification() {
+    if ('Notification' in window) {
+        Notification.requestPermission().then(function (permission) {
+            if (permission === 'granted') {
+                const options = {
+                    body: 'This is a web push notification.'
+                };
+                new Notification('Hello', options);
+            }
+        });
+    }
+}
+
+const socket = io();
+            
+socket.on('connect', () => {
+    console.log('Connected to the server');
+});
+
+socket.on('disconnect', () => {
+    console.log('Disconnected from the server');
+});
+        
+function getCountText(count) {
+    return count == 1 ? count + ' hat grad FOMO' : count + ' haben grad FOMO'
+}
+        
+socket.on('viewerCount', (count) => {
+    document.getElementById('viewer-count').textContent = getCountText(count)
+});
+
+setTimeout(() => {
+    socket.on('newMessage', async () => {
+        console.log("newMessage");
+        const channels = ["stegi", "di1araas"];
+        for (const channel of channels) {
+            const response = await fetch(`https://api.op47.de/v1/twitch/messages/stegi/since`, lastTimestamp);
+            const messages = await response.json();
+    
+            messages.sort((a, b) => a.timestamp - b.timestamp);
+    
+            messages.forEach( async (message) => {
+                if (!isSameDayGermanTime(lastTimestamp, message.timestamp)) insertNewDayMessage(container, message.timestamp);
+    
+                lastTimestamp = message.timestamp;
+                const chatMessage = parseMessage(message.display_name, message.content, message.timestamp, channel === "stegi" ? true : false);
+                container.appendChild(chatMessage);
+            });
+        }
+    });
+}, 1000);;
+
+document.body.addEventListener('click',() => { 
+    const menuCheckbox = document.getElementById('menu-checkbox');
+    if (event.target !== menuCheckbox) {
+            menuCheckbox.checked = false
+    }
+}, false);
+
+
+
+
+
 function buildNewDayMessage(dateTimeString) {
     const parent = document.createElement("div");
     parent.classList.add("chat-message");
@@ -43,11 +106,11 @@ function insertNewDayMessage(container, timestamp) {
     const newDayMessage = buildNewDayMessage(newDayString);
     container.appendChild(newDayMessage);
 }
+let lastTimestamp = 0;
 async function insertMessages(container, channel) {
     const messages = await getMessages(channel);
     messages.sort((a, b) => a.timestamp - b.timestamp);
 
-    let lastTimestamp = 0;
     messages.forEach( async (message) => {
         if (!isSameDayGermanTime(lastTimestamp, message.timestamp)) insertNewDayMessage(container, message.timestamp);
         lastTimestamp = message.timestamp;

@@ -11,32 +11,6 @@
     </head>
     <body>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.min.js"></script>
-        <script>
-            const socket = io();
-            
-            socket.on('connect', () => {
-                console.log('Connected to the server');
-            });
-            
-            socket.on('disconnect', () => {
-                console.log('Disconnected from the server');
-            });
-            
-            function getCountText(count) {
-                return count == 1 ? count + ' hat grad FOMO' : count + ' haben grad FOMO'
-            }
-            
-            socket.on('viewerCount', (count) => {
-                document.getElementById('viewer-count').textContent = getCountText(count)
-            });
-
-            document.body.addEventListener('click',() => { 
-                const menuCheckbox = document.getElementById('menu-checkbox');
-                if (event.target !== menuCheckbox) {
-                    menuCheckbox.checked = false
-                }
-             }, false);
-        </script>
         <div class="chat-wrapper">
             <div class="chat-container">
                 <div class="chat-window-title">
