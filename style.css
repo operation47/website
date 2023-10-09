@@ -92,11 +92,10 @@ a {
     max-width: 100%;
     vertical-align: -webkit-baseline-middle;
 }
-
 .chat-username {
     font-weight: bold;
-    padding-right: 5px;
     white-space: nowrap;
+    margin-right: 5px;
 }
 
 .chat-username-stegi {
