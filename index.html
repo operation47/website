@@ -31,7 +31,10 @@
             });
 
             document.body.addEventListener('click',() => { 
-                document.getElementById('menu-checkbox').checked = false
+                const menuCheckbox = document.getElementById('menu-checkbox');
+                if (event.target !== menuCheckbox) {
+                    menuCheckbox.checked = false
+                }
              }, false);
         </script>
         <div class="chat-wrapper">
