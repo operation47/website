@@ -37,6 +37,7 @@ setTimeout(() => {
         const channels = ["stegi", "di1araas"];
         for (const channel of channels) {
             const container = document.querySelector(`.chat-scrollable-${channel}`);
+            console.log(lastTimestamp);
             const response = await fetch(`https://api.op47.de/v1/twitch/messages/${channel}/since/${lastTimestamp}`);
             const messages = await response.json();
     
@@ -44,8 +45,9 @@ setTimeout(() => {
     
             messages.forEach( async (message) => {
                 if (!isSameDayGermanTime(lastTimestamp, message.timestamp)) insertNewDayMessage(container, message.timestamp);
-    
                 lastTimestamp = message.timestamp;
+                console.log(lastTimestamp);
+
                 const chatMessage = parseMessage(message.display_name, message.content, message.timestamp, channel === "stegi" ? true : false);
                 container.appendChild(chatMessage);
             });
