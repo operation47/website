@@ -13,6 +13,16 @@ function sendPushNotification() {
     }
 }
 
+function sendPushNotificationWithArguments(title, options) {
+    if ('Notification' in window) {
+        Notification.requestPermission().then(function (permission) {
+            if (permission === 'granted') {
+                new Notification(title, options);
+            }
+        });
+    }
+}
+
 const socket = io();
             
 socket.on('connect', () => {
@@ -114,8 +124,17 @@ let reloadInterval;
 let isReloadEnabled = true;
 
 function startReloadInterval() {
-    reloadInterval = setInterval(function () {
-        location.reload();
+    reloadInterval = setInterval( async function () {
+        const stegiChat = document.querySelector(".chat-scrollable-stegi");
+        const di1araasChat = document.querySelector(".chat-scrollable-di1araas");
+
+        stegiChat.innerHTML = "";
+        di1araasChat.innerHTML = "";
+        
+        await insertMessages(stegiChat, "stegi");
+        await insertMessages(di1araasChat, "di1araas");
+
+        scrollToBottom();
     }, 60000);
 }
 
