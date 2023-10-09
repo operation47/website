@@ -31,19 +31,19 @@ socket.on('viewerCount', (count) => {
     document.getElementById('viewer-count').textContent = getCountText(count)
 });
 
+let lastTimestamp = 0;
 setTimeout(() => {
     socket.on('newMessage', async () => {
         console.log("newMessage");
         const channels = ["stegi", "di1araas"];
         for (const channel of channels) {
             const container = document.querySelector(`.chat-scrollable-${channel}`);
-            console.log(lastTimestamp);
             const response = await fetch(`https://api.op47.de/v1/twitch/messages/${channel}/since/${lastTimestamp}`);
             const messages = await response.json();
     
             messages.sort((a, b) => a.timestamp - b.timestamp);
     
-            messages.forEach( async (message) => {
+            messages.forEach(message => {
                 if (!isSameDayGermanTime(lastTimestamp, message.timestamp)) insertNewDayMessage(container, message.timestamp);
                 lastTimestamp = message.timestamp;
 
@@ -108,7 +108,6 @@ function insertNewDayMessage(container, timestamp) {
     const newDayMessage = buildNewDayMessage(newDayString);
     container.appendChild(newDayMessage);
 }
-let lastTimestamp = 0;
 async function insertMessages(container, channel) {
     const messages = await getMessages(channel);
     messages.sort((a, b) => a.timestamp - b.timestamp);
