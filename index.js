@@ -51,7 +51,8 @@ app.get('/prime', (req, res) => {
     res.sendFile(join(__dirname, 'prime.html'))
 })
 app.post('/comm/new_message', (req, res) => {
-    io.emit('newMessage', res.body.message);
+    const message = req.body.message;
+    io.emit('newMessage', message);
 });
 
 async function customFetch(url, options) {
