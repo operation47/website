@@ -1,43 +1,16 @@
 import { parseMessage, loadEmotes } from "./message-parser.js";
 
-function buildChatMessage(timeString, username, message) {
-    const urlRegex =
-        /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g;
-    message.replace(urlRegex, (url) => {
-        message = message.replace(
-            url,
-            `<a class="link" href="${url}" target="_blank">${url}</a>`,
-        );
-    });
-
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(
-        `
-                    <div class="chat-message">
-                        <span class="chat-timestamp">${timeString}</span>
-                        <span class="chat-username chat-username-${username}">${username}:</span>
-                        <span class="chat-text">${message}</span>
-                    </div>`,
-        "text/html",
-    );
-    return doc.body.firstChild;
-}
 function buildNewDayMessage(dateTimeString) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(
-        `
-                <div class="chat-message">
-                    <span class="chat-timestamp">${dateTimeString}</span>
-                </div>`,
-        "text/html",
-    );
-    return doc.body.firstChild;
-}
-function buildMessageTimeString(timestamp) {
-    return new Date(timestamp).toLocaleTimeString("de-DE", {
-        hour: "2-digit",
-        minute: "2-digit",
-    });
+    const parent = document.createElement("div");
+    parent.classList.add("chat-message");
+
+    const timestamp = document.createElement("span");
+    timestamp.classList.add("chat-timestamp");
+    timestamp.innerHTML = dateTimeString;
+
+    parent.appendChild(timestamp);
+
+    return parent;
 }
 function buildNewDayMessageDateTimeString(timestamp) {
     return "00:00 ".concat(
@@ -76,14 +49,8 @@ async function insertMessages(container, channel) {
 
     let lastTimestamp = 0;
     messages.forEach( async (message) => {
-        if (!isSameDayGermanTime(lastTimestamp, message.timestamp))
-            insertNewDayMessage(container, message.timestamp);
+        if (!isSameDayGermanTime(lastTimestamp, message.timestamp)) insertNewDayMessage(container, message.timestamp);
         lastTimestamp = message.timestamp;
-        /*const chatMessage = buildChatMessage(
-            buildMessageTimeString(message.timestamp),
-            message.display_name,
-            message.content,
-        );*/
         const chatMessage = parseMessage(message.display_name, message.content, message.timestamp, channel === "stegi" ? true : false);
         container.appendChild(chatMessage);
     });
