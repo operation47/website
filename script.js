@@ -1,4 +1,4 @@
-import { parseMessage } from "./message-parser.js";
+import { parseMessage, loadEmotes } from "./message-parser.js";
 
 function buildChatMessage(timeString, username, message) {
     const urlRegex =
@@ -75,7 +75,7 @@ async function insertMessages(container, channel) {
     messages.sort((a, b) => a.timestamp - b.timestamp);
 
     let lastTimestamp = 0;
-    messages.forEach((message) => {
+    messages.forEach( async (message) => {
         if (!isSameDayGermanTime(lastTimestamp, message.timestamp))
             insertNewDayMessage(container, message.timestamp);
         lastTimestamp = message.timestamp;
@@ -84,7 +84,7 @@ async function insertMessages(container, channel) {
             message.display_name,
             message.content,
         );*/
-        const chatMessage = parseMessage(message.display_name, message.content, message.timestamp);
+        const chatMessage = parseMessage(message.display_name, message.content, message.timestamp, channel === "stegi" ? true : false);
         container.appendChild(chatMessage);
     });
 }
@@ -138,6 +138,8 @@ function scrollToBottom() {
 async function main() {
     const stegiChat = document.querySelector(".chat-scrollable-stegi");
     const di1araasChat = document.querySelector(".chat-scrollable-di1araas");
+
+    await loadEmotes();
 
     await insertMessages(stegiChat, "stegi");
     await insertMessages(di1araasChat, "di1araas");
