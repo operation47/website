@@ -46,7 +46,6 @@ setTimeout(() => {
             messages.forEach( async (message) => {
                 if (!isSameDayGermanTime(lastTimestamp, message.timestamp)) insertNewDayMessage(container, message.timestamp);
                 lastTimestamp = message.timestamp;
-                console.log(lastTimestamp);
 
                 const chatMessage = parseMessage(message.display_name, message.content, message.timestamp, channel === "stegi" ? true : false);
                 container.appendChild(chatMessage);
