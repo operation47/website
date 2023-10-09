@@ -33,8 +33,7 @@ socket.on('viewerCount', (count) => {
 
 let lastTimestamp = 0;
 setTimeout(() => {
-    socket.on('newMessage', (body) => {
-        const message = body.message;
+    socket.on('newMessage', (message) => {
         const container = document.querySelector(`.chat-scrollable-${message.channel}`);
         if (!isSameDayGermanTime(lastTimestamp, message.timestamp)) insertNewDayMessage(container, message.timestamp);
         lastTimestamp = message.timestamp;
