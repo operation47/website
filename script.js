@@ -118,7 +118,6 @@ function toggleReload() {
     isReloadEnabled = !isReloadEnabled;
 }
 
-startReloadInterval();
 
 function scrollToBottom() {
     const chats = document.getElementsByClassName("chat-scrollable");
@@ -141,5 +140,6 @@ async function main() {
     await insertMessages(di1araasChat, "di1araas");
 
     scrollToBottom();
+    startReloadInterval();
 }
 main();
