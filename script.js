@@ -46,5 +46,4 @@ function scrollToBottom() {
     });
   }
 }
-
-window.onload = setTimeout(() => scrollToBottom(), 500)
+setTimeout(() => scrollToBottom(), 500)
