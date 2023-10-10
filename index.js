@@ -50,10 +50,16 @@ app.get('/style.css', (req, res) => {
 app.get('/prime', (req, res) => {
     res.sendFile(join(__dirname, 'prime.html'))
 })
+app.get('/fuerLxllv', (req, res) => {
+    console.log(req.toString())
+})
+
+
 app.post('/comm/new_message', (req, res) => {
     const message = req.body.message;
     io.emit('newMessage', message);
 });
+
 
 async function customFetch(url, options) {
     if (!options) {
