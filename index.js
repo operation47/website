@@ -51,7 +51,11 @@ app.get('/prime', (req, res) => {
     res.sendFile(join(__dirname, 'prime.html'))
 })
 app.get('/fuerLxllv', (req, res) => {
-    console.log(req.toString())
+    if (req.url === '/fuerLxllv') {
+        res.sendFile(join(__dirname, 'lilly.html'))
+    } else {
+        res.status(404).send('Not found');
+    }
 })
 
 
