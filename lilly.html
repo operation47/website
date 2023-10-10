@@ -158,6 +158,11 @@
             cursor: pointer;
             position: absolute;
         }
+        .heart {
+            user-select: none;
+            content: "❤";
+        }
+
     </style>
 </head>
 
@@ -168,6 +173,7 @@
         Your browser does not support the audio element.
     </audio>
 
+    <div id="heart"></div>
     <div id="background" class="background"></div>
     
     <div class="text-container">
@@ -184,6 +190,47 @@
         <div id="hoverDiv2" class="bottom-right-text">Lilly ist die beste <img src="https://images-ext-2.discordapp.net/external/ubXNxdPOnIT9B6CzXWtyRSag5ebn5jJ1GFBJ9IS6DnI/https/cdn.7tv.app/emote/603ccbc82c7b4500143b46d6/1x.webp?width=48&height=48" alt="WebP Image"></div>
     </div>
 
+    <script>
+        const heart_container = document.getElementById('heart');
+
+        let mouse_x = 0;
+        let mouse_y = 0;
+        let last_mouse_x = 0;
+        let last_mouse_y = 0;
+        document.addEventListener('mousemove', function(e) {
+            mouse_x = e.clientX;
+            mouse_y = e.clientY;
+        });
+
+        function onCallback() {
+            const mouse_x_diff = mouse_x - last_mouse_x;
+            const mouse_y_diff = mouse_y - last_mouse_y;
+
+            const mouse_x_diff_abs = Math.abs(mouse_x_diff);
+            const mouse_y_diff_abs = Math.abs(mouse_y_diff);
+
+            const distance = Math.sqrt(mouse_x_diff_abs * mouse_x_diff_abs + mouse_y_diff_abs * mouse_y_diff_abs);
+
+            console.log(mouse_x, mouse_y, last_mouse_x, last_mouse_y)
+            if (distance > 15) {
+                last_mouse_x = mouse_x;
+                last_mouse_y = mouse_y;
+
+                const div = document.createElement('div');
+                div.style.position = 'absolute';
+                div.style.left = mouse_x + 'px';
+                div.style.top = mouse_y + 'px';
+                div.classList.add('heart');
+                heart_container.appendChild(div);
+
+                setTimeout(function() {
+                    div.remove();
+                }, 100);
+            }
+        }
+        setInterval(onCallback, 1);
+
+    </script>
     <script>
         const clickDivOrder = ['clickDiv1', 'clickDiv2', 'clickDiv3', 'clickDiv4', 'clickDiv5'];
 
