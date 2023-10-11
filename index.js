@@ -34,29 +34,35 @@ io.on('connection', (socket) => {
     });
 });
 
-
-app.get('/', async (req, res) => {
-    res.sendFile(join(__dirname, 'index.html'));
-});
-app.get('/script.js', (req, res) => {
-    res.sendFile(join(__dirname, 'script.js'))
-});
-app.get('/message-parser.js', (req, res) => {
-    res.sendFile(join(__dirname, 'message-parser.js'))
-});
-app.get('/style.css', (req, res) => {
-    res.sendFile(join(__dirname, 'style.css'))
-})
-
-app.get('/prime', (req, res) => {
-    res.sendFile(join(__dirname, 'prime.html'))
-})
-app.get('/fuerLxllv', (req, res) => {
-    if (req.url === '/fuerLxllv') {
-        res.sendFile(join(__dirname, 'lilly.html'))
+function sendFileSafe(req, res, url, filepath){
+    if (req.url === url) {
+        res.sendFile(join(__dirname, filepath));
     } else {
         res.status(404).send('Not found');
     }
+}
+
+app.get('/', async (req, res) => {
+    sendFileSafe(req, res, '/', 'index.html');
+});
+app.get('/script.js', (req, res) => {
+    sendFileSafe(req, res, '/script.js', 'script.js');
+});
+app.get('/message-parser.js', (req, res) => {
+    sendFileSafe(req, res, '/message-parser.js', 'message-parser.js');
+});
+app.get('/style.css', (req, res) => {
+    sendFileSafe(req, res, '/style.css', 'style.css');
+})
+
+app.get('/prime', (req, res) => {
+    sendFileSafe(req, res, '/prime', 'prime.html');
+})
+app.get('/recap', (req, res) => {
+    sendFileSafe(req, res, '/recap', 'recap.html');
+})
+app.get('/fuerLxllv', (req, res) => {
+    sendFileSafe(req, res, 'fuerLxllv', 'lilly.html');
 })
 
 
