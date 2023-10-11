@@ -1,6 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
+    background-color: #0f0f0f;
 }
 a {
     text-decoration: none;
@@ -67,12 +68,15 @@ a {
 }
 
 .button {
-    background-color: #26C281; 
+    background-color: #3498db;
     color: #ffffff; 
     border: none; 
     padding: 6px 12px;
     border-radius: 5px; 
     cursor: pointer
+}
+.button:hover {
+    background-color: #2674b8;
 }
 
 .viewer-count {
@@ -150,7 +154,7 @@ a {
 #menuToggle a
 {
   text-decoration: none;
-  color: #232323;
+  color: #cdcdcd;
   
   transition: color 0.3s ease;
 }
@@ -219,7 +223,7 @@ a {
 {
   opacity: 1;
   transform: rotate(45deg) translate(-2px, -1px);
-  background: #232323;
+  background-color: #4d4d4d;
 }
 
 /*
@@ -251,7 +255,7 @@ a {
   padding-left: 50px;
   padding-top: 100px;
   
-  background: #ededed;
+  background: #080808f6;
   list-style-type: none;
   -webkit-font-smoothing: antialiased;
   /* to stop flickering of text in safari */
