@@ -1,6 +1,5 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
     background-color: #0f0f0f;
 }
 a {
@@ -11,20 +10,43 @@ a {
     text-decoration: underline;
 }
 .chat-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
     display: flex;
     height: 100dvh;
-    width: 100%;
+    width: 100dvw;
+}
+/* centered horizontally and vertically in parent element */
+.loading-circle {
+    position: relative;
+    margin: auto;
+
+    border: 3px solid #535353;
+    border-radius: 50%;
+    border-top: 3px solid #3498db;
+    width: 30px;
+    height: 30px;
+    rotate: 45deg;
+    -webkit-animation: spin 1s ease-in-out infinite; /* Safari */
+    animation: spin 1s ease-in-out infinite;    
+}
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .chat-container {
-    width: 50%;
-    padding: 0px;
-    background-color: #000000;
-    color: #fff;
     display: flex;
     flex-direction: column;
-    max-height: 100%;
-    flex-grow: 1;
+    width: 50%;
+    background-color: #000000;
+    color: #fff;
 }
 
 .chat-scrollable {
