@@ -51,6 +51,9 @@ app.get('/script.js', (req, res) => {
 app.get('/message-parser.js', (req, res) => {
     sendFileSafe(req, res, '/message-parser.js', 'message-parser.js');
 });
+app.get('/message-handler.js', (req, res) => {
+    sendFileSafe(req, res, '/message-handler.js', 'message-handler.js');
+});
 app.get('/style.css', (req, res) => {
     sendFileSafe(req, res, '/style.css', 'style.css');
 })

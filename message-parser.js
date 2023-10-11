@@ -1,5 +1,4 @@
-export function parseMessage(displayName, messageContent, timestamp, isStegi) {
-
+export function parseMessage(message) {
     // Steps:
     // 1. Insert <img> tags with the right source emotes from twitch, 7tv, bttv, ffz in that order
     // 2. Insert url anchors
@@ -11,70 +10,49 @@ export function parseMessage(displayName, messageContent, timestamp, isStegi) {
 
     // do later on each message fragment messageContent = insertAnchorTags(messageContent);
 
-    const messageFragments = insertEmotes(messageContent, isStegi);
+    //console.log("message: ", JSON.stringify(message));
+    const messageFragments = insertEmotes(message.content, message.channel);
 
-    return buildMessage(displayName, messageFragments, getClockTimeString(timestamp));
+    return buildMessage(message.display_name, messageFragments, getClockTimeString(message.timestamp));
 }
 
-function insertEmotes(messageContent, isStegi) {
+function insertEmotes(messageContent, channel) {
     const result = [];
     const words = messageContent.split(" ");
     let textFragmentBuffer = "";
 
     for (const word of words) {
-        //console.log("check word: " + word);
         let foundEmote = false;
-        (isStegi ? emotesStegi : emotesDi1araas).find(emote => {
+
+        (channel === "stegi" ? emotesStegi : emotesDi1araas).find(emote => {
             if (emote.name === word) {
-                // text fragment if buffer is not empty
                 if (textFragmentBuffer.length > 0) {
-                    //console.log("insert text fragment");
                     result.push(buildTextFragmentElement(textFragmentBuffer));
                     textFragmentBuffer = "";
                 }
-
-                //console.log("insert emote");
                 result.push(buildEmoteElement(emote));
                 foundEmote = true;
             }
         });
-        if (foundEmote) {
-            //console.log("trigger continue");
-            continue;
-        }
+        if (foundEmote) continue;
+
         emotesGlobal.find(emote => {
             if (emote.name === word) {
-                // text fragment if buffer is not empty
                 if (textFragmentBuffer.length > 0) {
-                    //console.log("insert text fragment");
                     result.push(buildTextFragmentElement(textFragmentBuffer));
                     textFragmentBuffer = "";
                 }
-
                 result.push(buildEmoteElement(emote));
                 foundEmote = true;
             }
         });
-        if (foundEmote) {
-            //console.log("trigger continue");
-            continue;
-        }
+        if (foundEmote) continue;
 
-        //console.log("textfragmentbuffer length: " + textFragmentBuffer.length);
-        if (textFragmentBuffer.length > 0) {
-            //console.log("add space to buffer")
-            textFragmentBuffer += " ";
-        }
-
-        //console.log("add word to buffer");
+        if (textFragmentBuffer.length > 0) textFragmentBuffer += " ";
         textFragmentBuffer += word;
     }
 
-    if (textFragmentBuffer.length > 0) {
-        //console.log("insert text fragment because buffer is not empty after loop");
-        result.push(buildTextFragmentElement(textFragmentBuffer));
-    }
-
+    if (textFragmentBuffer.length > 0) result.push(buildTextFragmentElement(textFragmentBuffer));
     return result;
 }
 
