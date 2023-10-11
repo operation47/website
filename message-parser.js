@@ -1,3 +1,51 @@
+let emotesDi1araas = [];
+let emotesStegi = [];
+let emotesGlobal = [];
+
+export async function loadEmotes() {
+    const di1araasTwitchId = 645207159;
+    const stegiTwitchId = 51304190;
+
+    emotesDi1araas = await get7tvChannelEmotes(di1araasTwitchId);
+    emotesStegi = await get7tvChannelEmotes(stegiTwitchId);
+    emotesGlobal = await get7tvGlobalEmotes();
+}
+
+async function get7tvGlobalEmotes() {
+    const url = "https://7tv.io/v3/emote-sets/global";
+
+    const emotes = [];
+    const response = await fetch(url);
+    const json = await response.json();
+    for (const emote of json.emotes) {
+        emotes.push(
+            {
+                name: emote.name,
+                url: emote.data.host.url,
+                files: emote.data.host.files
+            }
+        );
+    }
+    return emotes;
+}
+
+async function get7tvChannelEmotes(twitchId) {
+    const url = `https://7tv.io/v3/users/twitch/${twitchId}`;
+
+    const emotes = [];
+    const response = await fetch(url);
+    const json = await response.json();
+    for (const emote of json.emote_set.emotes) {
+        emotes.push(
+            {
+                name: emote.name,
+                url: emote.data.host.url,
+                files: emote.data.host.files
+            }
+        );
+    }
+    return emotes;
+}
 export function parseMessage(message) {
     // Steps:
     // 1. Insert <img> tags with the right source emotes from twitch, 7tv, bttv, ffz in that order
@@ -13,7 +61,7 @@ export function parseMessage(message) {
     //console.log("message: ", JSON.stringify(message));
     const messageFragments = insertEmotes(message.content, message.channel);
 
-    return buildMessage(message.display_name, messageFragments, getClockTimeString(message.timestamp));
+    return buildMessage(message.display_name, messageFragments, message.timestamp);
 }
 
 function insertEmotes(messageContent, channel) {
@@ -72,71 +120,14 @@ function buildEmoteElement(emote) {
     return emoteElement;
 }
 
-let emotesDi1araas = [];
-let emotesStegi = [];
-let emotesGlobal = [];
-
-export async function loadEmotes() {
-    /*
-    const emote_structure = {
-        name: "test",
-        urls: {
-            1: "testurl"
-        }
-    };
-    */
-    const di1araasTwitchId = 645207159;
-    const stegiTwitchId = 51304190;
-
-    emotesDi1araas = await get7tvChannelEmotes(di1araasTwitchId);
-    emotesStegi = await get7tvChannelEmotes(stegiTwitchId);
-    emotesGlobal = await get7tvGlobalEmotes();
-}
-
-async function get7tvGlobalEmotes() {
-    const url = "https://7tv.io/v3/emote-sets/global";
-    const response = await fetch(url);
-    const json = await response.json();
-    const emoteStrings = [];
-    
-    for (const emote of json.emotes) {
-        emoteStrings.push(
-            {
-                name: emote.name,
-                url: emote.data.host.url,
-                files: emote.data.host.files
-            }
-        );
-    }
-    return emoteStrings;
-}
-
-async function get7tvChannelEmotes(twitchId) {
-    const url = `https://7tv.io/v3/users/twitch/${twitchId}`;
-
-    const emoteStrings = [];
-    const response = await fetch(url);
-    const json = await response.json();
-    for (const emote of json.emote_set.emotes) {
-        emoteStrings.push(
-            {
-                name: emote.name,
-                url: emote.data.host.url,
-                files: emote.data.host.files
-            }
-        );
-    }
-    return emoteStrings;
-}
-
-function buildMessage(displayName, messageContentFragments, timeString) {
+function buildMessage(displayName, messageContentFragments, timestamp) {
     const chatMessage = document.createElement("div");
     chatMessage.classList.add("chat-message");
 
-    const timestamp = document.createElement("span");
-    timestamp.classList.add("chat-timestamp");
-    timestamp.textContent = timeString;
-    chatMessage.appendChild(timestamp);
+    const timestampText = document.createElement("span");
+    timestampText.classList.add("chat-timestamp");
+    timestampText.textContent = getClockTimeString(timestamp);
+    chatMessage.appendChild(timestampText);
 
     const chatUsername = document.createElement("span");
     chatUsername.classList.add("chat-username");
@@ -149,6 +140,7 @@ function buildMessage(displayName, messageContentFragments, timeString) {
     };
     return chatMessage;
 }
+
 function getClockTimeString(timestamp) {
     return new Date(timestamp).toLocaleString("de-DE", { hour: "2-digit", minute: "2-digit" });
 }
@@ -159,15 +151,3 @@ function insertAnchorTags(message) {
         return `<a class="link" href="${url}">${url}</a>`;
     });
 }
-
-function stringToDomElement(string) {
-  const parser = new DOMParser();
-  return parser.parseFromString(string, "text/html").body.firstChild;
-}
-
-
-// call https://7tv.io/v3/emote-sets/global
-// https://7tv.io/v3/users/twitch/{channel_id}
-// 
-// 51304190 stegi
-// 645207159 di1araas

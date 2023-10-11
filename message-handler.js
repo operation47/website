@@ -2,8 +2,8 @@ import { parseMessage, loadEmotes } from "./message-parser.js";
 
 let emotesLoaded = false
 export async function loadAllChatMessages() {
-    await loadMessagesStegi();
-    await loadMessagesDi1araas();
+    await Promise.all([loadMessagesStegi(), loadMessagesDi1araas()]); 
+
     scrollToBottom();
 }
 
