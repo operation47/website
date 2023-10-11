@@ -8,26 +8,22 @@ export async function loadAllChatMessages() {
 }
 
 export async function loadMessagesStegi() {
-    if (!emotesLoaded) {
-        await loadEmotes();
-        emotesLoaded = true;
-    }
     const containerStegi = document.querySelector(".chat-scrollable-stegi");
     if (containerStegi.children.length > 0) containerStegi.innerHTML = "";
 
     const spinner = createSpinner();
     containerStegi.parentNode.appendChild(spinner);
 
+    if (!emotesLoaded) {
+        await loadEmotes();
+        emotesLoaded = true;
+    }
     const messagesStegi = await getMessages("stegi");
     insertMessages(containerStegi, messagesStegi);
     spinner.remove();
 }
 
 export async function loadMessagesDi1araas() {
-    if (!emotesLoaded) {
-        await loadEmotes();
-        emotesLoaded = true;
-    }
     const containerDi1araas = document.querySelector(".chat-scrollable-di1araas");
     if (containerDi1araas.children.length > 0) containerDi1araas.innerHTML = "";
     
@@ -35,6 +31,10 @@ export async function loadMessagesDi1araas() {
     const spinner = createSpinner();
     containerDi1araas.parentNode.appendChild(spinner);
 
+    if (!emotesLoaded) {
+        await loadEmotes();
+        emotesLoaded = true;
+    }
     const messagesDi1araas = await getMessages("di1araas");
     insertMessages(containerDi1araas, messagesDi1araas);
     spinner.remove();
