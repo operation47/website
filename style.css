@@ -51,6 +51,7 @@ a {
 
 .chat-scrollable {
     overflow-y: auto;
+    overscroll-behavior: contain;
 }
 
 .chat-scrollable::-webkit-scrollbar {
