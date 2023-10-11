@@ -46,7 +46,7 @@ window.toggleReload = function () {
     reloadButton.style.backgroundColor = "#26C281";
     reloadIntervalHandle = setInterval(() => {
         loadAllChatMessages();
-    }, 10000);
+    }, 45000);
 }
 
 
