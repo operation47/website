@@ -47,6 +47,7 @@ app.get('/message-parser.js', (req, res) => {
 app.get('/style.css', (req, res) => {
     res.sendFile(join(__dirname, 'style.css'))
 })
+
 app.get('/prime', (req, res) => {
     res.sendFile(join(__dirname, 'prime.html'))
 })
