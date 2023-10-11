@@ -1,5 +1,10 @@
 import { loadAllChatMessages } from "./message-handler.js"
 
+async function main() {
+    await loadAllChatMessages();
+}
+main();
+
 const socket = io();
 
 socket.on('connect', () => {
@@ -50,7 +55,3 @@ window.toggleReload = function () {
 }
 
 
-async function main() {
-    await loadAllChatMessages();
-}
-main();
