@@ -19,7 +19,7 @@ export async function loadMessagesForChannel(channel) {
         emotesLoaded = true;
     }
     
-    insertMessages(container, await fetch(`https://api.op47.de/v1/twitch/messages/${channel}`).json());
+    insertMessages(container, await fetch(`https://api.op47.de/v1/twitch/messages/${channel}`).then(response => response.json()));
     spinner.remove();
 
     if (container.children.length > 0) {
@@ -40,7 +40,14 @@ function insertMessages(container, messages) {
 }
 
 function isSameDay(timestamp1, timestamp2) {
-    return new Date(timestamp1).toDateString() === new Date(timestamp2).toDateString()
+    const d1 = new Date(timestamp1)
+    const d2 = new Date(timestamp2)
+
+    return(
+        d1.getDate() == d2.getDate() &&
+        d1.getMonth() == d2.getMonth() &&
+        d1.getFullYear() == d2.getFullYear()
+    )
 }
 
 function buildNewDayMessage(timestamp) {
