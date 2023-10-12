@@ -15,7 +15,7 @@ async function get7tvGlobalEmotes() {
     const url = "https://7tv.io/v3/emote-sets/global";
 
     const emotes = [];
-    const json = await fetch(url).then(response => response.json()));
+    const json = await fetch(url).then(response => response.json());
     for (const emote of json.emotes) {
         emotes.push(
             {
@@ -32,7 +32,7 @@ async function get7tvChannelEmotes(twitchId) {
     const url = `https://7tv.io/v3/users/twitch/${twitchId}`;
 
     const emotes = [];
-    const json = await fetch(url).then(response => response.json()));
+    const json = await fetch(url).then(response => response.json());
     for (const emote of json.emote_set.emotes) {
         emotes.push(
             {
