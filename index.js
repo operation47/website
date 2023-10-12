@@ -40,39 +40,31 @@ function sendFileSafe(req, res, url, filepath){
     }
 }
 
+function registerRoute(route, htmlFile) {
+    if (htmlFile) {
+        app.get(route, async (req, res) => {
+            sendFileSafe(req, res, route, 'index.html');
+        });
+    } else {
+        app.get(route, (req, res) => {
+            sendFileSafe(req, res, route, route)
+        })
+    }
+}
+
 /** Resource Routes */
-app.get('/script.js', (req, res) => {
-    sendFileSafe(req, res, '/script.js', 'script.js');
-});
-app.get('/base.js', (req, res) => {
-    sendFileSafe(req, res, '/base.js', '/base.js');
-});
-app.get('/message-parser.js', (req, res) => {
-    sendFileSafe(req, res, '/message-parser.js', 'message-parser.js');
-});
-app.get('/message-handler.js', (req, res) => {
-    sendFileSafe(req, res, '/message-handler.js', 'message-handler.js');
-});
-app.get('/style.css', (req, res) => {
-    sendFileSafe(req, res, '/style.css', 'style.css');
-});
+registerRoute('/script.js');
+registerRoute('/base.js');
+registerRoute('/message-parser.js');
+registerRoute('/message-handler.js');
+registerRoute('/style.css');
 
 /** HTML Page Routes */
-app.get('/', async (req, res) => {
-    sendFileSafe(req, res, '/', 'index.html');
-});
-app.get('/prime', (req, res) => {
-    sendFileSafe(req, res, '/prime', 'prime.html');
-});
-app.get('/recap', (req, res) => {
-    sendFileSafe(req, res, '/recap', 'recap.html');
-});
-app.get('/fuerLxllv', (req, res) => {
-    sendFileSafe(req, res, 'fuerLxllv', 'lilly.html');
-});
-app.get('/credits', (req, res) => {
-    sendFileSafe(req, res, '/credits', 'credits.html');
-});
+registerRoute('/', 'index.html');
+registerRoute('/prime', 'prime.html');
+registerRoute('/recap', 'recap.html');
+registerRoute('/fuerLxllv', 'lilly.html');
+registerRoute('/credits', 'credits.html');
 
 /** Event Routes */
 app.get('/comm/new_message', (_req, res) => {
