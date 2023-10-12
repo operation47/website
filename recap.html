@@ -7,9 +7,80 @@
     <title>Operation 47 - Recap</title>
     <link rel="icon" type="image/x-icon" href="https://imgur.com/GiBb5YN.png">
     <link rel="stylesheet" type="text/css" href="./style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .title {
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 25px;
+            letter-spacing: 1px;
+            padding: 6px;
+        }
+
+        .box-container {
+            display: flex;
+            justify-content: space-around;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-bottom: 5px;
+            box-sizing: border-box;
+            height: 100vh;
+        }
+
+        @media (max-width: 1000px) {
+            .box-container {
+                display:block;
+            }
+        }
+
+        .box {
+            flex: 1;
+            margin: 7px;
+            padding: 10px;
+            border: 1px solid white;
+            border-radius: 15px;
+        }
+        
+        .box h2 {
+            text-align: center;
+            margin: 0;
+            background-color: #9146ff;
+            color: white;
+            letter-spacing: 2px;
+            padding: 5px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .links {
+            color: #9146ff;
+            padding-top: 15px;
+            text-decoration: none;
+        }
+
+        a {
+            font-size: 19px;
+        }
+
+        a:hover {
+            color: #6a33cc;
+        }
+
+        .links .active {
+            color: #2ca3d2;
+        }
+    </style>
 </head>
 
 <body>
+    <div class="title">FOMO Clips der Woche</div>
     <nav role="navigation">
         <div id="menuToggle">
             <input id="menu-checkbox" type="checkbox" />
@@ -28,8 +99,58 @@
                 </a>
             </ul>
     </nav>
+    <div class="box-container">
+        <div class="box">
+            <h2>SO</h2>
+            <div class="links">
+                <a href="#">Link 1</a><br>
+                <a href="#">Link 2</a><br>
+                <a href="#">Link 3</a><br>
+                <a href="#">Link 4</a><br>
+                <a href="#">Link 5</a>
+            </div>
+        </div>
+        <div class="box">
+            <h2>MO</h2>
+            <div class="links">
+                <a href="#">Link 1</a><br>
+                <a href="#">Link 2</a><br>
+                <a href="#">Link 3</a><br>
+                <a href="#">Link 4</a><br>
+                <a href="#">Link 5</a>
+            </div>
+        </div>
+        <div class="box">
+            <h2>DI</h2>
+            <div class="links">
+                <a href="#">Link 1</a><br>
+                <a href="#">Link 2</a><br>
+                <a href="#">Link 3</a><br>
+                <a href="#">Link 4</a><br>
+                <a href="#">Link 5</a>
+            </div>
+        </div>
+        <div class="box">
+            <h2>MI</h2>
+            <div class="links">
+                <a href="#">Link 1</a><br>
+                <a href="#">Link 2</a><br>
+                <a href="#">Link 3</a><br>
+                <a href="#">Link 4</a><br>
+                <a href="#">Link 5</a>
+            </div>
+        </div>
+        <div class="box">
+            <h2>DO</h2>
+            <div class="links">
+                <a href="#">Link 1</a><br>
+                <a href="#">Link 2</a><br>
+                <a href="#">Link 3</a><br>
+                <a href="#">Link 4</a><br>
+                <a href="#">Link 5</a>
+            </div>
+        </div>
     </div>
-    <h1 style="text-align: center;color: white;">
-        WORK IN PROGRESS...
-    </h1>
 </body>
+
+</html>
