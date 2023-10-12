@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Op47 - Credits</title>
+    <link rel="icon" type="image/x-icon" href="https://imgur.com/GiBb5YN.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .main-content {
+            color: #fff;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 20dvh;
+        }
+        .featured {
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+        }
+        @media (max-width: 768px) {
+            .featured {
+                flex-direction: column;
+            }
+        }
+        .linkcredit {
+            color: #9146FF;
+            text-decoration: none;
+        }
+        h2 {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <nav role="navigation">
+        <div id="menuToggle">
+            <input id="menu-checkbox" type="checkbox" />
+            <span></span>
+            <span></span>
+            <span></span>
+            <ul id="menu">
+                <a href="/" class="active">
+                    <li>Chat</li>
+                </a>
+                <a href="prime">
+                    <li>Prime</li>
+                </a>
+                <a href="recap">
+                    <li>Recap</li>
+                </a>
+                <a href="credits">
+                    <li>Credits</li>
+                </a>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <h1>Op47 - Credits</h1>
+        <section class="featured">
+        </section>
+    </div>
+
+    <script>
+        function mixandmatch() {
+            let devs = [ { name: "Swox", twitch: "twitch.tv/swox___"}, { name: "Darius", twitch: "twitch.tv/zfdarius"} ,{ name: "GenJoeyy", twitch: "twitch.tv/genjoeyy"}];
+            const featured = document.querySelector(".featured");
+            devs.sort(() => Math.random() - 0.5);
+            for (dev of devs) {
+                const card = document.createElement("div");
+                card.classList.add("card");
+                
+                const img = document.createElement("img");
+
+                const name = document.createElement("h2");
+                name.textContent = dev.name;
+
+
+                const link = document.createElement("a");
+                link.classList.add("linkcredit");
+                link.href = dev.twitch;
+                link.textContent = dev.twitch;
+
+                const subtitle = document.createElement("h3");
+                subtitle.textContent = "Developer";
+
+                card.appendChild(img);
+                card.appendChild(name);
+                card.appendChild(link);
+                card.appendChild(subtitle);
+
+                featured.appendChild(card);
+            }
+        }
+        mixandmatch();
+    </script>
+</body>
+</html>
