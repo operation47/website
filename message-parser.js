@@ -15,8 +15,7 @@ async function get7tvGlobalEmotes() {
     const url = "https://7tv.io/v3/emote-sets/global";
 
     const emotes = [];
-    const response = await fetch(url);
-    const json = await response.json();
+    const json = await fetch(url).json();
     for (const emote of json.emotes) {
         emotes.push(
             {
@@ -33,8 +32,7 @@ async function get7tvChannelEmotes(twitchId) {
     const url = `https://7tv.io/v3/users/twitch/${twitchId}`;
 
     const emotes = [];
-    const response = await fetch(url);
-    const json = await response.json();
+    const json = await fetch(url).json();
     for (const emote of json.emote_set.emotes) {
         emotes.push(
             {
@@ -100,34 +98,31 @@ function insertEmotes(messageContent, channel) {
 }
 
 function buildTextFragmentElement(text) {
-    const textElement = document.createElement("span");
-    textElement.classList.add("chat-text-fragment");
-    textElement.innerHTML = insertAnchorTags(text);
-    return textElement;
+    return createHTMLElement("span", {
+        innerHTML: insertAnchorTags(text)
+    }, ["chat-text-fragment"])
 }
 
 function buildEmoteElement(emote) {
-    const emoteElement = document.createElement("img");
-    emoteElement.classList.add("chat-emote");
-    emoteElement.alt = emote.name;
-    emoteElement.title = emote.name;
-    emoteElement.src = emote.url + "/1x.webp";
-    return emoteElement;
+    return createHTMLElement("img", {
+        alt: emote.name,
+        title: emote.name,
+        src: emote.url + "/1x.webp"
+    }, ["chat-emote"])
 }
 
 function buildMessage(displayName, messageContentFragments, timestamp) {
-    const chatMessage = document.createElement("div");
-    chatMessage.classList.add("chat-message");
+    const chatMessage = createHTMLElement("div", null, ["chat-message"])
+    
+    const timestampText = createHTMLElement("span", {
+        textContent: getTimeString(timestamp)
+    }, ["chat-timestamp"])
 
-    const timestampText = document.createElement("span");
-    timestampText.classList.add("chat-timestamp");
-    timestampText.textContent = getClockTimeString(timestamp);
     chatMessage.appendChild(timestampText);
 
-    const chatUsername = document.createElement("span");
-    chatUsername.classList.add("chat-username");
-    chatUsername.classList.add("chat-username-" + displayName.toLowerCase());
-    chatUsername.textContent = displayName.concat(":");
+    const chatUsername = createHTMLElement("span", {
+        textContent: displayName.concat(":")
+    }, ["chat-username", "chat-username-" + displayName.toLowerCase()])
     chatMessage.appendChild(chatUsername);
 
     for (const fragment of messageContentFragments) {
@@ -136,9 +131,10 @@ function buildMessage(displayName, messageContentFragments, timestamp) {
     return chatMessage;
 }
 
-function getClockTimeString(timestamp) {
+function getTimeString(timestamp) {
     return new Date(timestamp).toLocaleString("de-DE", { hour: "2-digit", minute: "2-digit" });
 }
+
 function insertAnchorTags(message) {
     const urlRegex =
         /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g;

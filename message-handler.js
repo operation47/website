@@ -1,56 +1,31 @@
+import { createHTMLElement } from "./base.js";
 import { parseMessage, loadEmotes } from "./message-parser.js";
 
 let emotesLoaded = false
 export async function loadAllChatMessages() {
-    await Promise.all([loadMessagesStegi(), loadMessagesDi1araas()]); 
-
-    scrollToBottom();
+    loadMessagesForUser("di1araas")
+    loadMessagesForUser("stegi")
 }
 
-export async function loadMessagesStegi() {
-    const containerStegi = document.querySelector(".chat-scrollable-stegi");
-    if (containerStegi.children.length > 0) containerStegi.innerHTML = "";
+export async function loadMessagesForUser(channel) {
+    const container = document.querySelector(".chat-scrollable-" + channel);
+    if (container.children.length > 0) container.innerHTML = "";
 
-    const spinner = createSpinner();
-    containerStegi.parentNode.appendChild(spinner);
+    const spinner = createHTMLElement("div", null, ["loading-circle"]);
+    container.parentNode.appendChild(spinner);
 
     if (!emotesLoaded) {
         await loadEmotes();
         emotesLoaded = true;
     }
-    const messagesStegi = await getMessages("stegi");
-    insertMessages(containerStegi, messagesStegi);
-    spinner.remove();
-}
-
-export async function loadMessagesDi1araas() {
-    const containerDi1araas = document.querySelector(".chat-scrollable-di1araas");
-    if (containerDi1araas.children.length > 0) containerDi1araas.innerHTML = "";
     
-
-    const spinner = createSpinner();
-    containerDi1araas.parentNode.appendChild(spinner);
-
-    if (!emotesLoaded) {
-        await loadEmotes();
-        emotesLoaded = true;
-    }
-    const messagesDi1araas = await getMessages("di1araas");
-    insertMessages(containerDi1araas, messagesDi1araas);
+    insertMessages(container, await fetch(`https://api.op47.de/v1/twitch/messages/${channel}`).json());
     spinner.remove();
-}
 
-function createSpinner() {
-    const spinner = document.createElement("div");
-    spinner.classList.add("loading-circle");
-    return spinner;
-}
-async function getMessages(channel) {
-    const response = await fetch(
-        `https://api.op47.de/v1/twitch/messages/${channel}`,
-    );
-    const json = await response.json();
-    return json;
+    if (container.children.length > 0) {
+        container.children[container.children.length - 1].scrollIntoView();
+        container.scrollTo(0, container.scrollHeight);
+    }
 }
 
 function insertMessages(container, messages) {
@@ -65,13 +40,7 @@ function insertMessages(container, messages) {
 }
 
 function isSameDay(timestamp1, timestamp2) {
-    const d1 = new Date(timestamp1);
-    const d2 = new Date(timestamp2);
-    return (
-        d1.getDate() == d2.getDate() &&
-        d1.getMonth() == d2.getMonth() &&
-        d1.getFullYear() == d2.getFullYear()
-    );
+    return new Date(timestamp1).toDateString() === new Date(timestamp2).toDateString()
 }
 
 function buildNewDayMessage(timestamp) {
@@ -83,23 +52,10 @@ function buildNewDayMessage(timestamp) {
             year: "numeric",
         }));
 
-    const container = document.createElement("div");
-    container.classList.add("chat-message");
-
-    const timestampText = document.createElement("span");
-    timestampText.classList.add("chat-timestamp");
-    timestampText.innerHTML = timeString;
+    const container = createHTMLElement("div", null, ["chat-message"])
+    const timestampText = createHTMLElement("span", { innerHTML: timeString }, ["chat-timestamp"])
 
     container.appendChild(timestampText);
     return container;
 }
 
-function scrollToBottom() {
-    const chats = document.getElementsByClassName("chat-scrollable");
-    for (const chat of chats) {
-        const children = chat.children;
-        if (children.length < 1) continue;
-        children[children.length - 1].scrollIntoView();
-        chat.scrollTo(0, chat.scrollHeight);
-    }
-}

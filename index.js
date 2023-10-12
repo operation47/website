@@ -1,5 +1,4 @@
 import http from 'http';
-import fetch from 'node-fetch';
 import express from 'express';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
@@ -11,7 +10,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express()
 const port = process.env.PORT || 6969
 const httpServer = http.createServer(app)
-const API_KEY = process.env.API_KEY;
 
 app.use(cors(
     {
@@ -42,9 +40,7 @@ function sendFileSafe(req, res, url, filepath){
     }
 }
 
-app.get('/', async (req, res) => {
-    sendFileSafe(req, res, '/', 'index.html');
-});
+/** Resource Routes */
 app.get('/script.js', (req, res) => {
     sendFileSafe(req, res, '/script.js', 'script.js');
 });
@@ -58,6 +54,10 @@ app.get('/style.css', (req, res) => {
     sendFileSafe(req, res, '/style.css', 'style.css');
 });
 
+/** HTML Page Routes */
+app.get('/', async (req, res) => {
+    sendFileSafe(req, res, '/', 'index.html');
+});
 app.get('/prime', (req, res) => {
     sendFileSafe(req, res, '/prime', 'prime.html');
 });
@@ -71,29 +71,11 @@ app.get('/credits', (req, res) => {
     sendFileSafe(req, res, '/credits', 'credits.html');
 });
 
-
-app.get('/comm/new_message', (req, res) => {
+/** Event Routes */
+app.get('/comm/new_message', (_req, res) => {
     io.emit('newMessage');
     res.status(200).send('OK');
 });
-
-
-async function customFetch(url, options) {
-    if (!options) {
-        options = {};
-    }
-    if (!options['headers']) {
-        options['headers'] = {};
-    }
-    options['headers']['authorization'] = API_KEY
-    return await fetch(url, options)
-}
-
-async function getMessages(channel) {
-    const url = `https://api.op47.de/v1/twitch/messages/${channel}`;
-    const response = await customFetch(url);
-    return JSON.parse(await response.text());
-}
 
 httpServer.listen(port, () => {
     console.log(`Server running on port ${port}`)
