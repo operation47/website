@@ -73,7 +73,7 @@ app.get('/credits', (req, res) => {
 
 
 app.get('/comm/new_message', (req, res) => {
-    if (req.API_KEY !== API_KEY) {
+    if (req.headers['API_KEY'] !== API_KEY) {
         res.status(401).send('Unauthorized');
         return;
     }
