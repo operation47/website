@@ -7,7 +7,8 @@ a {
     color: inherit;
 }
 .link {
-    text-decoration: underline;
+    text-decoration: none;
+    color: #3498db;
 }
 .chat-wrapper {
     position: fixed;

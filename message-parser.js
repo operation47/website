@@ -48,17 +48,12 @@ async function get7tvChannelEmotes(twitchId) {
 }
 export function parseMessage(message) {
     // Steps:
-    // 1. Insert <img> tags with the right source emotes from twitch, 7tv, bttv, ffz in that order
-    // 2. Insert url anchors
-    // 3. Take string and add in the display name and timestamp to the message
-    // 4. Return the message as a DOM element
+    // 1. Fragment the message into <img> tags and text fragments (and add anchor tags inside the text fragments)
+    // 2. Take string and add in the display name and timestamp to the message
+    // 3. Return the message as a DOM element
 
     // for now skip the first step as it's the most complicated
     
-
-    // do later on each message fragment messageContent = insertAnchorTags(messageContent);
-
-    //console.log("message: ", JSON.stringify(message));
     const messageFragments = insertEmotes(message.content, message.channel);
 
     return buildMessage(message.display_name, messageFragments, message.timestamp);
@@ -72,7 +67,7 @@ function insertEmotes(messageContent, channel) {
     for (const word of words) {
         let foundEmote = false;
 
-        (channel === "stegi" ? emotesStegi : emotesDi1araas).find(emote => {
+        (channel === "#stegi" ? emotesStegi : emotesDi1araas).find(emote => {
             if (emote.name === word) {
                 if (textFragmentBuffer.length > 0) {
                     result.push(buildTextFragmentElement(textFragmentBuffer));
@@ -107,7 +102,7 @@ function insertEmotes(messageContent, channel) {
 function buildTextFragmentElement(text) {
     const textElement = document.createElement("span");
     textElement.classList.add("chat-text-fragment");
-    textElement.textContent = text;
+    textElement.innerHTML = insertAnchorTags(text);
     return textElement;
 }
 
