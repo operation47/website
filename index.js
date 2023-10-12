@@ -44,6 +44,9 @@ function sendFileSafe(req, res, url, filepath){
 app.get('/script.js', (req, res) => {
     sendFileSafe(req, res, '/script.js', 'script.js');
 });
+app.get('/base.js', (req, res) => {
+    sendFileSafe(req, res, '/base.js', '/base.js');
+});
 app.get('/message-parser.js', (req, res) => {
     sendFileSafe(req, res, '/message-parser.js', 'message-parser.js');
 });
