@@ -3,11 +3,11 @@ import { parseMessage, loadEmotes } from "./message-parser.js";
 
 let emotesLoaded = false
 export async function loadAllChatMessages() {
-    loadMessagesForUser("di1araas")
-    loadMessagesForUser("stegi")
+    loadMessagesForChannel("di1araas")
+    loadMessagesForChannel("stegi")
 }
 
-export async function loadMessagesForUser(channel) {
+export async function loadMessagesForChannel(channel) {
     const container = document.querySelector(".chat-scrollable-" + channel);
     if (container.children.length > 0) container.innerHTML = "";
 
