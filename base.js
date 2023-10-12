@@ -6,7 +6,7 @@ export function createHTMLElement(type, options, classList) {
         }
     }
     if (classList) {
-        for (const style in classList) {
+        for (const style of classList) {
             element.classList.add(style);
         }
     }
