@@ -56,17 +56,20 @@ app.get('/message-handler.js', (req, res) => {
 });
 app.get('/style.css', (req, res) => {
     sendFileSafe(req, res, '/style.css', 'style.css');
-})
+});
 
 app.get('/prime', (req, res) => {
     sendFileSafe(req, res, '/prime', 'prime.html');
-})
+});
 app.get('/recap', (req, res) => {
     sendFileSafe(req, res, '/recap', 'recap.html');
-})
+});
 app.get('/fuerLxllv', (req, res) => {
     sendFileSafe(req, res, 'fuerLxllv', 'lilly.html');
-})
+});
+app.get('/credits', (req, res) => {
+    sendFileSafe(req, res, '/credits', 'credits.html');
+});
 
 
 app.post('/comm/new_message', (req, res) => {
