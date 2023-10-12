@@ -1,3 +1,5 @@
+import { createHTMLElement } from "./base.js";
+
 let emotesDi1araas = [];
 let emotesStegi = [];
 let emotesGlobal = [];
