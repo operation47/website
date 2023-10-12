@@ -15,14 +15,17 @@ socket.on('disconnect', () => {
     console.log('Disconnected from the server');
 });
 
-function getCountText(count) {
-    return count == 1 ? count + ' hat grad FOMO' : count + ' haben grad FOMO'
-}
-
 socket.on('viewerCount', (count) => {
     document.getElementById('viewer-count').textContent = getCountText(count)
 });
 
+socket.on('newMessage', () => {
+    loadAllChatMessages();
+});
+
+function getCountText(count) {
+    return count == 1 ? count + ' hat grad FOMO' : count + ' haben grad FOMO'
+}
 
 document.body.addEventListener('click',(e) => { 
     const menuCheckbox = document.getElementById('menu-checkbox');

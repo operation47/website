@@ -72,9 +72,13 @@ app.get('/credits', (req, res) => {
 });
 
 
-app.post('/comm/new_message', (req, res) => {
-    const message = req.body.message;
-    io.emit('newMessage', message);
+app.get('/comm/new_message', (req, res) => {
+    if (req.API_KEY !== API_KEY) {
+        res.status(401).send('Unauthorized');
+        return;
+    }
+    io.emit('newMessage');
+    res.status(200).send('OK');
 });
 
 
