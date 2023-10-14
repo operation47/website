@@ -33,28 +33,3 @@ document.body.addEventListener('click',(e) => {
         menuCheckbox.checked = false
     }
 }, false);
-
-
-let reloadEnabled = false;
-let reloadIntervalHandle = null;
-window.toggleReload = function () {
-    const reloadButton = document.getElementById("reload-button");
-
-    if (reloadEnabled) {
-        reloadEnabled = false;
-        console.log("Auto Reload disabled");
-        reloadButton.innerHTML = "Auto Reload <b>OFF</b>";
-        reloadButton.style.backgroundColor = "#9d2933";
-        clearInterval(reloadIntervalHandle);
-        return;
-    } 
-    console.log("Auto Reload enabled");
-    reloadEnabled = true;
-    reloadButton.innerHTML = "Auto Reload <b>ON</b>";
-    reloadButton.style.backgroundColor = "#26C281";
-    reloadIntervalHandle = setInterval(() => {
-        loadAllChatMessages();
-    }, 45000);
-}
-
-
