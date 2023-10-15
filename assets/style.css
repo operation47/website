@@ -1,0 +1,313 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #0f0f0f;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+.link {
+    text-decoration: none;
+    color: #3498db;
+}
+.chat-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    height: 100dvh;
+    width: 100dvw;
+}
+/* centered horizontally and vertically in parent element */
+.loading-circle {
+    position: relative;
+    margin: auto;
+
+    border: 3px solid #535353;
+    border-radius: 50%;
+    border-top: 3px solid #3498db;
+    width: 30px;
+    height: 30px;
+    rotate: 45deg;
+    -webkit-animation: spin 1s ease-in-out infinite; /* Safari */
+    animation: spin 1s ease-in-out infinite;    
+}
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    background-color: #000000;
+    color: #fff;
+}
+
+.chat-scrollable {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.chat-scrollable::-webkit-scrollbar {
+    width: 7px;
+}
+
+.chat-scrollable::-webkit-scrollbar-thumb {
+    background-color: #4d4d4d;
+}
+
+.chat-scrollable::-webkit-scrollbar-thumb:hover {
+    background-color: #333;
+}
+
+.chat-scrollable::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.chat-window-title {
+    padding: 7px;
+    font-size: 24px;
+    color: #81b8d9;
+    position: sticky;
+    top: 0;
+    background-color: #1a1a1a;
+    z-index: 1;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.addon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+.button {
+    background-color: #3498db;
+    color: #ffffff; 
+    border: none; 
+    padding: 6px 12px;
+    border-radius: 5px; 
+    cursor: pointer
+}
+.button:hover {
+    background-color: #2674b8;
+}
+
+.viewer-count {
+    font-size: 16px;
+    align-self: baseline;
+}
+
+.chat-message {
+    font-size: 17px;
+    display: flex;
+    padding: 7px;
+    overflow-wrap: break-word;
+    word-break: break-all;
+}
+
+.chat-message img {
+    max-width: 100%;
+    vertical-align: -webkit-baseline-middle;
+}
+.chat-username {
+    font-weight: bold;
+    white-space: nowrap;
+    margin-right: 5px;
+}
+
+.chat-username-stegi {
+    color: #ff0000;
+}
+
+.chat-username-di1araas {
+    color: #006000;
+}
+
+.chat-text {
+    flex-grow: 1;
+}
+
+.chat-timestamp {
+    color: #aaaaaa;
+    margin-right: 5px;
+    white-space: nowrap;
+}
+
+.chat-message:nth-child(even) {
+    background-color: #000000;
+}
+
+.chat-message:nth-child(odd) {
+    background-color: #0f0f0f;
+}
+
+@media (max-width: 768px) {
+    .chat-wrapper {
+        flex-direction: column;
+    }
+    .chat-container {
+        width: 100%;
+        min-height: 50dvh;
+    }
+}
+
+#menuToggle
+{
+  display: block;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  
+  z-index: 1;
+  
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#menuToggle a
+{
+  text-decoration: none;
+  color: #cdcdcd;
+  
+  transition: color 0.3s ease;
+}
+
+#menuToggle a:hover
+{
+  color: tomato;
+}
+
+#menuToggle a.active {
+    color:#4d4d4d;
+}
+
+
+#menuToggle input
+{
+  display: block;
+  width: 40px;
+  height: 32px;
+  position: absolute;
+  top: -7px;
+  left: -5px;
+  
+  cursor: pointer;
+  
+  opacity: 0; /* hide this */
+  z-index: 2; /* and place it over the hamburger */
+  
+  -webkit-touch-callout: none;
+}
+
+/*
+ * Just a quick hamburger
+ */
+#menuToggle span
+{
+  display: block;
+  width: 33px;
+  height: 4px;
+  margin-bottom: 5px;
+  position: relative;
+  
+  background: #cdcdcd;
+  border-radius: 3px;
+  
+  z-index: 1;
+  
+  transform-origin: 4px 0px;
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              opacity 0.55s ease;
+}
+
+#menuToggle span:first-child
+{
+  transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2)
+{
+  transform-origin: 0% 100%;
+}
+
+/* 
+ * Transform all the slices of hamburger
+ * into a crossmark.
+ */
+#menuToggle input:checked ~ span
+{
+  opacity: 1;
+  transform: rotate(45deg) translate(-2px, -1px);
+  background-color: #4d4d4d;
+}
+
+/*
+ * But let's hide the middle one.
+ */
+#menuToggle input:checked ~ span:nth-last-child(3)
+{
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+/*
+ * Ohyeah and the last one should go the other direction
+ */
+#menuToggle input:checked ~ span:nth-last-child(2)
+{
+  transform: rotate(-45deg) translate(0, -1px);
+}
+
+/*
+ * Make this absolute positioned
+ * at the top left of the screen
+ */
+#menu
+{
+  position: absolute;
+  width: 300px;
+  margin: -100px 0 0 -50px;
+  padding-left: 50px;
+  padding-top: 100px;
+  
+  background: #080808f6;
+  list-style-type: none;
+  -webkit-font-smoothing: antialiased;
+  /* to stop flickering of text in safari */
+  
+  transform-origin: 0% 0%;
+  transform: translate(-100%, 0);
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+}
+
+#menu li
+{
+  padding: 10px 0;
+  font-size: 22px;
+}
+
+/*
+ * And let's slide it in from the left
+ */
+#menuToggle input:checked ~ ul
+{
+  transform: none;
+}
+
+.centered-content {
+    text-align: center; /* Horizontally center the content within the div */
+}
