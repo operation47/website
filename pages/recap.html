@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>Operation 47 - Recap</title>
+    <link rel="icon" type="image/x-icon" href="https://imgur.com/GiBb5YN.png">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            position: relative;
+        }
+
+        .title {
+            color: white;
+            font-weight: bold;
+            font-size: 25px;
+            letter-spacing: 1px;
+        }
+
+        .button {
+            font-size: 20px;
+            padding-top: 6px;
+            padding-bottom: 6px;
+            padding-left: 12px;
+            padding-right: 12px;
+
+        }
+
+        .box-container {
+            display: flex;
+            justify-content: space-around;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-bottom: 5px;
+            box-sizing: border-box;
+            height: 100vh;
+        }
+
+        @media (max-width: 1000px) {
+            .box-container {
+                display: block;
+            }
+        }
+
+        .box {
+            flex: 1;
+            margin: 7px;
+            padding: 10px;
+            border: 1px solid white;
+            border-radius: 15px;
+        }
+
+        .box h2 {
+            text-align: center;
+            margin: 0;
+            background-color: #9146ff;
+            color: white;
+            letter-spacing: 2px;
+            padding: 5px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .links {
+            color: #9146ff;
+            padding-top: 15px;
+            text-decoration: none;
+        }
+
+        a {
+            font-size: 19px;
+        }
+
+        a:hover {
+            color: #6a33cc;
+        }
+
+        .links .active {
+            color: #2ca3d2;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <nav role="navigation">
+            <div id="menuToggle">
+                <input id="menu-checkbox" type="checkbox" />
+                <span></span>
+                <span></span>
+                <span></span>
+                <ul id="menu">
+                    <a href="/">
+                        <li>Chat</li>
+                    </a>
+                    <a href="prime">
+                        <li>Prime</li>
+                    </a>
+                    <a href="recap" class="active">
+                        <li>Recap</li>
+                    </a>
+                    <a href="credits">
+                        <li>Credits</li>
+                    </a>
+                </ul>
+        </nav>
+        <div class="title">
+            FOMO Clips der Woche
+        </div>
+        <button class="button">
+            +
+        </button>
+    </div>
+    <div class="box-container">
+        <div class="box">
+            <h2>MI</h2>
+            <div class="links">
+            </div>
+        </div>
+        <div class="box">
+            <h2>DO</h2>
+            <div class="links">
+            </div>
+        </div>
+        <div class="box">
+            <h2>FR</h2>
+            <div class="links">
+            </div>
+        </div>
+        <div class="box">
+            <h2>SA</h2>
+            <div class="links">
+            </div>
+        </div>
+        <div class="box">
+            <h2>SO</h2>
+            <div class="links">
+                <a href="https://clips.twitch.tv/UglyCreativeHippoYee-kz5k1WZHAJ3whSz7">#1 Klatschen im
+                    Schlafzimmer?</a><br><br>
+                <a href="https://clips.twitch.tv/DiligentFilthyCucumberChefFrank-r47f1Tg1igianzrh">#2 WTF
+                    happend?</a><br><br>
+                <a href="https://clips.twitch.tv/YawningPlainNightingaleOSfrog-3RUneCuhne9kACHk">#3 💚 🎃 🕷 Der frühe
+                    Vogel 🕸️ 🎃 💚 | !socials</a><br><br>
+                <a href="https://clips.twitch.tv/CleverAlluringSnailShadyLulu-AHaNQlEGarsdwwK6">#4 was sieht man in
+                    deinen twitter likes?</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
