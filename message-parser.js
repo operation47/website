@@ -128,7 +128,12 @@ function buildMessage(displayName, messageContentFragments, timestamp) {
     chatUsername.classList.add("chat-username");
     chatUsername.classList.add("chat-username-" + displayName.toLowerCase());
     chatUsername.textContent = displayName.concat(":");
-    chatMessage.appendChild(chatUsername);
+    const link = document.createElement("a");
+    link.href = "https://twitch.tv/" + displayName.toLowerCase();
+    link.target = "_blank";
+    link.appendChild(chatUsername);
+
+    chatMessage.appendChild(link);
 
     for (const fragment of messageContentFragments) {
         chatMessage.appendChild(fragment);
