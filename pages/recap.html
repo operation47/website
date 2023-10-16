@@ -109,9 +109,12 @@
             display: block;
         }
 
-        #input-list ul {
-            position: relative;
+        .input-button {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
+
     </style>
 </head>
 
@@ -141,17 +144,19 @@
         <div class="title">
             FOMO Clips der Woche
         </div>
-        <ul class="hide" id="input-list">
-            <li>
-                <input type="password" id="pw-input" placeholder="password">
-            </li>
-            <li>
-                <input type="url" id="link-input" placeholder="link">
-            </li>
-        </ul>
-        <button class="button" onclick="showInput()">
-            +
-        </button>
+        <div class="input-button">
+            <button class="button" onclick="showInput()">
+                +
+            </button>
+            <ul class="hide" id="input-list">
+                <li>
+                    <input type="password" id="pw-input" placeholder="password">
+                </li>
+                <li>
+                    <input type="url" id="link-input" placeholder="link">
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="box-container"></div>
     <script>
@@ -216,6 +221,8 @@
             inputList.classList.toggle("show");
             const pwInput = document.getElementById("pw-input");
             const linkInput = document.getElementById("link-input");
+
+            console.log(password)
 
         }
 
