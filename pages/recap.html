@@ -84,6 +84,9 @@
             color: #9146ff;
             padding-top: 15px;
             text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         a {
@@ -96,6 +99,18 @@
 
         .links .active {
             color: #2ca3d2;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+
+        #input-list ul {
+            position: relative;
         }
     </style>
 </head>
@@ -126,52 +141,89 @@
         <div class="title">
             FOMO Clips der Woche
         </div>
-        <button class="button">
+        <ul class="hide" id="input-list">
+            <li>
+                <input type="password" id="pw-input" placeholder="password">
+            </li>
+            <li>
+                <input type="url" id="link-input" placeholder="link">
+            </li>
+        </ul>
+        <button class="button" onclick="showInput()">
             +
         </button>
     </div>
-    <div class="box-container">
-        <div class="box">
-            <h2>MI</h2>
-            <div class="links">
-            </div>
-        </div>
-        <div class="box">
-            <h2>DO</h2>
-            <div class="links">
-            </div>
-        </div>
-        <div class="box">
-            <h2>FR</h2>
-            <div class="links">
-            </div>
-        </div>
-        <div class="box">
-            <h2>SA</h2>
-            <div class="links">
-            </div>
-        </div>
-        <div class="box">
-            <h2>SO</h2>
-            <div class="links">
-                <a href="https://clips.twitch.tv/UglyCreativeHippoYee-kz5k1WZHAJ3whSz7">
-                    #1 Klatschen im Schlafzimmer?
-                </a><br><br>
-                <a href="https://clips.twitch.tv/DiligentFilthyCucumberChefFrank-r47f1Tg1igianzrh">
-                    #2 WTF happend?
-                </a><br><br>
-                <a href="https://clips.twitch.tv/YawningPlainNightingaleOSfrog-3RUneCuhne9kACHk">
-                    #3 💚 🎃 🕷 Der frühe Vogel 🕸️ 🎃 💚 | !socials
-                </a><br><br>
-                <a href="https://clips.twitch.tv/CleverAlluringSnailShadyLulu-AHaNQlEGarsdwwK6">
-                    #4 was sieht man in deinen twitter likes?
-                </a><br><br>
-                <a href="https://clips.twitch.tv/AmazonianAcceptableSheepSeemsGood-QMpQMaU-o2JNhbz9">
-                    #5 wieder krank
-                </a>
-            </div>
-        </div>
-    </div>
+    <div class="box-container"></div>
+    <script>
+        const today = new Date();
+        const dates = [new Date(), new Date(), new Date(), new Date(), today];
+        const weekdays = [];
+
+        function getWeekday(date) {
+            const weekdays = ["SO", "MO", "DI", "MI", "DO", "FR", "SA"];
+            return weekdays[date.getDay()];
+        }
+        function setDates() {
+            for (let i = 0; i < dates.length; i++) {
+                dates[i].setDate(today.getDate() - (4 - i));
+                weekdays[i] = getWeekday(dates[i]);
+            }
+        }
+        function buildHTMLBoxes() {
+            const boxContainer = document.getElementsByClassName("box-container")[0];
+            for (const weekday of weekdays) {
+                let box = document.createElement("div");
+                box.classList.add("box");
+                box.id = weekday;
+
+                let h = document.createElement("h2");
+                let text = document.createTextNode(weekday);
+                h.appendChild(text);
+
+                let linkContainer = document.createElement("div");
+                linkContainer.classList.add("links");
+
+                box.appendChild(h);
+                box.appendChild(linkContainer);
+
+                boxContainer.appendChild(box);
+            }
+        }
+        function getCorrectFormatFromDate(date) {
+            return date.toISOString().split('T')[0];
+        }
+        async function insertLinks() {
+            for (let i = 0; i < dates.length; i++) {
+                const url = `https://api.op47.de/v1/clips/${getCorrectFormatFromDate(dates[i])}`
+                const res = await fetch(url);
+                const json = await res.json();
+                const linksDiv = document.getElementById(weekdays[i]).getElementsByClassName("links")[0];
+                for (const link of json) {
+                    let a = document.createElement("a");
+                    let linkText = document.createTextNode(`#${json.indexOf(link) + 1} ${link.title}`);
+                    a.appendChild(linkText);
+                    a.href = link.url;
+
+                    linksDiv.appendChild(a);
+                }
+
+            }
+        }
+
+        function showInput() {
+            const inputList = document.getElementById("input-list");
+            inputList.classList.toggle("hide");
+            inputList.classList.toggle("show");
+            const pwInput = document.getElementById("pw-input");
+            const linkInput = document.getElementById("link-input");
+
+        }
+
+        setDates();
+        buildHTMLBoxes();
+        insertLinks();
+
+    </script>
 </body>
 
 </html>
