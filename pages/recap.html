@@ -100,25 +100,40 @@
         .links .active {
             color: #2ca3d2;
         }
-
-        .hide {
-            display: none;
-        }
-
-        .show {
-            display: block;
-        }
-
-        .input-button {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
     </style>
 </head>
 
 <body>
+    <script>
+        async function submitInput() {
+            const pwInput = document.getElementById("pw-input").value.trim();
+            const linkInput = document.getElementById("link-input").value.trim();
+
+            document.getElementById("pw-input").value = '';
+            document.getElementById("link-input").value = '';
+
+            if (!pwInput || !linkInput) return;
+
+            const options = {
+                method: 'POST',
+                headers: {
+                    'authorization': pwInput,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    url: linkInput
+                })
+            }
+
+            let res = await fetch('https://api.op47.de/v1/insertClip', options);
+
+            if (res.status === 401) window.alert('Falsches Passwort!');
+            else if (res.status === 422) window.alert('Ungültige URL!\nAktuell werden nur clips.twitch.tv/ URLs unterstützt.');
+            else if (res.status !== 200) window.alert('Fehler!\nMöglicherweise existiert der Clip bereits.');
+            else location.reload();
+        }
+
+    </script>
     <div class="header">
         <nav role="navigation">
             <div id="menuToggle">
@@ -144,19 +159,17 @@
         <div class="title">
             FOMO Clips der Woche
         </div>
-        <div class="input-button">
-            <button class="button" onclick="showInput()">
-                +
-            </button>
-            <ul class="hide" id="input-list">
-                <li>
-                    <input type="password" id="pw-input" placeholder="password">
-                </li>
-                <li>
-                    <input type="url" id="link-input" placeholder="link">
-                </li>
-            </ul>
-        </div>
+        <ul id="input-list">
+            <li>
+                <input type="password" id="pw-input" placeholder="password">
+            </li>
+            <li>
+                <input type="url" id="link-input" placeholder="link">
+            </li>
+        </ul>
+        <button class="button" onclick="submitInput()">
+            +
+        </button>
     </div>
     <div class="box-container"></div>
     <script type="module">
@@ -215,17 +228,7 @@
             }
         }
 
-        function showInput() {
-            const inputList = document.getElementById("input-list");
-            inputList.classList.toggle("hide");
-            inputList.classList.toggle("show");
-            const pwInput = document.getElementById("pw-input");
-            const linkInput = document.getElementById("link-input");
-
-            console.log(password)
-
-        }
-
+        
         setDates();
         buildHTMLBoxes();
         insertLinks();
