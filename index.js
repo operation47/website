@@ -70,9 +70,12 @@ app.get('/prime', (req, res) => {
 app.get('/recap', (req, res) => {
     sendFileSafe(req, res, '/recap', 'recap.html');
 });
+<<<<<<< HEAD
 app.get('/fuerLxllv', (req, res) => {
     sendFileSafe(req, res, 'fuerLxllv', 'lilly.html');
 });
+=======
+>>>>>>> refs/remotes/origin/main
 app.get('/credits', (req, res) => {
     sendFileSafe(req, res, '/credits', 'credits.html');
 });
