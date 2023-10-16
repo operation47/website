@@ -70,9 +70,6 @@ app.get('/prime', (req, res) => {
 app.get('/recap', (req, res) => {
     sendFileSafe(req, res, '/recap', 'recap.html');
 });
-app.get('/fuerLxllv', (req, res) => {
-    sendFileSafe(req, res, 'fuerLxllv', 'lilly.html');
-});
 app.get('/credits', (req, res) => {
     sendFileSafe(req, res, '/credits', 'credits.html');
 });
