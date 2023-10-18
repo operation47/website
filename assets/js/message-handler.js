@@ -1,10 +1,8 @@
 import { parseMessage, loadEmotes } from "./message-parser.js";
 
-let emotesLoaded = false
+let emotesLoadedPromise = null;
 export async function loadAllChatMessages() {
     await Promise.all([loadMessagesStegi(), loadMessagesDi1araas()]); 
-
-    scrollToBottom();
 }
 
 export async function loadMessagesStegi() {
@@ -14,13 +12,16 @@ export async function loadMessagesStegi() {
     const spinner = createSpinner();
     containerStegi.parentNode.appendChild(spinner);
 
-    if (!emotesLoaded) {
-        await loadEmotes();
-        emotesLoaded = true;
+    if (!emotesLoadedPromise) {
+        emotesLoadedPromise = loadEmotes();
     }
+    await emotesLoadedPromise;
+
     const messagesStegi = await getMessages("stegi");
     insertMessages(containerStegi, messagesStegi);
     spinner.remove();
+    
+    containerStegi.scrollTo(0, containerStegi.scrollHeight);
 }
 
 export async function loadMessagesDi1araas() {
@@ -31,13 +32,16 @@ export async function loadMessagesDi1araas() {
     const spinner = createSpinner();
     containerDi1araas.parentNode.appendChild(spinner);
 
-    if (!emotesLoaded) {
-        await loadEmotes();
-        emotesLoaded = true;
+    if (!emotesLoadedPromise) {
+        emotesLoadedPromise = loadEmotes();
     }
+    await emotesLoadedPromise;
+
     const messagesDi1araas = await getMessages("di1araas");
     insertMessages(containerDi1araas, messagesDi1araas);
     spinner.remove();
+
+    containerDi1araas.scrollTo(0, containerDi1araas.scrollHeight);
 }
 
 function createSpinner() {
@@ -92,14 +96,4 @@ function buildNewDayMessage(timestamp) {
 
     container.appendChild(timestampText);
     return container;
-}
-
-function scrollToBottom() {
-    const chats = document.getElementsByClassName("chat-scrollable");
-    for (const chat of chats) {
-        const children = chat.children;
-        if (children.length < 1) continue;
-        children[children.length - 1].scrollIntoView();
-        chat.scrollTo(0, chat.scrollHeight);
-    }
 }

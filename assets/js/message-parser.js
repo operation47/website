@@ -47,15 +47,7 @@ async function get7tvChannelEmotes(twitchId) {
     return emotes;
 }
 export function parseMessage(message) {
-    // Steps:
-    // 1. Fragment the message into <img> tags and text fragments (and add anchor tags inside the text fragments)
-    // 2. Take string and add in the display name and timestamp to the message
-    // 3. Return the message as a DOM element
-
-    // for now skip the first step as it's the most complicated
-    
     const messageFragments = insertEmotes(message.content, message.channel);
-
     return buildMessage(message.display_name, messageFragments, message.timestamp);
 }
 
