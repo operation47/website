@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Operation 47 - Recap</title>
     <link rel="icon" type="image/x-icon" href="https://imgur.com/GiBb5YN.png">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="module" src="script.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -411,7 +412,7 @@
                     clip.onclick = () =>{
                         clip.classList.add("seen");
                         let clipID = link.url.split("/")[3].split("?")[0];
-                        let embedURL = `https://clips.twitch.tv/embed?clip=${clipID}&parent=op47.de&autoplay=true&muted=false`;
+                        let embedURL = `https://clips.twitch.tv/embed?clip=${clipID}&parent=localhost&autoplay=true&muted=false`;
                         clipPlayer.src = embedURL;
                         clipPlayerWrapper.classList.remove("hide");
                     }
@@ -431,9 +432,6 @@
         setUpAinmations();
         boxContainer.classList.remove('hide');
         loadingScreen.classList.add('hide');
-            
-
-
 
     </script>
 </body>
