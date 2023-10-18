@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Operation 47 - Recap</title>
     <link rel="icon" type="image/x-icon" href="https://imgur.com/GiBb5YN.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <style>
         body {
@@ -42,6 +43,7 @@
             background-color: #77dd77;
 
         }
+
         .button:hover {
             background-color: #66c266;
         }
@@ -87,12 +89,15 @@
         .box.today {
             border: 1px solid tomato;
         }
+
         .box.today h2 {
             background-color: tomato;
         }
+
         .box.today .links {
             color: rgb(218, 63, 36);
         }
+
         .box.today a:hover {
             color: rgb(186, 53, 30)
         }
@@ -195,6 +200,13 @@
     </div>
     <div class="box-container"></div>
     <script type="module">
+        const socket = io();
+
+        socket.on('newClip', () => {
+            insertLinks();
+            console.log('reloaded')
+        });
+
         const today = new Date();
         const dates = [new Date(), new Date(), new Date(), new Date(), today];
         const weekdays = [];
