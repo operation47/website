@@ -413,7 +413,7 @@
                         let clipID = link.url.split("/")[3].split("?")[0];
                         console.log(clipID);
                         //change origin to op47.de when deployed
-                        let embedURL = `https://clips.twitch.tv/embed?clip=${clipID}&parent=localhost&autoplay=true&muted=false&origin=https://op47.de`;
+                        let embedURL = `https://clips.twitch.tv/embed?clip=${clipID}&parent=localhost&autoplay=true&muted=false&parent=https://op47.de`;
                         clipPlayer.src = embedURL;
                         clipPlayerWrapper.classList.remove("hide");
                     }
