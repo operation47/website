@@ -48,6 +48,14 @@
             background-color: #66c266;
         }
 
+        .container{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+        }
+
         .box-container {
             display: flex;
             justify-content: space-around;
@@ -59,10 +67,60 @@
             height: 100vh;
         }
 
+        #clip-player {
+            width: 60vw;
+            height: calc(60vw / (16 / 9));
+        }
+
         @media (max-width: 1000px) {
             .box-container {
                 display: block;
             }
+
+            .box .links {
+                height: 0px;
+                overflow-y: auto;
+            }
+
+            .title {
+                display: none;
+            }
+
+            @keyframes showLinks {
+                form {
+                    height: 0px;
+                }
+
+                to {
+                    height: 300px;
+                }
+            }
+
+            @keyframes hideLinks {
+                from {
+                    height: 300px;
+                }
+
+                to {
+                    height: 0px;
+                }
+            }
+
+            #clip-player {
+                width: 100vw;
+                height: calc(100vw / (16 / 9));
+                align-self: flex-start;
+                margin-top: 100px;
+            }
+
+            .hide-links {
+                animation: hideLinks 0.5s forwards;
+            }
+
+            .show-links {
+                animation: showLinks 0.5s forwards;
+            }
+
         }
 
         .box {
@@ -76,6 +134,7 @@
         .box h2 {
             text-align: center;
             margin: 0;
+            margin-bottom: 15px;
             background-color: #9146ff;
             color: white;
             letter-spacing: 2px;
@@ -97,31 +156,57 @@
         .box.today .links {
             color: rgb(218, 63, 36);
         }
-
-        .box.today a:hover {
+        .box.today .clip:hover {
             color: rgb(186, 53, 30)
         }
 
 
         .links {
             color: #873ff3;
-            padding-top: 15px;
+            font-size: 19px;
             text-decoration: none;
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
 
-        a {
-            font-size: 19px;
+        .overlay {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top:0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.726)
         }
 
-        a:hover {
+        .loading-circle{
+            width: 70px;
+            height: 70px;
+            border-width: 12px;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .clip{
+            user-select: none;
+        }
+
+        .clip:hover{
+            cursor: pointer;
             color: #6d2ac9;
         }
 
-        .links .active {
-            color: #2ca3d2;
+        .clip.seen {
+            color: #333;
+        }
+
+        .links .clip.seen:hover {
+            color: #333;
         }
 
         ul {
@@ -181,6 +266,7 @@
                         <li>Credits</li>
                     </a>
                 </ul>
+            </div>
         </nav>
         <div class="title">
             FOMO Clips der Woche
@@ -198,6 +284,12 @@
         </button>
     </div>
     <div class="box-container"></div>
+    <div id="clip-player-wrapper" class="overlay hide">
+        <iframe id="clip-player" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>
+    </div>
+    <div id="loading-screen" class="container">
+        <div class="loading-circle"></div>
+    </div>
     <script type="module">
         const socket = io();
 
@@ -208,11 +300,21 @@
         const today = new Date();
         const dates = [new Date(), new Date(), new Date(), new Date(), today];
         const weekdays = [];
+        const clipPlayer = document.getElementById("clip-player");
+        const clipPlayerWrapper = document.getElementById("clip-player-wrapper");
+        const boxContainer = document.getElementsByClassName("box-container")[0];
+        const loadingScreen = document.getElementById("loading-screen");
+        const weekdayContainers = [];
 
+        let isOnMobile = false;
+        const maxTitleLength = 25;
+        const titleLengthBuffer = 3;
+        
         function getWeekday(date) {
             const weekdays = ["SO", "MO", "DI", "MI", "DO", "FR", "SA"];
             return weekdays[date.getDay()];
         }
+
         function setDates() {
             for (let i = 0; i < dates.length; i++) {
                 dates[i].setDate(today.getDate() - (4 - i));
@@ -220,7 +322,7 @@
             }
         }
         function buildHTMLBoxes() {
-            const boxContainer = document.getElementsByClassName("box-container")[0];
+
             for (const weekday of weekdays) {
                 let box = document.createElement("div");
                 box.classList.add("box");
@@ -240,33 +342,100 @@
                 box.appendChild(linkContainer);
 
                 boxContainer.appendChild(box);
+                weekdayContainers.push({ h: h, linkContainer: linkContainer, box: box })
+
             }
         }
         function getCorrectFormatFromDate(date) {
             return date.toISOString().split('T')[0];
         }
+
+        function setUpAinmations() {
+            clipPlayerWrapper.addEventListener("click", () => {
+                clipPlayerWrapper.classList.add("hide");
+                clipPlayer.src = "";
+            })
+            for (let i = 0; i < weekdayContainers.length; i++) {
+                
+                weekdayContainers[i].h.addEventListener("click", () => {
+                    if (window.innerWidth < 1000) {
+                        if (weekdayContainers[i].linkContainer.classList.contains('show-links')) {
+                            weekdayContainers[i].linkContainer.classList.remove('show-links');
+                            weekdayContainers[i].linkContainer.classList.add('hide-links');
+                        } else {
+                            weekdayContainers[i].linkContainer.classList.add('show-links');
+                            weekdayContainers[i].linkContainer.classList.remove('hide-links');
+                        }
+                    }
+                })
+                
+            }
+
+            window.addEventListener("resize", () => {
+                if (window.innerWidth > 1000 && isOnMobile) {
+                    for (let i = 0; i < weekdayContainers.length; i++) {
+                        weekdayContainers[i].linkContainer.classList.remove('show-links');
+                        weekdayContainers[i].linkContainer.classList.remove('hide-links');
+                    }
+                    isOnMobile = false;
+                } else if (!isOnMobile) {
+                    isOnMobile = true;
+                }
+            })
+        }
+
         async function loadLinks() {
             for (let i = dates.length - 1; i > 0; i--) {
                 const url = `https://api.op47.de/v1/clips/${getCorrectFormatFromDate(dates[i])}`
                 const res = await fetch(url);
                 const json = await res.json();
                 const linksDiv = document.getElementById(weekdays[i]).getElementsByClassName("links")[0];
+                if(json.length === 0){
+                    linksDiv.innerHTML = "Keine Clips gefunden";
+                    continue;
+                }
                 linksDiv.replaceChildren();
                 for (const link of json) {
-                    let a = document.createElement("a");
-                    let linkText = document.createTextNode(`#${json.indexOf(link) + 1} ${link.title}`);
-                    a.appendChild(linkText);
-                    a.href = link.url;
+                    let clip = document.createElement("span");
+
+                    //chops off the title if it is too long
+                    let linkText;
+                    if (link.title.length > maxTitleLength + titleLengthBuffer) {
+                        linkText = document.createTextNode(`#${json.indexOf(link) + 1} ${link.title.substring(0, maxTitleLength) + "..."}`);
+                    } else {
+                        linkText = document.createTextNode(`#${json.indexOf(link) + 1} ${link.title}`);
+                    }
+
+                    clip.classList.add("clip");
+
+                    clip.onclick = () =>{
+                        clip.classList.add("seen");
+                        let clipID = link.url.split("/")[3].split("?")[0];
+                        console.log(clipID);
+                        //change origin to op47.de when deployed
+                        let embedURL = `https://clips.twitch.tv/embed?clip=${clipID}&parent=localhost&autoplay=true&muted=false&origin=https://op47.de`;
+                        clipPlayer.src = embedURL;
+                        clipPlayerWrapper.classList.remove("hide");
+                    }
+
+                    clip.appendChild(linkText);
                     
-                    linksDiv.appendChild(a);
+                    linksDiv.appendChild(clip);
                 }
                 
             }
         }
 
+        boxContainer.classList.add('hide');
         setDates();
         buildHTMLBoxes();
-        loadLinks();
+        await loadLinks()
+        setUpAinmations();
+        boxContainer.classList.remove('hide');
+        loadingScreen.classList.add('hide');
+            
+
+
 
     </script>
 </body>
