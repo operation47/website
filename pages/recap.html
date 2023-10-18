@@ -157,7 +157,6 @@
             if (res.status === 401) window.alert('Falsches Passwort!');
             else if (res.status === 422) window.alert('Ungültiger Link!');
             else if (res.status !== 200) window.alert('Fehler!\nMöglicherweise existiert der Clip bereits.');
-            else location.reload();
         }
 
     </script>
@@ -253,9 +252,7 @@
                 const res = await fetch(url);
                 const json = await res.json();
                 const linksDiv = document.getElementById(weekdays[i]).getElementsByClassName("links")[0];
-                while (linksDiv.firstChild) { 
-                    linksDiv.removeChild(linksDiv.lastChild);
-                }
+                linksDiv.replaceChildren();
                 for (const link of json) {
                     let a = document.createElement("a");
                     let linkText = document.createTextNode(`#${json.indexOf(link) + 1} ${link.title}`);
