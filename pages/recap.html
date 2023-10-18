@@ -247,8 +247,6 @@
         }
         async function loadLinks() {
             for (let i = dates.length - 1; i > 0; i--) {
-                console.log("  "+dates[i])
-
                 const url = `https://api.op47.de/v1/clips/${getCorrectFormatFromDate(dates[i])}`
                 const res = await fetch(url);
                 const json = await res.json();
@@ -261,13 +259,9 @@
                     a.href = link.url;
                     
                     linksDiv.appendChild(a);
-
-                    
-                    console.log("    loaded link")
                 }
                 
             }
-            console.log("loaded all links")
         }
 
         setDates();
