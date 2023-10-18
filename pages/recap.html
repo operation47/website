@@ -39,6 +39,7 @@
             padding-bottom: 6px;
             padding-left: 12px;
             padding-right: 12px;
+            background-color: #77dd77;
 
         }
 
@@ -80,8 +81,22 @@
             border-bottom-right-radius: 4px;
         }
 
+        .box.today {
+            border: 1px solid tomato;
+        }
+        .box.today h2 {
+            background-color: tomato;
+        }
+        .box.today .links {
+            color: rgb(218, 63, 36);
+        }
+        .box.today a:hover {
+            color: rgb(186, 53, 30)
+        }
+
+
         .links {
-            color: #9146ff;
+            color: #873ff3;
             padding-top: 15px;
             text-decoration: none;
             display: flex;
@@ -94,7 +109,7 @@
         }
 
         a:hover {
-            color: #6a33cc;
+            color: #6d2ac9;
         }
 
         .links .active {
@@ -132,7 +147,7 @@
             let res = await fetch('https://api.op47.de/v1/insertClip', options);
 
             if (res.status === 401) window.alert('Falsches Passwort!');
-            else if (res.status === 422) window.alert('Ungültige URL!\nAktuell werden nur clips.twitch.tv/ URLs unterstützt.');
+            else if (res.status === 422) window.alert('Ungültiger Link!');
             else if (res.status !== 200) window.alert('Fehler!\nMöglicherweise existiert der Clip bereits.');
             else location.reload();
         }
@@ -196,6 +211,9 @@
             for (const weekday of weekdays) {
                 let box = document.createElement("div");
                 box.classList.add("box");
+                if (weekdays.indexOf(weekday) === weekdays.length - 1) {
+                    box.classList.add("today");
+                }
                 box.id = weekday;
 
                 let h = document.createElement("h2");
@@ -215,7 +233,7 @@
             return date.toISOString().split('T')[0];
         }
         async function insertLinks() {
-            for (let i = 0; i < dates.length; i++) {
+            for (let i = dates.length - 1; i > 0; i--) {
                 const url = `https://api.op47.de/v1/clips/${getCorrectFormatFromDate(dates[i])}`
                 const res = await fetch(url);
                 const json = await res.json();

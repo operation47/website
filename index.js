@@ -80,6 +80,11 @@ app.get('/comm/new_message', (req, res) => {
     res.status(200).send('OK');
 });
 
+app.get('/comm/new_clip', (req, res) => {
+    io.emit('newClip');
+    res.status(200).send('OK');
+});
+
 
 async function customFetch(url, options) {
     if (!options) {
