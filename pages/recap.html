@@ -412,7 +412,7 @@
                     clip.onclick = () =>{
                         clip.classList.add("seen");
                         let clipID = link.url.split("/")[3].split("?")[0];
-                        let embedURL = `https://clips.twitch.tv/embed?clip=${clipID}&parent=localhost&autoplay=true&muted=false`;
+                        let embedURL = `https://clips.twitch.tv/embed?clip=${clipID}&parent=op47.de&autoplay=true&muted=false`;
                         clipPlayer.src = embedURL;
                         clipPlayerWrapper.classList.remove("hide");
                     }
