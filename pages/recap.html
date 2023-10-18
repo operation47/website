@@ -203,7 +203,6 @@
 
         socket.on('newClip', () => {
             loadLinks();
-            console.log('reloaded')
         });
 
         const today = new Date();
@@ -248,6 +247,8 @@
         }
         async function loadLinks() {
             for (let i = dates.length - 1; i > 0; i--) {
+                console.log("  "+dates[i])
+
                 const url = `https://api.op47.de/v1/clips/${getCorrectFormatFromDate(dates[i])}`
                 const res = await fetch(url);
                 const json = await res.json();
@@ -258,11 +259,15 @@
                     let linkText = document.createTextNode(`#${json.indexOf(link) + 1} ${link.title}`);
                     a.appendChild(linkText);
                     a.href = link.url;
-
+                    
                     linksDiv.appendChild(a);
-                }
 
+                    
+                    console.log("    loaded link")
+                }
+                
             }
+            console.log("loaded all links")
         }
 
         setDates();
