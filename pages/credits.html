@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <title>Operation 47 - Credits</title>
@@ -13,6 +14,7 @@
             flex-direction: column;
             gap: 20dvh;
         }
+
         .featured {
             color: #fff;
             display: flex;
@@ -20,20 +22,24 @@
             align-items: center;
             gap: 50px;
         }
+
         @media (max-width: 768px) {
             .featured {
                 flex-direction: column;
             }
         }
+
         .linkcredit {
             color: #9146FF;
             text-decoration: none;
         }
+
         h2 {
             margin-bottom: 0;
         }
     </style>
 </head>
+
 <body>
     <nav role="navigation">
         <div id="menuToggle">
@@ -66,13 +72,18 @@
 
     <script>
         function mixandmatch() {
-            let devs = [ { name: "Swox", twitch: "twitch.tv/swox___"}, { name: "Darius", twitch: "twitch.tv/zfdarius"} ,{ name: "GenJoeyy", twitch: "twitch.tv/genjoeyy"}];
+            let devs = [
+                { name: "Smiley", twitch: "twitch.tv/smileymc93" },
+                { name: "Swox", twitch: "twitch.tv/swox___" },
+                { name: "Darius", twitch: "twitch.tv/zfdarius" },
+                { name: "GenJoeyy", twitch: "twitch.tv/genjoeyy" }
+            ];
             const featured = document.querySelector(".featured");
             devs.sort(() => Math.random() - 0.5);
             for (dev of devs) {
                 const card = document.createElement("div");
                 card.classList.add("card");
-                
+
                 const img = document.createElement("img");
 
                 const name = document.createElement("h2");
@@ -98,4 +109,5 @@
         mixandmatch();
     </script>
 </body>
+
 </html>
