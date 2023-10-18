@@ -76,6 +76,8 @@
         await loadAllChatMessages();
     }
     main();
+
+    const socket = io();
     
     socket.on('viewerCount', (count) => {
         document.getElementById('viewer-count').textContent = getCountText(count)
