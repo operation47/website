@@ -7,7 +7,6 @@
     <title>Operation 47 - Recap</title>
     <link rel="icon" type="image/x-icon" href="https://imgur.com/GiBb5YN.png">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <script type="module" src="script.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.min.js"></script>
     <style>
         body {
@@ -49,7 +48,7 @@
             background-color: #66c266;
         }
 
-        .container{
+        .container {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -154,16 +153,18 @@
             background-color: tomato;
         }
 
-        .box.today .links {
+        .box.today .clip {
             color: rgb(218, 63, 36);
         }
+
         .box.today .clip:hover {
             color: rgb(186, 53, 30)
         }
 
 
         .links {
-            color: #873ff3;
+            color: red;
+            /* text color when no clips were found */
             font-size: 19px;
             text-decoration: none;
             display: flex;
@@ -178,12 +179,12 @@
             width: 100vw;
             height: 100vh;
             position: fixed;
-            top:0;
+            top: 0;
             left: 0;
             background-color: rgba(0, 0, 0, 0.726)
         }
 
-        .loading-circle{
+        .loading-circle {
             width: 70px;
             height: 70px;
             border-width: 12px;
@@ -193,11 +194,12 @@
             display: none;
         }
 
-        .clip{
+        .clip {
             user-select: none;
+            color: #873ff3;
         }
 
-        .clip:hover{
+        .clip:hover {
             cursor: pointer;
             color: #6d2ac9;
         }
@@ -293,7 +295,6 @@
     </div>
     <script type="module">
         const socket = io();
-
         socket.on('newClip', () => {
             loadLinks();
         });
@@ -310,7 +311,7 @@
         let isOnMobile = false;
         const maxTitleLength = 25;
         const titleLengthBuffer = 3;
-        
+
         function getWeekday(date) {
             const weekdays = ["SO", "MO", "DI", "MI", "DO", "FR", "SA"];
             return weekdays[date.getDay()];
@@ -357,7 +358,7 @@
                 clipPlayer.src = "";
             })
             for (let i = 0; i < weekdayContainers.length; i++) {
-                
+
                 weekdayContainers[i].h.addEventListener("click", () => {
                     if (window.innerWidth < 1000) {
                         if (weekdayContainers[i].linkContainer.classList.contains('show-links')) {
@@ -369,7 +370,7 @@
                         }
                     }
                 })
-                
+
             }
 
             window.addEventListener("resize", () => {
@@ -386,20 +387,25 @@
         }
 
         async function loadLinks() {
-            for (let i = dates.length - 1; i > 0; i--) {
+            for (let i = 0; i < dates.length; i++) {
                 const url = `https://api.op47.de/v1/clips/${getCorrectFormatFromDate(dates[i])}`
                 const res = await fetch(url);
                 const json = await res.json();
                 const linksDiv = document.getElementById(weekdays[i]).getElementsByClassName("links")[0];
-                if(json.length === 0){
+                if (json.length === 0) {
                     linksDiv.innerHTML = "Keine Clips gefunden";
                     continue;
                 }
-                linksDiv.replaceChildren();
                 for (const link of json) {
+
+                    // skip the current link if its already loaded
+                    if(linksDiv.children[json.indexOf(link)]) {
+                        break;
+                    }
+
                     let clip = document.createElement("span");
 
-                    //chops off the title if it is too long
+                    // chops off the title if it is too long
                     let linkText;
                     if (link.title.length > maxTitleLength + titleLengthBuffer) {
                         linkText = document.createTextNode(`#${json.indexOf(link) + 1} ${link.title.substring(0, maxTitleLength) + "..."}`);
@@ -409,21 +415,23 @@
 
                     clip.classList.add("clip");
 
-                    clip.onclick = () =>{
+                    clip.onclick = () => {
                         clip.classList.add("seen");
                         let clipID = link.url.split("/")[3].split("?")[0];
-                        let embedURL = `https://clips.twitch.tv/embed?clip=${clipID}&parent=op47.de&autoplay=true&muted=false`;
+                        let embedURL = `https://clips.twitch.tv/embed?clip=${clipID}&parent=localhost&autoplay=true&muted=false`;
                         clipPlayer.src = embedURL;
                         clipPlayerWrapper.classList.remove("hide");
                     }
 
                     clip.appendChild(linkText);
-                    
+
                     linksDiv.appendChild(clip);
                 }
-                
+
             }
         }
+
+        export { loadLinks };
 
         boxContainer.classList.add('hide');
         setDates();

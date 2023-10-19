@@ -25,11 +25,11 @@ const io = new Server(httpServer, { cors: { origin: "*" }, allowEIO3: true });
 
 let viewerCount = 0;
 io.on('connection', (socket) => {
-    viewerCount++
+    viewerCount++;
     io.emit('viewerCount', viewerCount);
-
+    
     socket.on('disconnect', () => {
-        viewerCount--
+        viewerCount--;
         io.emit('viewerCount', viewerCount);
     });
 });
