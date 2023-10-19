@@ -394,10 +394,11 @@
                 const res = await fetch(url);
                 const json = await res.json();
                 const linksDiv = document.getElementById(weekdays[i]).getElementsByClassName("links")[0];
+                const noClipsText = "Keine Clips gefunden.\nPosted mal fleißiger.";
                 if (json.length === 0) {
-                    linksDiv.innerHTML = "Keine Clips gefunden";
+                    linksDiv.innerHTML = noClipsText;
                     continue;
-                } else if (linksDiv.innerHTML === "Keine Clips gefunden") {
+                } else if (linksDiv.innerHTML === noClipsText) {
                     linksDiv.innerHTML = "";
                 }
                 
