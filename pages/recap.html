@@ -295,8 +295,10 @@
     </div>
     <script type="module">
         const socket = io();
-        socket.on('newClip', () => {
-            loadLinks();
+
+        socket.on('newClip', async () => {
+            console.log("loaded new clips") // ==================================================================================================  
+            await loadLinks();
         });
 
         const today = new Date();
@@ -395,12 +397,16 @@
                 if (json.length === 0) {
                     linksDiv.innerHTML = "Keine Clips gefunden";
                     continue;
+                } else if (linksDiv.innerHTML === "Keine Clips gefunden") {
+                    linksDiv.innerHTML = "";
                 }
+                console.log(weekdays[i]);
                 for (const link of json) {
 
                     // skip the current link if its already loaded
-                    if(linksDiv.children[json.indexOf(link)]) {
-                        break;
+                    if (linksDiv.children[json.indexOf(link)]) {
+                        console.log(json.indexOf(link) + "  e  " + linksDiv.children[json.indexOf(link)].innerHTML) // =================================
+                        continue;
                     }
 
                     let clip = document.createElement("span");
@@ -424,6 +430,7 @@
                     }
 
                     clip.appendChild(linkText);
+                    console.log(json.indexOf(link) + "  n  " + clip.innerHTML.slice(2))//=========================================================================
 
                     linksDiv.appendChild(clip);
                 }
