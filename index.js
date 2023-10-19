@@ -47,13 +47,9 @@ function sendFileSafe(req, res, url, filepath) {
     }
 }
 
-app.get('/', async (req, res) => {
-    sendFileSafe(req, res, '/', 'index.html');
-});
 app.get('/style.css', (req, res) => {
     sendFileSafe(req, res, '/style.css', 'style.css');
 });
-
 app.get('/script.js', (req, res) => {
     sendFileSafe(req, res, '/script.js', 'script.js');
 });
@@ -63,7 +59,13 @@ app.get('/message-parser.js', (req, res) => {
 app.get('/message-handler.js', (req, res) => {
     sendFileSafe(req, res, '/message-handler.js', 'message-handler.js');
 });
+app.get('/chat-stuff.js', (req, res) => {
+    sendFileSafe(req, res, '/chat-stuff.js', 'chat-stuff.js');
+});
 
+app.get('/', async (req, res) => {
+    sendFileSafe(req, res, '/', 'index.html');
+});
 app.get('/prime', (req, res) => {
     sendFileSafe(req, res, '/prime', 'prime.html');
 });

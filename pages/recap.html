@@ -7,7 +7,8 @@
     <title>Operation 47 - Recap</title>
     <link rel="icon" type="image/x-icon" href="https://imgur.com/GiBb5YN.png">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.min.js"></script>
+    <script type="module" src="script.js" defer></script>
+    <script src="/socket.io/socket.io.js"></script>
     <style>
         body {
             margin: 0;
@@ -294,10 +295,9 @@
         <div class="loading-circle"></div>
     </div>
     <script type="module">
-        const socket = io();
+        import { socket } from "./script.js"
 
         socket.on('newClip', async () => {
-            console.log("loaded new clips") // ==================================================================================================  
             await loadLinks();
         });
 
@@ -400,12 +400,11 @@
                 } else if (linksDiv.innerHTML === "Keine Clips gefunden") {
                     linksDiv.innerHTML = "";
                 }
-                console.log(weekdays[i]);
+                
                 for (const link of json) {
 
                     // skip the current link if its already loaded
                     if (linksDiv.children[json.indexOf(link)]) {
-                        console.log(json.indexOf(link) + "  e  " + linksDiv.children[json.indexOf(link)].innerHTML) // =================================
                         continue;
                     }
 
@@ -430,7 +429,6 @@
                     }
 
                     clip.appendChild(linkText);
-                    console.log(json.indexOf(link) + "  n  " + clip.innerHTML.slice(2))//=========================================================================
 
                     linksDiv.appendChild(clip);
                 }

@@ -35,15 +35,20 @@ async function get7tvChannelEmotes(twitchId) {
     const emotes = [];
     const response = await fetch(url);
     const json = await response.json();
-    for (const emote of json.emote_set.emotes) {
-        emotes.push(
-            {
-                name: emote.name,
-                url: emote.data.host.url,
-                files: emote.data.host.files
-            }
-        );
+    try {
+        for (const emote of json.emote_set.emotes) {
+            emotes.push(
+                {
+                    name: emote.name,
+                    url: emote.data.host.url,
+                    files: emote.data.host.files
+                }
+            );
+        }
+    } catch (err) {
+        console.log(err);
     }
+    
     return emotes;
 }
 export function parseMessage(message) {
