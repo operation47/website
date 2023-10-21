@@ -2,16 +2,17 @@ let emotesDi1araas = [];
 let emotesStegi = [];
 let emotesGlobal = [];
 
+const di1araasTwitchId = 645207159;
+const stegiTwitchId = 51304190;
 export async function loadEmotes() {
-    const di1araasTwitchId = 645207159;
-    const stegiTwitchId = 51304190;
 
     emotesDi1araas = await get7tvChannelEmotes(di1araasTwitchId);
     emotesStegi = await get7tvChannelEmotes(stegiTwitchId);
     emotesGlobal = await get7tvGlobalEmotes();
 }
 
-async function get7tvGlobalEmotes() {
+
+export async function get7tvGlobalEmotes() {
     const url = "https://7tv.io/v3/emote-sets/global";
 
     const emotes = [];
@@ -29,7 +30,7 @@ async function get7tvGlobalEmotes() {
     return emotes;
 }
 
-async function get7tvChannelEmotes(twitchId) {
+export async function get7tvChannelEmotes(twitchId) {
     const url = `https://7tv.io/v3/users/twitch/${twitchId}`;
 
     const emotes = [];
@@ -51,12 +52,12 @@ async function get7tvChannelEmotes(twitchId) {
     
     return emotes;
 }
-export function parseMessage(message) {
-    const messageFragments = insertEmotes(message.content, message.channel);
+export function parseMessage(message, channelEmotes, globalEmotes) {
+    const messageFragments = insertEmotes(message.content, channelEmotes, globalEmotes);
     return buildMessage(message.display_name, messageFragments, message.timestamp);
 }
 
-function insertEmotes(messageContent, channel) {
+function insertEmotes(messageContent, channelEmotes, globalEmotes) {
     const result = [];
     const words = messageContent.split(" ");
     let textFragmentBuffer = "";
@@ -64,7 +65,7 @@ function insertEmotes(messageContent, channel) {
     for (const word of words) {
         let foundEmote = false;
 
-        (channel === "#stegi" ? emotesStegi : emotesDi1araas).find(emote => {
+        channelEmotes.find(emote => {
             if (emote.name === word) {
                 if (textFragmentBuffer.length > 0) {
                     result.push(buildTextFragmentElement(textFragmentBuffer));
@@ -76,7 +77,7 @@ function insertEmotes(messageContent, channel) {
         });
         if (foundEmote) continue;
 
-        emotesGlobal.find(emote => {
+        globalEmotes.find(emote => {
             if (emote.name === word) {
                 if (textFragmentBuffer.length > 0) {
                     result.push(buildTextFragmentElement(textFragmentBuffer));
