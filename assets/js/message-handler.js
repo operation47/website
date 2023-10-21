@@ -53,8 +53,8 @@ async function loadMessages(user) {
 export async function loadEmotes(messageDom1, messageDom2) {
     const result = await Promise.all([
         get7tvGlobalEmotes(),
-        get7tvChannelEmotes(di1araasTwitchId),
         get7tvChannelEmotes(stegiTwitchId),
+        get7tvChannelEmotes(di1araasTwitchId),
     ]);
     replaceWithEmotes(messageDom1, result[1], result[0]);
     replaceWithEmotes(messageDom2, result[2], result[0]);

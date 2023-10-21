@@ -4,6 +4,7 @@ export async function get7tvGlobalEmotes() {
     const emotes = [];
     const response = await fetch(url);
     const json = await response.json();
+
     for (const emote of json.emotes) {
         emotes.push({
             name: emote.name,
