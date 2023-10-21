@@ -1,11 +1,8 @@
-import {
-    loadAllChatMessagesNew,
-    loadAllChatMessages,
-} from "./message-handler.js";
+import { loadAllChatMessages } from "./message-handler.js";
 import { socket } from "./script.js";
 
 async function main() {
-    await loadAllChatMessagesNew();
+    await loadAllChatMessages();
 }
 main();
 
@@ -14,7 +11,7 @@ socket.on("viewerCount", (count) => {
 });
 
 socket.on("newMessage", () => {
-    loadAllChatMessagesNew();
+    loadAllChatMessages();
 });
 
 function getCountText(count) {

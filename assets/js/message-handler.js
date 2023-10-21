@@ -6,89 +6,58 @@ import {
 
 const di1araasTwitchId = 645207159;
 const stegiTwitchId = 51304190;
-let messagesDomStegi = [];
-let messagesDomDi1araas = [];
 
-export async function loadAllChatMessagesNew() {
-    await Promise.all([loadMessagesStegi(), loadMessagesDi1araas()]);
-    loadEmotesNew();
+export async function loadAllChatMessages() {
+    const result = await Promise.all([
+        loadMessages("stegi"),
+        loadMessages("di1araas"),
+    ]);
+    loadEmotes(result[0], result[1]);
 }
 
-async function loadMessagesDi1araas() {
-    const containerDi1araas = document.querySelector(
-        ".chat-scrollable-di1araas",
-    );
-    if (containerDi1araas.children.length > 0) containerDi1araas.innerHTML = "";
+async function loadMessages(user) {
+    const container = document.querySelector(`.chat-scrollable-${user}`);
+    if (container.children.length > 0) container.innerHTML = "";
 
     const spinner = createSpinner();
-    containerDi1araas.parentNode.appendChild(spinner);
+    container.parentNode.appendChild(spinner);
 
-    const messagesDi1araas = await getMessages("di1araas");
+    const messagesDi1araas = await getMessages(user);
+    const messagesDom = [];
 
     messagesDi1araas.sort((a, b) => a.timestamp - b.timestamp);
 
     let lastTimestamp = 0;
     messagesDi1araas.forEach((message) => {
         if (!isSameDay(lastTimestamp, message.timestamp)) {
-            containerDi1araas.appendChild(
-                buildNewDayMessage(message.timestamp),
-            );
+            container.appendChild(buildNewDayMessage(message.timestamp));
             lastTimestamp = message.timestamp;
         }
-        const newElement = buildMessageNewTextOnly(
+        const newElement = buildTextMessage(
             message.timestamp,
             message.display_name,
             message.content,
         );
-        containerDi1araas.appendChild(newElement);
-        messagesDomDi1araas.push({
+        container.appendChild(newElement);
+        messagesDom.push({
             message: message,
             element: newElement,
         });
         spinner.remove();
-        containerDi1araas.scrollTo(0, containerDi1araas.scrollHeight);
+        container.scrollTo(0, container.scrollHeight);
     });
-}
-async function loadMessagesStegi() {
-    const containerStegi = document.querySelector(".chat-scrollable-stegi");
-    if (containerStegi.children.length > 0) containerStegi.innerHTML = "";
-
-    const spinner = createSpinner();
-    containerStegi.parentNode.appendChild(spinner);
-
-    const messagesStegi = await getMessages("stegi");
-
-    messagesStegi.sort((a, b) => a.timestamp - b.timestamp);
-
-    let lastTimestamp = 0;
-    messagesStegi.forEach((message) => {
-        if (!isSameDay(lastTimestamp, message.timestamp)) {
-            containerStegi.appendChild(buildNewDayMessage(message.timestamp));
-            lastTimestamp = message.timestamp;
-        }
-        const newElement = buildMessageNewTextOnly(
-            message.timestamp,
-            message.display_name,
-            message.content,
-        );
-        containerStegi.appendChild(newElement);
-        messagesDomStegi.push({
-            message: message,
-            element: newElement,
-        });
-        spinner.remove();
-        containerStegi.scrollTo(0, containerStegi.scrollHeight);
-    });
+    return messagesDom;
 }
 
-export async function loadEmotesNew() {
+// TODO: This is a mess [danke copilot]
+export async function loadEmotes(messageDom1, messageDom2) {
     const result = await Promise.all([
         get7tvGlobalEmotes(),
         get7tvChannelEmotes(di1araasTwitchId),
         get7tvChannelEmotes(stegiTwitchId),
     ]);
-    replaceWithEmotes(messagesDomDi1araas, result[1], result[0]);
-    replaceWithEmotes(messagesDomStegi, result[2], result[0]);
+    replaceWithEmotes(messageDom1, result[1], result[0]);
+    replaceWithEmotes(messageDom2, result[2], result[0]);
 }
 
 async function replaceWithEmotes(messageDom, channelEmotes, globalEmotes) {
@@ -103,7 +72,7 @@ async function replaceWithEmotes(messageDom, channelEmotes, globalEmotes) {
     }
 }
 
-function buildMessageNewTextOnly(timestamp, displayName, messageContent) {
+function buildTextMessage(timestamp, displayName, messageContent) {
     const chatMessage = document.createElement("div");
     chatMessage.classList.add("chat-message");
 
@@ -131,17 +100,6 @@ function buildMessageNewTextOnly(timestamp, displayName, messageContent) {
     return chatMessage;
 }
 
-function getTimeString(timestamp) {
-    return new Date(timestamp).toLocaleString("de-DE", {
-        hour: "2-digit",
-        minute: "2-digit",
-    });
-}
-
-export async function loadAllChatMessages() {
-    await Promise.all([loadMessagesStegi(), loadMessagesDi1araas()]);
-}
-
 function createSpinner() {
     const spinner = document.createElement("div");
     spinner.classList.add("loading-circle");
@@ -154,16 +112,6 @@ async function getMessages(channel) {
     );
     const json = await response.json();
     return json;
-}
-
-function isSameDay(timestamp1, timestamp2) {
-    const d1 = new Date(timestamp1);
-    const d2 = new Date(timestamp2);
-    return (
-        d1.getDate() == d2.getDate() &&
-        d1.getMonth() == d2.getMonth() &&
-        d1.getFullYear() == d2.getFullYear()
-    );
 }
 
 function buildNewDayMessage(timestamp) {
@@ -185,4 +133,21 @@ function buildNewDayMessage(timestamp) {
 
     container.appendChild(timestampText);
     return container;
+}
+
+function getTimeString(timestamp) {
+    return new Date(timestamp).toLocaleString("de-DE", {
+        hour: "2-digit",
+        minute: "2-digit",
+    });
+}
+
+function isSameDay(timestamp1, timestamp2) {
+    const d1 = new Date(timestamp1);
+    const d2 = new Date(timestamp2);
+    return (
+        d1.getDate() == d2.getDate() &&
+        d1.getMonth() == d2.getMonth() &&
+        d1.getFullYear() == d2.getFullYear()
+    );
 }
