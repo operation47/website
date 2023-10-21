@@ -1,453 +1,506 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>Operation 47 - Recap</title>
-    <link rel="icon" type="image/x-icon" href="https://imgur.com/GiBb5YN.png">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script type="module" src="script.js" defer></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100vw;
-            height: 50px;
-            padding: 0px 20px;
-            box-sizing: border-box;
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
-
-        .title {
-            color: white;
-            font-weight: bold;
-            font-size: 25px;
-            letter-spacing: 1px;
-        }
-
-        .button {
-            font-size: 20px;
-            padding-top: 6px;
-            padding-bottom: 6px;
-            padding-left: 12px;
-            padding-right: 12px;
-            background-color: #77dd77;
-
-        }
-
-        .button:hover {
-            background-color: #66c266;
-        }
-
-        .container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100vw;
-            height: 100vh;
-        }
-
-        .box-container {
-            display: flex;
-            justify-content: space-around;
-            padding-left: 5px;
-            padding-right: 5px;
-            padding-bottom: 5px;
-            box-sizing: border-box;
-            padding-top: 50px;
-            height: 100vh;
-        }
-
-        #clip-player {
-            width: 60vw;
-            height: calc(60vw / (16 / 9));
-        }
-
-        @media (max-width: 1000px) {
-            .box-container {
-                display: block;
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        />
+        <title>Operation 47 - Recap</title>
+        <link
+            rel="icon"
+            type="image/x-icon"
+            href="https://imgur.com/GiBb5YN.png"
+        />
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <script type="module" src="script.js" defer></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
             }
 
-            .box .links {
-                height: 0px;
-                overflow-y: auto;
+            .header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100vw;
+                height: 50px;
+                padding: 0px 20px;
+                box-sizing: border-box;
+                position: fixed;
+                top: 0;
+                left: 0;
             }
 
             .title {
-                display: none;
+                color: white;
+                font-weight: bold;
+                font-size: 25px;
+                letter-spacing: 1px;
             }
 
-            @keyframes showLinks {
-                form {
-                    height: 0px;
-                }
-
-                to {
-                    height: 300px;
-                }
+            .button {
+                font-size: 20px;
+                padding-top: 6px;
+                padding-bottom: 6px;
+                padding-left: 12px;
+                padding-right: 12px;
+                background-color: #77dd77;
             }
 
-            @keyframes hideLinks {
-                from {
-                    height: 300px;
-                }
+            .button:hover {
+                background-color: #66c266;
+            }
 
-                to {
-                    height: 0px;
-                }
+            .container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100vw;
+                height: 100vh;
+            }
+
+            .box-container {
+                display: flex;
+                justify-content: space-around;
+                padding-left: 5px;
+                padding-right: 5px;
+                padding-bottom: 5px;
+                box-sizing: border-box;
+                padding-top: 50px;
+                height: 100vh;
             }
 
             #clip-player {
+                width: 60vw;
+                height: calc(60vw / (16 / 9));
+            }
+
+            @media (max-width: 1000px) {
+                .box-container {
+                    display: block;
+                }
+
+                .box .links {
+                    height: 0px;
+                    overflow-y: auto;
+                }
+
+                .title {
+                    display: none;
+                }
+
+                @keyframes showLinks {
+                    form {
+                        height: 0px;
+                    }
+
+                    to {
+                        height: 300px;
+                    }
+                }
+
+                @keyframes hideLinks {
+                    from {
+                        height: 300px;
+                    }
+
+                    to {
+                        height: 0px;
+                    }
+                }
+
+                #clip-player {
+                    width: 100vw;
+                    height: calc(100vw / (16 / 9));
+                    align-self: flex-start;
+                    margin-top: 100px;
+                }
+
+                .hide-links {
+                    animation: hideLinks 0.5s forwards;
+                }
+
+                .show-links {
+                    animation: showLinks 0.5s forwards;
+                }
+            }
+
+            .box {
+                flex: 1;
+                margin: 7px;
+                padding: 10px;
+                border: 1px solid white;
+                border-radius: 15px;
+            }
+
+            .box h2 {
+                text-align: center;
+                margin: 0;
+                margin-bottom: 15px;
+                background-color: #9146ff;
+                color: white;
+                letter-spacing: 2px;
+                padding: 5px;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+                border-bottom-left-radius: 4px;
+                border-bottom-right-radius: 4px;
+            }
+
+            .box.today {
+                border: 1px solid tomato;
+            }
+
+            .box.today h2 {
+                background-color: tomato;
+            }
+
+            .box.today .clip {
+                color: rgb(218, 63, 36);
+            }
+
+            .box.today .clip:hover {
+                color: rgb(186, 53, 30);
+            }
+
+            .links {
+                color: red;
+                /* text color when no clips were found */
+                font-size: 19px;
+                text-decoration: none;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .overlay {
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 width: 100vw;
-                height: calc(100vw / (16 / 9));
-                align-self: flex-start;
-                margin-top: 100px;
+                height: 100vh;
+                position: fixed;
+                top: 0;
+                left: 0;
+                background-color: rgba(0, 0, 0, 0.726);
             }
 
-            .hide-links {
-                animation: hideLinks 0.5s forwards;
+            .loading-circle {
+                width: 70px;
+                height: 70px;
+                border-width: 12px;
             }
 
-            .show-links {
-                animation: showLinks 0.5s forwards;
+            .hide {
+                display: none;
             }
 
-        }
-
-        .box {
-            flex: 1;
-            margin: 7px;
-            padding: 10px;
-            border: 1px solid white;
-            border-radius: 15px;
-        }
-
-        .box h2 {
-            text-align: center;
-            margin: 0;
-            margin-bottom: 15px;
-            background-color: #9146ff;
-            color: white;
-            letter-spacing: 2px;
-            padding: 5px;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            border-bottom-left-radius: 4px;
-            border-bottom-right-radius: 4px;
-        }
-
-        .box.today {
-            border: 1px solid tomato;
-        }
-
-        .box.today h2 {
-            background-color: tomato;
-        }
-
-        .box.today .clip {
-            color: rgb(218, 63, 36);
-        }
-
-        .box.today .clip:hover {
-            color: rgb(186, 53, 30)
-        }
-
-
-        .links {
-            color: red;
-            /* text color when no clips were found */
-            font-size: 19px;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .overlay {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100vw;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: rgba(0, 0, 0, 0.726)
-        }
-
-        .loading-circle {
-            width: 70px;
-            height: 70px;
-            border-width: 12px;
-        }
-
-        .hide {
-            display: none;
-        }
-
-        .clip {
-            user-select: none;
-            color: #873ff3;
-        }
-
-        .clip:hover {
-            cursor: pointer;
-            color: #6d2ac9;
-        }
-
-        .clip.seen {
-            color: #333;
-        }
-
-        .links .clip.seen:hover {
-            color: #333;
-        }
-
-        ul {
-            list-style: none;
-        }
-    </style>
-</head>
-
-<body>
-    <script>
-        async function submitInput() {
-            const pwInput = document.getElementById("pw-input").value.trim();
-            const linkInput = document.getElementById("link-input").value.trim();
-
-            document.getElementById("pw-input").value = '';
-            document.getElementById("link-input").value = '';
-
-            if (!pwInput || !linkInput) return;
-
-            const options = {
-                method: 'POST',
-                headers: {
-                    'authorization': pwInput,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    url: linkInput
-                })
+            .clip {
+                user-select: none;
+                color: #873ff3;
             }
 
-            let res = await fetch('https://api.op47.de/v1/insertClip', options);
+            .clip:hover {
+                cursor: pointer;
+                color: #6d2ac9;
+            }
 
-            if (res.status === 401) window.alert('Falsches Passwort!');
-            else if (res.status === 422) window.alert('Ungültiger Link!');
-            else if (res.status !== 200) window.alert('Fehler!\nMöglicherweise existiert der Clip bereits.');
-        }
+            .clip.seen {
+                color: #333;
+            }
 
-    </script>
-    <div class="header">
-        <nav role="navigation">
-            <div id="menuToggle">
-                <input id="menu-checkbox" type="checkbox" />
-                <span></span>
-                <span></span>
-                <span></span>
-                <ul id="menu">
-                    <a href="/">
-                        <li>Chat</li>
-                    </a>
-                    <a href="prime">
-                        <li>Prime</li>
-                    </a>
-                    <a href="recap" class="active">
-                        <li>Recap</li>
-                    </a>
-                    <a href="credits">
-                        <li>Credits</li>
-                    </a>
-                </ul>
-            </div>
-        </nav>
-        <div class="title">
-            FOMO Clips der Woche
+            .links .clip.seen:hover {
+                color: #333;
+            }
+
+            ul {
+                list-style: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <script>
+            async function submitInput() {
+                const pwInput = document
+                    .getElementById("pw-input")
+                    .value.trim();
+                const linkInput = document
+                    .getElementById("link-input")
+                    .value.trim();
+
+                document.getElementById("pw-input").value = "";
+                document.getElementById("link-input").value = "";
+
+                if (!pwInput || !linkInput) return;
+
+                const options = {
+                    method: "POST",
+                    headers: {
+                        authorization: pwInput,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        url: linkInput,
+                    }),
+                };
+
+                let res = await fetch(
+                    "https://api.op47.de/v1/insertClip",
+                    options,
+                );
+
+                if (res.status === 401) window.alert("Falsches Passwort!");
+                else if (res.status === 422) window.alert("Ungültiger Link!");
+                else if (res.status !== 200)
+                    window.alert(
+                        "Fehler!\nMöglicherweise existiert der Clip bereits.",
+                    );
+            }
+        </script>
+        <div class="header">
+            <nav role="navigation">
+                <div id="menuToggle">
+                    <input id="menu-checkbox" type="checkbox" />
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <ul id="menu">
+                        <a href="/">
+                            <li>Chat</li>
+                        </a>
+                        <a href="prime">
+                            <li>Prime</li>
+                        </a>
+                        <a href="recap" class="active">
+                            <li>Recap</li>
+                        </a>
+                        <a href="credits">
+                            <li>Credits</li>
+                        </a>
+                    </ul>
+                </div>
+            </nav>
+            <div class="title">FOMO Clips der Woche</div>
+            <ul id="input-list">
+                <li>
+                    <input
+                        type="password"
+                        id="pw-input"
+                        placeholder="password"
+                    />
+                </li>
+                <li>
+                    <input type="url" id="link-input" placeholder="link" />
+                </li>
+            </ul>
+            <button class="button" onclick="submitInput()">+</button>
         </div>
-        <ul id="input-list">
-            <li>
-                <input type="password" id="pw-input" placeholder="password">
-            </li>
-            <li>
-                <input type="url" id="link-input" placeholder="link">
-            </li>
-        </ul>
-        <button class="button" onclick="submitInput()">
-            +
-        </button>
-    </div>
-    <div class="box-container"></div>
-    <div id="clip-player-wrapper" class="overlay hide">
-        <iframe id="clip-player" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>
-    </div>
-    <div id="loading-screen" class="container">
-        <div class="loading-circle"></div>
-    </div>
-    <script type="module">
-        import { socket } from "./script.js"
+        <div class="box-container"></div>
+        <div id="clip-player-wrapper" class="overlay hide">
+            <iframe
+                id="clip-player"
+                frameborder="0"
+                allowfullscreen="true"
+                scrolling="no"
+            ></iframe>
+        </div>
+        <div id="loading-screen" class="container">
+            <div class="loading-circle"></div>
+        </div>
+        <script type="module">
+            import { socket } from "./script.js";
 
-        socket.on('newClip', async () => {
-            await loadLinks();
-        });
+            socket.on("newClip", async () => {
+                await loadLinks();
+            });
 
-        const today = new Date();
-        const dates = [new Date(), new Date(), new Date(), new Date(), today];
-        const weekdays = [];
-        const clipPlayer = document.getElementById("clip-player");
-        const clipPlayerWrapper = document.getElementById("clip-player-wrapper");
-        const boxContainer = document.getElementsByClassName("box-container")[0];
-        const loadingScreen = document.getElementById("loading-screen");
-        const weekdayContainers = [];
+            const today = new Date();
+            const dates = [
+                new Date(),
+                new Date(),
+                new Date(),
+                new Date(),
+                today,
+            ];
+            const weekdays = [];
+            const clipPlayer = document.getElementById("clip-player");
+            const clipPlayerWrapper = document.getElementById(
+                "clip-player-wrapper",
+            );
+            const boxContainer =
+                document.getElementsByClassName("box-container")[0];
+            const loadingScreen = document.getElementById("loading-screen");
+            const weekdayContainers = [];
 
-        let isOnMobile = false;
-        const maxTitleLength = 25;
-        const titleLengthBuffer = 3;
+            let isOnMobile = false;
+            const maxTitleLength = 25;
+            const titleLengthBuffer = 3;
 
-        function getWeekday(date) {
-            const weekdays = ["SO", "MO", "DI", "MI", "DO", "FR", "SA"];
-            return weekdays[date.getDay()];
-        }
-
-        function setDates() {
-            for (let i = 0; i < dates.length; i++) {
-                dates[i].setDate(today.getDate() - (4 - i));
-                weekdays[i] = getWeekday(dates[i]);
+            function getWeekday(date) {
+                const weekdays = ["SO", "MO", "DI", "MI", "DO", "FR", "SA"];
+                return weekdays[date.getDay()];
             }
-        }
-        function buildHTMLBoxes() {
 
-            for (const weekday of weekdays) {
-                let box = document.createElement("div");
-                box.classList.add("box");
-                if (weekdays.indexOf(weekday) === weekdays.length - 1) {
-                    box.classList.add("today");
+            function setDates() {
+                for (let i = 0; i < dates.length; i++) {
+                    dates[i].setDate(today.getDate() - (4 - i));
+                    weekdays[i] = getWeekday(dates[i]);
                 }
-                box.id = weekday;
-
-                let h = document.createElement("h2");
-                let text = document.createTextNode(weekday);
-                h.appendChild(text);
-
-                let linkContainer = document.createElement("div");
-                linkContainer.classList.add("links");
-
-                box.appendChild(h);
-                box.appendChild(linkContainer);
-
-                boxContainer.appendChild(box);
-                weekdayContainers.push({ h: h, linkContainer: linkContainer, box: box })
-
             }
-        }
-        function getCorrectFormatFromDate(date) {
-            return date.toISOString().split('T')[0];
-        }
+            function buildHTMLBoxes() {
+                for (const weekday of weekdays) {
+                    let box = document.createElement("div");
+                    box.classList.add("box");
+                    if (weekdays.indexOf(weekday) === weekdays.length - 1) {
+                        box.classList.add("today");
+                    }
+                    box.id = weekday;
 
-        function setUpAinmations() {
-            clipPlayerWrapper.addEventListener("click", () => {
-                clipPlayerWrapper.classList.add("hide");
-                clipPlayer.src = "";
-            })
-            for (let i = 0; i < weekdayContainers.length; i++) {
+                    let h = document.createElement("h2");
+                    let text = document.createTextNode(weekday);
+                    h.appendChild(text);
 
-                weekdayContainers[i].h.addEventListener("click", () => {
-                    if (window.innerWidth < 1000) {
-                        if (weekdayContainers[i].linkContainer.classList.contains('show-links')) {
-                            weekdayContainers[i].linkContainer.classList.remove('show-links');
-                            weekdayContainers[i].linkContainer.classList.add('hide-links');
-                        } else {
-                            weekdayContainers[i].linkContainer.classList.add('show-links');
-                            weekdayContainers[i].linkContainer.classList.remove('hide-links');
+                    let linkContainer = document.createElement("div");
+                    linkContainer.classList.add("links");
+
+                    box.appendChild(h);
+                    box.appendChild(linkContainer);
+
+                    boxContainer.appendChild(box);
+                    weekdayContainers.push({
+                        h: h,
+                        linkContainer: linkContainer,
+                        box: box,
+                    });
+                }
+            }
+            function getCorrectFormatFromDate(date) {
+                return date.toISOString().split("T")[0];
+            }
+
+            function setUpAinmations() {
+                clipPlayerWrapper.addEventListener("click", () => {
+                    clipPlayerWrapper.classList.add("hide");
+                    clipPlayer.src = "";
+                });
+                for (let i = 0; i < weekdayContainers.length; i++) {
+                    weekdayContainers[i].h.addEventListener("click", () => {
+                        if (window.innerWidth < 1000) {
+                            if (
+                                weekdayContainers[
+                                    i
+                                ].linkContainer.classList.contains("show-links")
+                            ) {
+                                weekdayContainers[
+                                    i
+                                ].linkContainer.classList.remove("show-links");
+                                weekdayContainers[
+                                    i
+                                ].linkContainer.classList.add("hide-links");
+                            } else {
+                                weekdayContainers[
+                                    i
+                                ].linkContainer.classList.add("show-links");
+                                weekdayContainers[
+                                    i
+                                ].linkContainer.classList.remove("hide-links");
+                            }
                         }
-                    }
-                })
+                    });
+                }
 
+                window.addEventListener("resize", () => {
+                    if (window.innerWidth > 1000 && isOnMobile) {
+                        for (let i = 0; i < weekdayContainers.length; i++) {
+                            weekdayContainers[i].linkContainer.classList.remove(
+                                "show-links",
+                            );
+                            weekdayContainers[i].linkContainer.classList.remove(
+                                "hide-links",
+                            );
+                        }
+                        isOnMobile = false;
+                    } else if (!isOnMobile) {
+                        isOnMobile = true;
+                    }
+                });
             }
 
-            window.addEventListener("resize", () => {
-                if (window.innerWidth > 1000 && isOnMobile) {
-                    for (let i = 0; i < weekdayContainers.length; i++) {
-                        weekdayContainers[i].linkContainer.classList.remove('show-links');
-                        weekdayContainers[i].linkContainer.classList.remove('hide-links');
-                    }
-                    isOnMobile = false;
-                } else if (!isOnMobile) {
-                    isOnMobile = true;
-                }
-            })
-        }
-
-        async function loadLinks() {
-            for (let i = 0; i < dates.length; i++) {
-                const url = `https://api.op47.de/v1/clips/${getCorrectFormatFromDate(dates[i])}`
-                const res = await fetch(url);
-                const json = await res.json();
-                const linksDiv = document.getElementById(weekdays[i]).getElementsByClassName("links")[0];
-                const noClipsText = "Keine Clips gefunden.\nPosted mal fleißiger.";
-                if (json.length === 0) {
-                    linksDiv.innerHTML = noClipsText;
-                    continue;
-                } else if (linksDiv.innerHTML === noClipsText) {
-                    linksDiv.innerHTML = "";
-                }
-                
-                for (const link of json) {
-
-                    // skip the current link if its already loaded
-                    if (linksDiv.children[json.indexOf(link)]) {
+            async function loadLinks() {
+                for (let i = 0; i < dates.length; i++) {
+                    const url = `https://api.op47.de/v1/clips/${getCorrectFormatFromDate(
+                        dates[i],
+                    )}`;
+                    const res = await fetch(url);
+                    const json = await res.json();
+                    const linksDiv = document
+                        .getElementById(weekdays[i])
+                        .getElementsByClassName("links")[0];
+                    const noClipsText =
+                        "Keine Clips gefunden.\nPosted mal fleißiger.";
+                    if (json.length === 0) {
+                        linksDiv.innerHTML = noClipsText;
                         continue;
+                    } else if (linksDiv.innerHTML === noClipsText) {
+                        linksDiv.innerHTML = "";
                     }
 
-                    let clip = document.createElement("span");
+                    for (const link of json) {
+                        // skip the current link if its already loaded
+                        if (linksDiv.children[json.indexOf(link)]) {
+                            continue;
+                        }
 
-                    // chops off the title if it is too long
-                    let linkText;
-                    if (link.title.length > maxTitleLength + titleLengthBuffer) {
-                        linkText = document.createTextNode(`#${json.indexOf(link) + 1} ${link.title.substring(0, maxTitleLength) + "..."}`);
-                    } else {
-                        linkText = document.createTextNode(`#${json.indexOf(link) + 1} ${link.title}`);
+                        let clip = document.createElement("span");
+
+                        // chops off the title if it is too long
+                        let linkText;
+                        if (
+                            link.title.length >
+                            maxTitleLength + titleLengthBuffer
+                        ) {
+                            linkText = document.createTextNode(
+                                `#${json.indexOf(link) + 1} ${
+                                    link.title.substring(0, maxTitleLength) +
+                                    "..."
+                                }`,
+                            );
+                        } else {
+                            linkText = document.createTextNode(
+                                `#${json.indexOf(link) + 1} ${link.title}`,
+                            );
+                        }
+
+                        clip.classList.add("clip");
+
+                        clip.onclick = () => {
+                            clip.classList.add("seen");
+                            let clipID = link.url.split("/")[3].split("?")[0];
+                            let embedURL = `https://clips.twitch.tv/embed?clip=${clipID}&parent=op47.de&autoplay=true&muted=false`;
+                            clipPlayer.src = embedURL;
+                            clipPlayerWrapper.classList.remove("hide");
+                        };
+
+                        clip.appendChild(linkText);
+
+                        linksDiv.appendChild(clip);
                     }
-
-                    clip.classList.add("clip");
-
-                    clip.onclick = () => {
-                        clip.classList.add("seen");
-                        let clipID = link.url.split("/")[3].split("?")[0];
-                        let embedURL = `https://clips.twitch.tv/embed?clip=${clipID}&parent=op47.de&autoplay=true&muted=false`;
-                        clipPlayer.src = embedURL;
-                        clipPlayerWrapper.classList.remove("hide");
-                    }
-
-                    clip.appendChild(linkText);
-
-                    linksDiv.appendChild(clip);
                 }
-
             }
-        }
 
-        export { loadLinks };
+            export { loadLinks };
 
-        boxContainer.classList.add('hide');
-        setDates();
-        buildHTMLBoxes();
-        await loadLinks()
-        setUpAinmations();
-        boxContainer.classList.remove('hide');
-        loadingScreen.classList.add('hide');
-
-    </script>
-</body>
-
+            boxContainer.classList.add("hide");
+            setDates();
+            buildHTMLBoxes();
+            await loadLinks();
+            setUpAinmations();
+            boxContainer.classList.remove("hide");
+            loadingScreen.classList.add("hide");
+        </script>
+    </body>
 </html>

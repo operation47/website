@@ -1,92 +1,107 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        />
+        <title>Operation 47 - Prime</title>
+        <link
+            rel="icon"
+            type="image/x-icon"
+            href="https://imgur.com/GiBb5YN.png"
+        />
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <script type="module" src="script.js" defer></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <style>
+            body {
+                height: 100vh;
+            }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>Operation 47 - Prime</title>
-    <link rel="icon" type="image/x-icon" href="https://imgur.com/GiBb5YN.png">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script type="module" src="script.js" defer></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <style>
-        body {
-            height: 100vh;
-        }
+            .container {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+                width: 100%;
+            }
 
-        .container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            width: 100%;
-        }
+            .headline {
+                text-align: center;
+                font-size: 30px;
+                font-weight: bold;
+                color: white;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 3%;
+            }
 
-        .headline {
-            text-align: center;
-            font-size: 30px;
-            font-weight: bold;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 3%;
-        }
+            .emote {
+                width: 50px;
+                height: 45px;
+            }
 
-        .emote {
-            width: 50px;
-            height: 45px;
-        }
+            iframe {
+                width: 60%;
+                height: 60%;
+            }
 
-        iframe {
-            width: 60%;
-            height: 60%;
-        }
+            .button {
+                margin-top: 20px;
+                text-decoration: none;
+                font-size: 20px;
+            }
 
-        .button {
-            margin-top: 20px;
-            text-decoration: none;
-            font-size: 20px;
-        }
+            a {
+                color: white;
+            }
+        </style>
+    </head>
 
-        a {
-            color: white;
-        }
-    </style>
-</head>
-
-<body>
-    <nav role="navigation">
-        <div id="menuToggle">
-            <input id="menu-checkbox" type="checkbox" />
-            <span></span>
-            <span></span>
-            <span></span>
-            <ul id="menu">
-                <a href="/">
-                    <li>Chat</li>
-                </a>
-                <a href="prime" class="active">
-                    <li>Prime</li>
-                </a>
-                <a href="recap">
-                    <li>Recap</li>
-                </a>
-                <a href="credits">
-                    <li>Credits</li>
-                </a>
-            </ul>
+    <body>
+        <nav role="navigation">
+            <div id="menuToggle">
+                <input id="menu-checkbox" type="checkbox" />
+                <span></span>
+                <span></span>
+                <span></span>
+                <ul id="menu">
+                    <a href="/">
+                        <li>Chat</li>
+                    </a>
+                    <a href="prime" class="active">
+                        <li>Prime</li>
+                    </a>
+                    <a href="recap">
+                        <li>Recap</li>
+                    </a>
+                    <a href="credits">
+                        <li>Credits</li>
+                    </a>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="headline">
+                Cytube Prime
+                <img
+                    src="https://cdn.7tv.app/emote/61de32c05001b6b33b2e32c8/4x.webp"
+                    class="emote"
+                />
+            </div>
+            <iframe
+                src="https://www.youtube.com/embed/9bi8tTrW97I?si=d9toUiUDt-YAEM7B&amp;rel=0&amp;modestbranding=1"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;web-share"
+                allowfullscreen
+                autoplay
+                scrolling="no"
+            ></iframe>
         </div>
-    </nav>
-    <div class="container">
-        <div class="headline">
-            Cytube Prime
-            <img src="https://cdn.7tv.app/emote/61de32c05001b6b33b2e32c8/4x.webp" class="emote">
-        </div>
-        <iframe src="https://www.youtube.com/embed/9bi8tTrW97I?si=d9toUiUDt-YAEM7B&amp;rel=0&amp;modestbranding=1"
-            title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;web-share" allowfullscreen autoplay scrolling="no"></iframe>
-    </div>
-</body>
-
+    </body>
 </html>

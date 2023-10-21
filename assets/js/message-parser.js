@@ -1,17 +1,3 @@
-let emotesDi1araas = [];
-let emotesStegi = [];
-let emotesGlobal = [];
-
-const di1araasTwitchId = 645207159;
-const stegiTwitchId = 51304190;
-export async function loadEmotes() {
-
-    emotesDi1araas = await get7tvChannelEmotes(di1araasTwitchId);
-    emotesStegi = await get7tvChannelEmotes(stegiTwitchId);
-    emotesGlobal = await get7tvGlobalEmotes();
-}
-
-
 export async function get7tvGlobalEmotes() {
     const url = "https://7tv.io/v3/emote-sets/global";
 
@@ -19,13 +5,11 @@ export async function get7tvGlobalEmotes() {
     const response = await fetch(url);
     const json = await response.json();
     for (const emote of json.emotes) {
-        emotes.push(
-            {
-                name: emote.name,
-                url: emote.data.host.url,
-                files: emote.data.host.files
-            }
-        );
+        emotes.push({
+            name: emote.name,
+            url: emote.data.host.url,
+            files: emote.data.host.files,
+        });
     }
     return emotes;
 }
@@ -38,23 +22,30 @@ export async function get7tvChannelEmotes(twitchId) {
     const json = await response.json();
     try {
         for (const emote of json.emote_set.emotes) {
-            emotes.push(
-                {
-                    name: emote.name,
-                    url: emote.data.host.url,
-                    files: emote.data.host.files
-                }
-            );
+            emotes.push({
+                name: emote.name,
+                url: emote.data.host.url,
+                files: emote.data.host.files,
+            });
         }
     } catch (err) {
         console.log(err);
     }
-    
+
     return emotes;
 }
+
 export function parseMessage(message, channelEmotes, globalEmotes) {
-    const messageFragments = insertEmotes(message.content, channelEmotes, globalEmotes);
-    return buildMessage(message.display_name, messageFragments, message.timestamp);
+    const messageFragments = insertEmotes(
+        message.content,
+        channelEmotes,
+        globalEmotes,
+    );
+    return buildMessage(
+        message.display_name,
+        messageFragments,
+        message.timestamp,
+    );
 }
 
 function insertEmotes(messageContent, channelEmotes, globalEmotes) {
@@ -65,7 +56,7 @@ function insertEmotes(messageContent, channelEmotes, globalEmotes) {
     for (const word of words) {
         let foundEmote = false;
 
-        channelEmotes.find(emote => {
+        channelEmotes.find((emote) => {
             if (emote.name === word) {
                 if (textFragmentBuffer.length > 0) {
                     result.push(buildTextFragmentElement(textFragmentBuffer));
@@ -77,7 +68,7 @@ function insertEmotes(messageContent, channelEmotes, globalEmotes) {
         });
         if (foundEmote) continue;
 
-        globalEmotes.find(emote => {
+        globalEmotes.find((emote) => {
             if (emote.name === word) {
                 if (textFragmentBuffer.length > 0) {
                     result.push(buildTextFragmentElement(textFragmentBuffer));
@@ -93,7 +84,8 @@ function insertEmotes(messageContent, channelEmotes, globalEmotes) {
         textFragmentBuffer += word;
     }
 
-    if (textFragmentBuffer.length > 0) result.push(buildTextFragmentElement(textFragmentBuffer));
+    if (textFragmentBuffer.length > 0)
+        result.push(buildTextFragmentElement(textFragmentBuffer));
     return result;
 }
 
@@ -135,12 +127,15 @@ function buildMessage(displayName, messageContentFragments, timestamp) {
 
     for (const fragment of messageContentFragments) {
         chatMessage.appendChild(fragment);
-    };
+    }
     return chatMessage;
 }
 
 function getClockTimeString(timestamp) {
-    return new Date(timestamp).toLocaleString("de-DE", { hour: "2-digit", minute: "2-digit" });
+    return new Date(timestamp).toLocaleString("de-DE", {
+        hour: "2-digit",
+        minute: "2-digit",
+    });
 }
 function insertAnchorTags(message) {
     const urlRegex =
