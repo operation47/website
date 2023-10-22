@@ -38,7 +38,7 @@ async function loadMessages(user) {
             if (!firstTimestampSet[user]) {
                 firstTimestampSet[user] = true;
 
-                if (isSameDay(message.timestamp, new Date() - 2)) {
+                if (isSameDay(message.timestamp, new Date() - 3)) {
                     firstTimestamp = true;
                 }
             }
