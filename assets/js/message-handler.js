@@ -32,13 +32,15 @@ async function loadMessages(user) {
     messages.sort((a, b) => a.timestamp - b.timestamp);
 
     let lastTimestamp = 0;
+    const threeDaysAgo = new Date();
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3)
     messages.forEach((message) => {
         if (!isSameDay(lastTimestamp, message.timestamp)) {
             let firstTimestamp = false;
             if (!firstTimestampSet[user]) {
                 firstTimestampSet[user] = true;
 
-                if (isSameDay(message.timestamp, new Date() - 3)) {
+                if (isSameDay(message.timestamp, threeDaysAgo)) {
                     firstTimestamp = true;
                 }
             }
