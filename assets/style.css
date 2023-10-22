@@ -136,12 +136,16 @@ a {
     padding: 7px;
     overflow-wrap: break-word;
     word-break: break-all;
+    align-items: center;
 }
 
 .chat-message img {
     max-width: 100%;
     vertical-align: -webkit-baseline-middle;
+    margin-left: 5px;
+    margin-right: 5px;
 }
+
 .chat-username {
     font-weight: bold;
     white-space: nowrap;
