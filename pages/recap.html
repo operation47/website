@@ -353,6 +353,7 @@
             function setDates() {
                 for (let i = 0; i < dates.length; i++) {
                     dates[i].setDate(today.getDate() - (4 - i));
+                    dates[i].setHours(0,0,0,0);
                     weekdays[i] = getWeekday(dates[i]);
                 }
             }
@@ -383,8 +384,11 @@
                     });
                 }
             }
-            function getCorrectFormatFromDate(date) {
-                return date.toISOString().split("T")[0];
+            function getAPIdateFormat(date) {
+                let y = date.getFullYear();
+                let m = ("0" + (date.getMonth() + 1)).slice(-2); // getMonth() is 0-indexed...
+                let d = ("0" + date.getDate()).slice(-2);
+                return y + "-" + m + "-" + d;
             }
 
             function setUpAinmations() {
@@ -437,7 +441,7 @@
 
             async function loadLinks() {
                 for (let i = 0; i < dates.length; i++) {
-                    const url = `https://api.op47.de/v1/clips/${getCorrectFormatFromDate(
+                    const url = `https://api.op47.de/v1/clips/${getAPIdateFormat(
                         dates[i],
                     )}`;
                     const res = await fetch(url);
