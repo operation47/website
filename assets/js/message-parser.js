@@ -3,15 +3,24 @@ export async function get7tvGlobalEmotes() {
 
     const emotes = [];
     const response = await fetch(url);
+    //console.log("7tv global emotes response", response);
     const json = await response.json();
 
-    for (const emote of json.emotes) {
-        emotes.push({
-            name: emote.name,
-            url: emote.data.host.url,
-            files: emote.data.host.files,
-        });
+    try {
+
+        for (const emote of json.emotes) {
+            emotes.push({
+                name: emote.name,
+                url: emote.data.host.url,
+                // files: emote.data.host.files, not needed right now because we assume that the emote is always available in 1x webp
+            });
+        }
     }
+    catch (err) {
+        console.log(err);
+    }
+
+    //console.log("emotes global", emotes);
     return emotes;
 }
 
@@ -20,19 +29,20 @@ export async function get7tvChannelEmotes(twitchId) {
 
     const emotes = [];
     const response = await fetch(url);
+    //console.log("7tv channel emotes response", response);
     const json = await response.json();
     try {
         for (const emote of json.emote_set.emotes) {
             emotes.push({
                 name: emote.name,
                 url: emote.data.host.url,
-                files: emote.data.host.files,
+                // files: emote.data.host.files, not needed right now because we assume that the emote is always available in 1x webp
             });
         }
     } catch (err) {
         console.log(err);
     }
-
+    //console.log("emotes channel", emotes);
     return emotes;
 }
 
