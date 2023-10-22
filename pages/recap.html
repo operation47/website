@@ -378,13 +378,8 @@
                     });
                 }
             }
-            
-            function localISOString(date = new Date()) {
-                let tzoffset = date.getTimezoneOffset() * 60000; //offset in milliseconds
-                return (new Date(Date.now() - tzoffset)).toISOString().slice(0,-1);
-            }
             function getCorrectFormatFromDate(date) {
-                return localISOString(date).split("T")[0];
+                return date.toISOString().split("T")[0];
             }
 
             function setUpAinmations() {
