@@ -36,8 +36,11 @@ async function loadMessages(user) {
         if (!isSameDay(lastTimestamp, message.timestamp)) {
             let firstTimestamp = false;
             if (!firstTimestampSet[user]) {
-                firstTimestamp = true;
                 firstTimestampSet[user] = true;
+
+                if (isSameDay(message.timestamp, new Date() - 2)) {
+                    firstTimestamp = true;
+                }
             }
 
             container.appendChild(buildNewDayMessage(message.timestamp, firstTimestamp));
