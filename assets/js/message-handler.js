@@ -6,6 +6,10 @@ import {
 
 const di1araasTwitchId = 645207159;
 const stegiTwitchId = 51304190;
+const firstTimestampSet = {
+    "stegi": false,
+    "di1araas": false
+}
 
 export async function loadAllChatMessages() {
     const result = await Promise.all([
@@ -22,15 +26,21 @@ async function loadMessages(user) {
     const spinner = createSpinner();
     container.parentNode.appendChild(spinner);
 
-    const messagesDi1araas = await getMessages(user);
+    const messages = await getMessages(user);
     const messagesDom = [];
 
-    messagesDi1araas.sort((a, b) => a.timestamp - b.timestamp);
+    messages.sort((a, b) => a.timestamp - b.timestamp);
 
     let lastTimestamp = 0;
-    messagesDi1araas.forEach((message) => {
+    messages.forEach((message) => {
         if (!isSameDay(lastTimestamp, message.timestamp)) {
-            container.appendChild(buildNewDayMessage(message.timestamp));
+            let firstTimestamp = false;
+            if (!firstTimestampSet[user]) {
+                firstTimestamp = true;
+                firstTimestampSet[user] = true;
+            }
+
+            container.appendChild(buildNewDayMessage(message.timestamp, firstTimestamp));
             lastTimestamp = message.timestamp;
         }
         const newElement = buildTextMessage(
@@ -114,8 +124,13 @@ async function getMessages(channel) {
     return json;
 }
 
-function buildNewDayMessage(timestamp) {
-    const timeString = "00:00 ".concat(
+function buildNewDayMessage(timestamp, firstTimestamp) {
+    let timeString = "00:00 "
+    if (firstTimestamp) {
+        timeString = getTimeStringFromDate(new Date()) + " "
+    }
+
+    const dateString = timeString.concat(
         new Date(timestamp).toLocaleDateString("de-DE", {
             weekday: "long",
             day: "2-digit",
@@ -129,14 +144,18 @@ function buildNewDayMessage(timestamp) {
 
     const timestampText = document.createElement("span");
     timestampText.classList.add("chat-timestamp");
-    timestampText.innerHTML = timeString;
+    timestampText.innerHTML = dateString;
 
     container.appendChild(timestampText);
     return container;
 }
 
 function getTimeString(timestamp) {
-    return new Date(timestamp).toLocaleString("de-DE", {
+    return getTimeStringFromDate(new Date(timestamp))
+}
+
+function getTimeStringFromDate(date) {
+    return date.toLocaleString("de-DE", {
         hour: "2-digit",
         minute: "2-digit",
     });
