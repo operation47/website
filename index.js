@@ -62,7 +62,12 @@ app.get("/message-handler.js", (req, res) => {
 app.get("/chat-stuff.js", (req, res) => {
     sendFileSafe(req, res, "/chat-stuff.js", "chat-stuff.js");
 });
-
+app.get("/wiki-page.js", (req, res) => {
+    sendFileSafe(req, res, "/wiki-page.js", "wiki-page.js");
+});
+app.get("/wiki-page.css", (req, res) => {
+    sendFileSafe(req, res, "/wiki-page.css", "wiki-page.css");
+});
 app.get("/", async (req, res) => {
     sendFileSafe(req, res, "/", "index.html");
 });
@@ -74,6 +79,12 @@ app.get("/recap", (req, res) => {
 });
 app.get("/credits", (req, res) => {
     sendFileSafe(req, res, "/credits", "credits.html");
+});
+app.get("/wiki", (req, res) => {
+    sendFileSafe(req, res, `/wiki`, "wiki.html");
+});
+app.get("/wiki/:page", (req, res) => {
+    sendFileSafe(req, res, `/wiki/${req.params.page}`, "wiki_page.html");
 });
 
 app.get("/comm/new_message", (req, res) => {
