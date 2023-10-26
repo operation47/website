@@ -18,6 +18,10 @@ export async function loadAllChatMessages() {
     ]);
     loadEmotes(result[0], result[1]);
 }
+export async function loadChatMessagesForChannel(channel) {
+    const result = await loadMessages(channel);
+    replaceWithEmotes(result, await get7tvChannelEmotes(channel), await get7tvGlobalEmotes());
+}
 
 async function loadMessages(user) {
     const container = document.querySelector(`.chat-scrollable-${user}`);

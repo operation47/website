@@ -1,4 +1,4 @@
-import { loadAllChatMessages } from "./message-handler.js";
+import { loadAllChatMessages, loadChatMessagesForChannel } from "./message-handler.js";
 import { socket } from "./script.js";
 
 async function main() {
@@ -10,8 +10,8 @@ socket.on("viewerCount", (count) => {
     document.getElementById("viewer-count").textContent = getCountText(count);
 });
 
-socket.on("newMessage", () => {
-    loadAllChatMessages();
+socket.on("newMessage", (channel) => {
+    loadChatMessagesForChannel(channel.substring(1));
 });
 
 function getCountText(count) {
