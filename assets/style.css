@@ -111,17 +111,19 @@ a {
     top: 0;
     background-color: #1a1a1a;
     z-index: 1;
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
 }
 
-.addon {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
+.channel-link {
+    flex: 1;
+    text-align: center;
 }
+
+.chat-header {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+}
+
 
 .button {
     background-color: #3498db;
@@ -137,7 +139,6 @@ a {
 
 .viewer-count {
     font-size: 16px;
-    align-self: baseline;
 }
 
 .chat-message {
@@ -321,6 +322,3 @@ a {
     transform: none;
 }
 
-.centered-content {
-    text-align: center; /* Horizontally center the content within the div */
-}
