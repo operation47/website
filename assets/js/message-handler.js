@@ -20,7 +20,7 @@ export async function loadAllChatMessages() {
 }
 export async function loadChatMessagesForChannel(channel) {
     const result = await loadMessages(channel);
-    replaceWithEmotes(result, await get7tvChannelEmotes(channel), await get7tvGlobalEmotes());
+    replaceWithEmotes(result, await get7tvChannelEmotes(channel === "stegi" ? stegiTwitchId : di1araasTwitchId), await get7tvGlobalEmotes());
 }
 
 async function loadMessages(user) {
