@@ -18,6 +18,7 @@ app.use(
         origin: "https://op47.de",
     }),
 );
+app.use(express.json());
 app.use(express.static(join(__dirname, "/public")));
 app.use(express.static(join(__dirname, "/files")));
 
@@ -88,6 +89,14 @@ app.get("/wiki/:page", (req, res) => {
 });
 
 app.get("/comm/new_message", (req, res) => {
+    if (!req.body.channel) {
+        //res.status(400).send("Bad request");
+        console.log("no channel");
+        //return;
+    }
+    else {
+        console.log("channel: " + req.body.channel);
+    }
     io.emit("newMessage");
     res.status(200).send("OK");
 });
