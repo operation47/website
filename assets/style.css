@@ -22,6 +22,7 @@ a {
 }
 .link {
     text-decoration: none;
+    word-break: break-all;
     color: #3498db;
 }
 .chat-wrapper {
@@ -63,7 +64,16 @@ a {
         transform: rotate(360deg);
     }
 }
-
+.chat-emote {
+    max-width: 200px;
+    max-height: 200px;
+    margin-left: 5px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+.chat-text-fragment {
+    word-wrap: break-word;
+}
 .chat-container {
     display: flex;
     flex-direction: column;
@@ -132,18 +142,7 @@ a {
 
 .chat-message {
     font-size: 17px;
-    display: flex;
     padding: 7px;
-    overflow-wrap: break-word;
-    word-break: break-all;
-    align-items: center;
-}
-
-.chat-message img {
-    max-width: 100%;
-    vertical-align: -webkit-baseline-middle;
-    margin-left: 5px;
-    margin-right: 5px;
 }
 
 .chat-username {
