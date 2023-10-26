@@ -88,7 +88,7 @@ app.get("/wiki/:page", (req, res) => {
     sendFileSafe(req, res, `/wiki/${req.params.page}`, "wiki_page.html");
 });
 
-app.get("/comm/new_message", (req, res) => {
+app.post("/comm/new_message", (req, res) => {
     if (!req.body.channel) {
         //res.status(400).send("Bad request");
         console.log("no channel");
