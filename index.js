@@ -89,16 +89,11 @@ app.get("/wiki/:page", (req, res) => {
 });
 
 app.post("/comm/new_message", (req, res) => {
-    console.log("body: " + JSON.stringify(req.body, null, 2));
     if (!req.body.channel) {
-        //res.status(400).send("Bad request");
-        console.log("no channel");
-        //return;
+        res.status(400).send("Bad request");
+        return;
     }
-    else {
-        console.log("channel: " + req.body.channel);
-    }
-    io.emit("newMessage");
+    io.emit("newMessage", req.body.channel);
     res.status(200).send("OK");
 });
 
