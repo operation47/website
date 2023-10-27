@@ -3,14 +3,14 @@
     <head>
         <meta charset="UTF-8" />
         <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
         />
         <title>Operation 47 - Recap</title>
         <link
-            rel="icon"
-            type="image/x-icon"
-            href="https://imgur.com/GiBb5YN.png"
+        rel="icon"
+        type="image/x-icon"
+        href="https://imgur.com/GiBb5YN.png"
         />
         <link rel="stylesheet" type="text/css" href="style.css" />
         <script type="module" src="script.js" defer></script>
@@ -78,55 +78,6 @@
                 height: calc(60vw / (16 / 9));
             }
 
-            @media (max-width: 1000px) {
-                .box-container {
-                    display: block;
-                }
-
-                .box .links {
-                    height: 0px;
-                    overflow-y: auto;
-                }
-
-                .title {
-                    display: none;
-                }
-
-                @keyframes showLinks {
-                    form {
-                        height: 0px;
-                    }
-
-                    to {
-                        height: 300px;
-                    }
-                }
-
-                @keyframes hideLinks {
-                    from {
-                        height: 300px;
-                    }
-
-                    to {
-                        height: 0px;
-                    }
-                }
-
-                #clip-player {
-                    width: 100vw;
-                    height: calc(100vw / (16 / 9));
-                    align-self: flex-start;
-                    margin-top: 100px;
-                }
-
-                .hide-links {
-                    animation: hideLinks 0.5s forwards;
-                }
-
-                .show-links {
-                    animation: showLinks 0.5s forwards;
-                }
-            }
 
             .box {
                 flex: 1;
@@ -157,10 +108,6 @@
             .box.today h2 {
                 background-color: tomato;
             }
-
-            
-
-            
 
             .links {
                 color: red;
@@ -223,6 +170,60 @@
 
             ul {
                 list-style: none;
+            }
+            @media (max-width: 1000px) {
+                .box-container {
+                    flex-direction: column-reverse;
+                    justify-content: flex-end;
+                }
+
+                .box {
+                    flex: initial;
+                }
+
+                .box .links {
+                    height: 0px;
+                    overflow-y: auto;
+                }
+
+                .title {
+                    display: none;
+                }
+
+                @keyframes showLinks {
+                    form {
+                        height: 0px;
+                    }
+
+                    to {
+                        height: 300px;
+                    }
+                }
+
+                @keyframes hideLinks {
+                    from {
+                        height: 300px;
+                    }
+
+                    to {
+                        height: 0px;
+                    }
+                }
+
+                #clip-player {
+                    width: 100vw;
+                    height: calc(100vw / (16 / 9));
+                    align-self: flex-start;
+                    margin-top: 100px;
+                }
+
+                .hide-links {
+                    animation: hideLinks 0.5s forwards;
+                }
+
+                .show-links {
+                    animation: showLinks 0.5s forwards;
+                }
             }
         </style>
     </head>
