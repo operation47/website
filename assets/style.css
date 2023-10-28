@@ -20,6 +20,15 @@ body {
     animation: slide-up 0.25s ease-in-out;
 }
 
+.disconnected-info.hidden {
+    animation: slide-down 0.25s ease-in-out forwards;
+}
+
+
+.dots {
+    display: inline-block;
+}
+
 @media (max-width: 768px) {
     .disconnected-info {
         font-size: 20px;
@@ -34,6 +43,15 @@ body {
         transform: translateY(0%);
     }
     
+}
+
+@keyframes slide-down {
+    0% {
+        transform: translateY(0%);
+    }
+    100% {
+        transform: translateY(100%);
+    }
 }
 
 ::-webkit-scrollbar-track {
@@ -356,7 +374,6 @@ a {
     transform: none;
 }
 
-
-.hidden {
-    display: none;
+.prevent-animation {
+    animation-duration: 0s !important;
 }
