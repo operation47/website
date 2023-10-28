@@ -4,7 +4,7 @@ export { socket };
 socket.on("connect", () => {
     console.log("Connected to the server");
     const info = document.getElementsByClassName("disconnected-info")[0];
-    if(info.classList.contains("hidden")) {
+    if(!info.classList.contains("hidden")) {
         info.classList.add("hidden");
     }
 });
