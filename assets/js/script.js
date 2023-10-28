@@ -17,12 +17,6 @@ socket.on("disconnect", () => {
     }
 });
 
-document.addEventListener("keyup", (e) => {
-    if(e.code === "KeyT") {
-        socket.disconnect();
-    }
-});
-
 document.body.addEventListener(
     "click",
     (e) => {
