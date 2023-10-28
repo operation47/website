@@ -5,10 +5,13 @@ socket.on("connect", () => {
     console.log("Connected to the server");
     const info = document.getElementsByClassName("disconnected-info")[0];
     if(!info.classList.contains("hidden")) {
-        info.classList.add("hidden");
         if(dotInterval) {
             clearInterval(dotInterval);
         }
+        info.classList.add("green");
+        setTimeout(() => {
+            info.classList.add("hidden");
+        }, 250);
     }
 });
 
@@ -17,6 +20,7 @@ socket.on("disconnect", () => {
     const info = document.getElementsByClassName("disconnected-info")[0];
     if(info.classList.contains("hidden")) {
         info.classList.remove("hidden");
+        info.classList.remove("green");
         dotInterval = setInterval(cycleDots, 500);
     }
 });
@@ -57,3 +61,4 @@ const disconnect_info = document.getElementsByClassName("disconnected-info")[0];
 setTimeout(() => {
     disconnect_info.classList.remove("prevent-animation");
 }, 250);
+

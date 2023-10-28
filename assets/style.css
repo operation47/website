@@ -377,3 +377,11 @@ a {
 .prevent-animation {
     animation-duration: 0s !important;
 }
+.disconnected-info.green {
+    transition: background-color 0.25s ease-in-out;
+}
+
+
+.green {
+    background: #22aa22a0;
+}
