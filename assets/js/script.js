@@ -17,6 +17,12 @@ socket.on("disconnect", () => {
     }
 });
 
+window.addEventListener('pageshow', () => {
+    if (!socket.connected) {
+        socket.connect();
+    }
+});
+
 document.body.addEventListener(
     "click",
     (e) => {
