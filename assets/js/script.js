@@ -33,12 +33,6 @@ setInterval(() => {
     }
 }, 5000);
 
-document.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-        socket.disconnect();
-    }
-});
-
 document.body.addEventListener(
     "click",
     (e) => {
