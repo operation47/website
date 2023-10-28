@@ -14,7 +14,8 @@ body {
     bottom: 0;
     min-height: 25dvh;
     color: #ffffff;
-    background: #aa0000c0;
+    background: #bb2222a0;
+    backdrop-filter: blur(4px);
     font-size: 24px;
     animation: slide-up 0.25s ease-in-out;
 }
