@@ -15,6 +15,7 @@ body {
     min-height: 25dvh;
     color: #ffffff;
     background: #bb2222a0;
+    -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
     font-size: 24px;
     animation: slide-up 0.25s ease-in-out;
