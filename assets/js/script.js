@@ -19,4 +19,3 @@ document.body.addEventListener(
     },
     false,
 );
-

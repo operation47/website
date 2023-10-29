@@ -55,7 +55,6 @@ window.addEventListener('pageshow', () => {
 });
 
 setTimeout(() => {
-    if(!disconnect_info) return;
     disconnect_info.classList.remove("prevent-animation");
 }, 250);
 
