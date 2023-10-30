@@ -7,7 +7,14 @@ const content = document.getElementById("markdown-content");
 const request = {
     method: "GET",
 }
-const md = await fetch(`https://api.op47.de/wiki/page/${slug}.md`, request);
+const response = await fetch(`https://api.op47.de/v1/wiki/page/${slug}`, request);
+if(!response.ok) throw new Error(response.statusText);
+const obj = await response.json();
+const title = obj.title;
+const md = obj.content;
+
+window.document.title = title.concat(" - Operation47 Wiki");
+
 const fake_md = `
 # ${slug}
 # Test heading 1
@@ -26,7 +33,7 @@ this is a test
 
 const mdBlock = new MarkdownBlock();
 mdBlock.setAttribute("untrusted", "");
-mdBlock.mdContent = fake_md;
+mdBlock.mdContent = md;
 
 content.appendChild(mdBlock);
 mdBlock.render();
