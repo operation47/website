@@ -66,6 +66,9 @@ app.get("/chat-stuff.js", (req, res) => {
 app.get("/wiki-page.js", (req, res) => {
     sendFileSafe(req, res, "/wiki-page.js", "wiki-page.js");
 });
+app.get("/create-wiki.js", (req, res) => {
+    sendFileSafe(req, res, "/create-wiki.js", "create-wiki.js");
+});
 app.get("/wiki-page.css", (req, res) => {
     sendFileSafe(req, res, "/wiki-page.css", "wiki-page.css");
 });
@@ -84,10 +87,12 @@ app.get("/credits", (req, res) => {
 app.get("/wiki", (req, res) => {
     sendFileSafe(req, res, `/wiki`, "wiki.html");
 });
+app.get("/wiki/create", (req, res) => {
+    sendFileSafe(req, res, `/wiki/create`, "create_wiki.html");
+});
 app.get("/wiki/:page", (req, res) => {
     sendFileSafe(req, res, `/wiki/${req.params.page}`, "wiki_page.html");
 });
-
 app.post("/comm/new_message", (req, res) => {
     if (!req.body.channel) {
         res.status(400).send("Bad request");
