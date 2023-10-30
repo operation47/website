@@ -7,7 +7,7 @@ form.addEventListener("submit", async (e) => {
     const password = document.getElementById("create-wiki-password").value;
     console.log(title, content);
 
-    const endpoint = "https://api.op47.de/wiki/create";
+    const endpoint = "https://api.op47.de/v1/wiki/create";
     const request = {
         method: "POST",
         headers: {

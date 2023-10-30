@@ -3,7 +3,12 @@ const slug = window.location.pathname.split("/").slice(-1)[0];
 const content = document.getElementById("markdown-content");
 
 // fetch md from users from api out of db later
-const md = `
+
+const request = {
+    method: "GET",
+}
+const md = await fetch(`https://api.op47.de/wiki/page/${slug}.md`, request);
+const fake_md = `
 # ${slug}
 # Test heading 1
 ## Test heading 2
@@ -21,7 +26,7 @@ this is a test
 
 const mdBlock = new MarkdownBlock();
 mdBlock.setAttribute("untrusted", "");
-mdBlock.mdContent = md;
+mdBlock.mdContent = fake_md;
 
 content.appendChild(mdBlock);
 mdBlock.render();
