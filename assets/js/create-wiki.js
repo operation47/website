@@ -20,7 +20,7 @@ form.addEventListener("submit", async (e) => {
     switch (response.status) {
         case 200:
             // success
-            window.location.href = "/wiki/" + title;
+            window.location.href = "/wiki/" + title.trim();
             break;
         case 409:
             // conflict

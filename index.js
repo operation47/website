@@ -91,7 +91,8 @@ app.get("/wiki/create", (req, res) => {
     sendFileSafe(req, res, `/wiki/create`, "create_wiki.html");
 });
 app.get("/wiki/:page", (req, res) => {
-    sendFileSafe(req, res, `/wiki/${req.params.page}`, "wiki_page.html");
+    res.sendFile(join(__dirname, "pages", "wiki_page.html"));
+    //sendFileSafe(req, res, `/wiki/${req.params.page}`, "wiki_page.html");
 });
 app.post("/comm/new_message", (req, res) => {
     if (!req.body.channel) {

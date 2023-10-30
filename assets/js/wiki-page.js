@@ -1,5 +1,6 @@
 import { MarkdownBlock } from "https://md-block.verou.me/md-block.js";
-const slug = window.location.pathname.split("/").slice(-1)[0];
+const slug = window.location.pathname.split("/").slice(-1)[0].replace("%20", " ");
+console.log(slug);
 const content = document.getElementById("markdown-content");
 
 // fetch md from users from api out of db later
@@ -7,12 +8,6 @@ const content = document.getElementById("markdown-content");
 const request = {
     method: "GET",
 }
-const response = await fetch(`https://api.op47.de/v1/wiki/page/${slug}`, request);
-if(!response.ok) throw new Error(response.statusText);
-const obj = await response.json();
-const title = obj.title;
-const md = obj.content;
-
 const response2 = await fetch(`https://api.op47.de/v1/wiki/pages`, request);
 if(!response2.ok) throw new Error(response2.statusText);
 const pages = await response2.json();
@@ -27,6 +22,12 @@ for (const page of pages) {
     li.appendChild(a);
     thingy.appendChild(li);
 }
+const response = await fetch(`https://api.op47.de/v1/wiki/page/${slug}`, request);
+if(!response.ok) throw new Error(response.statusText);
+const obj = await response.json();
+const title = obj.title;
+const md = obj.content;
+
 
 
 window.document.title = title.concat(" - Operation47 Wiki");
