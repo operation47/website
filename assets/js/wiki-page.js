@@ -1,9 +1,7 @@
 import { MarkdownBlock } from "https://md-block.verou.me/md-block.js";
 const slug = window.location.pathname.split("/").slice(-1)[0].replace("%20", " ");
-console.log(slug);
 const content = document.getElementById("markdown-content");
 
-// fetch md from users from api out of db later
 
 const request = {
     method: "GET",
