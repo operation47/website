@@ -13,23 +13,24 @@ const obj = await response.json();
 const title = obj.title;
 const md = obj.content;
 
+const response2 = await fetch(`https://api.op47.de/v1/wiki/pages`, request);
+if(!response2.ok) throw new Error(response2.statusText);
+const pages = await response2.json();
+
+const thingy = document.getElementById("pages");
+
+for (const page of pages) {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.setAttribute("href", `/wiki/${page}`);
+    a.textContent = page;
+    li.appendChild(a);
+    thingy.appendChild(li);
+}
+
+
 window.document.title = title.concat(" - Operation47 Wiki");
 
-const fake_md = `
-# ${slug}
-# Test heading 1
-## Test heading 2
-### Test heading 3
-#### Test heading 4
-##### Test heading 5
-###### Test heading 6
-
-this is a test
-
-1. test
-2. test
-3. **test**
-`;
 
 const mdBlock = new MarkdownBlock();
 mdBlock.setAttribute("untrusted", "");
