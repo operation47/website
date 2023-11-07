@@ -1,4 +1,7 @@
-import { loadAllChatMessages, loadChatMessagesForChannel } from "./message-handler.js";
+import {
+    loadAllChatMessages,
+    loadChatMessagesForChannel,
+} from "./message-handler.js";
 import { socket } from "./script.js";
 
 async function main() {
@@ -29,8 +32,8 @@ function cycleDots() {
 }
 
 socket.on("connect", () => {
-    if(!disconnect_info.classList.contains("hidden")) {
-        if(dotInterval) {
+    if (!disconnect_info.classList.contains("hidden")) {
+        if (dotInterval) {
             clearInterval(dotInterval);
         }
         disconnect_info.classList.add("green");
@@ -41,14 +44,14 @@ socket.on("connect", () => {
 });
 
 socket.on("disconnect", () => {
-    if(disconnect_info.classList.contains("hidden")) {
+    if (disconnect_info.classList.contains("hidden")) {
         disconnect_info.classList.remove("hidden");
         disconnect_info.classList.remove("green");
         dotInterval = setInterval(cycleDots, 500);
     }
 });
 
-window.addEventListener('pageshow', () => {
+window.addEventListener("pageshow", () => {
     if (!socket.connected) {
         socket.connect();
     }
@@ -59,8 +62,7 @@ setTimeout(() => {
 }, 250);
 
 setInterval(() => {
-    if(!socket.connected) {
+    if (!socket.connected) {
         socket.connect();
     }
 }, 5000);
-

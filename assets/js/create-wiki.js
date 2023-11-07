@@ -40,4 +40,3 @@ form.addEventListener("submit", async (e) => {
             break;
     }
 });
-

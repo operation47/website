@@ -25,7 +25,6 @@ body {
     animation: slide-down 0.25s ease-in-out forwards;
 }
 
-
 .dots {
     display: inline-block;
 }
@@ -43,7 +42,6 @@ body {
     100% {
         transform: translateY(0%);
     }
-    
 }
 
 @keyframes slide-down {
@@ -173,10 +171,9 @@ a {
 
 .chat-header {
     display: flex;
-    justify-content: space-between; 
-    align-items: center; 
+    justify-content: space-between;
+    align-items: center;
 }
-
 
 .button {
     background-color: #3498db;
@@ -246,7 +243,6 @@ a {
     display: block;
     position: absolute;
     top: 10px;
-    left: 10px;
 
     z-index: 1;
 
@@ -256,17 +252,22 @@ a {
 
 #menuToggle a {
     text-decoration: none;
-    color: #cdcdcd;
+    color: #adadad;
 
     transition: color 0.3s ease;
 }
 
+#menuToggle li {
+    margin-left: 10px;
+}
+
+
 #menuToggle a:hover {
-    color: tomato;
+    color: #ffffff;
 }
 
 #menuToggle a.active {
-    color: #4d4d4d;
+    color: #81b8d9;
 }
 
 #menuToggle input {
@@ -296,7 +297,6 @@ a {
     position: relative;
 
     background: #cdcdcd;
-    border-radius: 3px;
 
     z-index: 1;
 
@@ -349,10 +349,10 @@ a {
     position: absolute;
     width: 300px;
     margin: -100px 0 0 -50px;
-    padding-left: 50px;
     padding-top: 100px;
+    height: 100vh;
 
-    background: #080808f6;
+    background: #080808fa;
     list-style-type: none;
     -webkit-font-smoothing: antialiased;
     /* to stop flickering of text in safari */
@@ -381,7 +381,6 @@ a {
 .disconnected-info.green {
     transition: background-color 0.25s ease-in-out;
 }
-
 
 .green {
     background: #22aa22a0;
