@@ -3,6 +3,12 @@ body {
     background-color: #0f0f0f;
 }
 
+.nav {
+    position: abolute;
+    top: 10px;
+    left: 10px;
+}
+
 .disconnected-info {
     display: flex;
     font-family: system-ui, sans-serif;
@@ -229,7 +235,7 @@ a {
     background-color: #0f0f0f;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
     .chat-wrapper {
         flex-direction: column;
     }
@@ -237,14 +243,16 @@ a {
         width: 100%;
         min-height: 50dvh;
     }
+
 }
 
 #menuToggle {
     display: block;
     position: absolute;
     top: 10px;
+    left: 10px;
 
-    z-index: 1;
+    z-index: 2;
 
     -webkit-user-select: none;
     user-select: none;
@@ -360,6 +368,15 @@ a {
     transform: translate(-100%, 0);
 
     transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+}
+
+@media (max-width: 1000px) {
+    #menu  {
+        width: 100dvw;
+        transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+        text-align: center;
+    }
+    
 }
 
 #menu li {

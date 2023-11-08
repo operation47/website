@@ -13,6 +13,9 @@
             href="https://imgur.com/GiBb5YN.png"
         />
         <link rel="stylesheet" href="style.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
         <script type="module" src="script.js" defer></script>
         <script src="/socket.io/socket.io.js"></script>
 
@@ -22,7 +25,8 @@
                 display: flex;
                 align-items: center;
                 flex-direction: column;
-                gap: 20dvh;
+                gap: 10dvh;
+                font-family: "Inter", sans-serif;
             }
 
             .featured {
@@ -32,7 +36,7 @@
                 gap: 50px;
             }
 
-            @media (max-width: 768px) {
+            @media (max-width: 1000px) {
                 .featured {
                     flex-direction: column;
                 }
@@ -44,11 +48,23 @@
             .linkcredit {
                 color: #9146ff;
                 text-decoration: none;
+                font-size: 1.5rem;
             }
 
             h2 {
                 margin-bottom: 0;
+                font-size: 2rem;
             }
+            h3 {
+                font-size: 1.5rem;
+            }
+            /* inter font */
+            .motto {
+                font-size: 4rem;
+                font-weight: 700;
+                text-align: center;
+            }
+
         </style>
     </head>
 
@@ -74,6 +90,7 @@
 
         <div class="main-content">
             <h1>Op47 - Credits</h1>
+            <div class="motto">Die FOMO hat ein Ende</div>
             <section class="featured"></section>
         </div>
 
