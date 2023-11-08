@@ -357,7 +357,7 @@ a {
     width: 300px;
     margin: -100px 0 0 -50px;
     padding-top: 100px;
-    height: 100vh;
+    height: 100dvh;
 
     background: #080808fa;
     list-style-type: none;
