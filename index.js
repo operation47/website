@@ -88,7 +88,7 @@ app.get("/wiki/create", (req, res) => {
     sendFileSafe(req, res, `/wiki/create`, "create_wiki.html");
 });
 app.get("/wiki", (req, res) => {
-    res.redirect("/wiki/index");
+    res.redirect("/wiki/startseite");
 });
 app.get("/wiki/:page", (req, res) => {
     res.sendFile(join(__dirname, "pages", "wiki_page.html"));
