@@ -9,7 +9,6 @@ const request = {
     method: "GET",
 };
 const response2 = await fetch(`https://api.op47.de/v1/wiki/pages`, request);
-if (!response2.ok) throw new Error(response2.statusText);
 const pages = await response2.json();
 
 const thingy = document.getElementById("pages");
@@ -26,13 +25,27 @@ const response = await fetch(
     `https://api.op47.de/v1/wiki/page/${slug}`,
     request,
 );
-if (!response.ok) throw new Error(response.statusText);
-const obj = await response.json();
-const title = obj.title;
-const md = obj.content;
+let title;
+let md;
+switch (response.status) {
+    case 200:
+        const obj = await response.json();
+        title = obj.title;
+        md = obj.content;
+        break;
+    case 404:
+        title = "404";
+        md = "# 404\n\nThis page does not exist.";
+        break;
+    default:
+        title = "Error";
+        md = `# Error\n\nAn error occured while loading this page. Please try again later.\n\nError code: ${response.status}`;
+        break;
+}
 
 window.document.title = title.concat(" - Operation47 Wiki");
 
+md = "# ".concat(title).concat("\n\n").concat(md);
 const mdBlock = new MarkdownBlock();
 mdBlock.setAttribute("untrusted", "");
 mdBlock.mdContent = md;

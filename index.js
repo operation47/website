@@ -84,11 +84,11 @@ app.get("/recap", (req, res) => {
 app.get("/credits", (req, res) => {
     sendFileSafe(req, res, "/credits", "credits.html");
 });
-app.get("/wiki", (req, res) => {
-    sendFileSafe(req, res, `/wiki`, "wiki.html");
-});
 app.get("/wiki/create", (req, res) => {
     sendFileSafe(req, res, `/wiki/create`, "create_wiki.html");
+});
+app.get("/wiki", (req, res) => {
+    res.redirect("/wiki/index");
 });
 app.get("/wiki/:page", (req, res) => {
     res.sendFile(join(__dirname, "pages", "wiki_page.html"));
