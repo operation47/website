@@ -1,11 +1,13 @@
 html {
     font-family: sans-serif;
-    background: linear-gradient(to bottom, #f5f5f5, #e8e8e8);
+    background-color: #1f1f1f;
+    color: #d9d9d9;
     min-height: 100%;
     min-width: 100%;
 }
 body {
     margin: 0;
+    height: 100dvh;
 }
 
 .page-content {
@@ -15,20 +17,50 @@ body {
 }
 
 .wiki-nav {
-    background: green;
-    padding-right: 7.5rem;
+    padding-left: 1rem;
+    height: 100%;
+}
+
+
+.wiki-nav > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    padding-left: 1rem;
+}
+.wiki-nav > ul > li {
+    padding: 0.25rem 0;
+}
+
+a {
+    color: #aaa;
+    text-decoration: none;
 }
 
 header {
+    position: sticky;
     display: flex;
     justify-content: space-between;
+    gap: 1rem;
     align-items: center;
     padding: 1rem;
-    background: blue;
-    color: red;
+    color: #81b8d9;
+    font-size: 1.5rem;
+}
+
+.expanded {
+    display: none;
 }
 
 #markdown-content {
+    width: 100%;
+    margin-right: 2.5rem;
+    margin-left: 2.5rem;
+    height: 100%;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-y: scroll;
+    background-color: #0f0f0f;
 }
 
 h1 {
@@ -49,3 +81,5 @@ h5 {
 h6 {
     font-size: 1.5rem;
 }
+
+

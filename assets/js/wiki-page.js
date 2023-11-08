@@ -39,3 +39,10 @@ mdBlock.mdContent = md;
 
 content.appendChild(mdBlock);
 mdBlock.render();
+
+
+const expand = document.getElementById("expand");
+const aside = document.getElementsByClassName("wiki-nav")[0];
+expand.addEventListener("click", () => {
+    aside.classList.toggle("expanded");
+});
