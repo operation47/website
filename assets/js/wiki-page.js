@@ -35,7 +35,7 @@ switch (response.status) {
         break;
     case 404:
         title = "404";
-        md = "# 404\n\nThis page does not exist.";
+        md = "## This page does not exist.";
         break;
     default:
         title = "Error";
