@@ -41,6 +41,21 @@
                 letter-spacing: 1px;
             }
 
+            .add-clip {
+                display:flex ;
+                padding-top: 5px;
+            }
+
+            .add-clip div {
+                padding-top: 18px;
+                padding-left: 4px;
+            }
+
+            .add-clip input {
+                border: 1px solid white;
+                border-radius: 3px;
+            }
+
             .button {
                 font-size: 20px;
                 padding-top: 6px;
@@ -287,19 +302,23 @@
                 </div>
             </nav>
             <div class="title">FOMO Clips der Woche</div>
-            <ul id="input-list">
-                <li>
-                    <input
+            <div class="add-clip">
+                <ul id="input-list">
+                    <li>
+                        <input
                         type="password"
                         id="pw-input"
                         placeholder="password"
-                    />
-                </li>
-                <li>
-                    <input type="url" id="link-input" placeholder="link" />
-                </li>
-            </ul>
-            <button class="button" onclick="submitInput()">+</button>
+                        />
+                    </li>
+                    <li>
+                        <input type="url" id="link-input" placeholder="link" />
+                    </li>
+                </ul>
+                <div>
+                    <button class="button" onclick="submitInput()">+</button>
+                </div>
+            </div>
         </div>
         <div class="box-container"></div>
         <div id="clip-player-wrapper" class="overlay hide">
