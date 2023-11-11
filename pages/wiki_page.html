@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Wiki Page</title>
+        <script type="module" src="/wiki-page.js"></script>
+        <link rel="stylesheet" href="/wiki-page.css" />
+    </head>
+    <body>
+        <header>
+            <a href="/wiki"><h1 class="title">FOMO-Wiki</h1></a>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/wiki/create">Create new</a>
+            </nav>
+        </header>
+        <div class="page-content">
+            <span id="expand">></span>
+            <aside class="wiki-nav">
+                <h2>Pages</h2>
+                <ul id="pages"></ul>
+            </aside>
+            <section id="markdown-content"></section>
+        </div>
+    </body>
+</html>

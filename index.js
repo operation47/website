@@ -18,6 +18,7 @@ app.use(
         origin: "https://op47.de",
     }),
 );
+app.use(express.json());
 app.use(express.static(join(__dirname, "/public")));
 app.use(express.static(join(__dirname, "/files")));
 
@@ -62,7 +63,15 @@ app.get("/message-handler.js", (req, res) => {
 app.get("/chat-stuff.js", (req, res) => {
     sendFileSafe(req, res, "/chat-stuff.js", "chat-stuff.js");
 });
-
+app.get("/wiki-page.js", (req, res) => {
+    sendFileSafe(req, res, "/wiki-page.js", "wiki-page.js");
+});
+app.get("/create-wiki.js", (req, res) => {
+    sendFileSafe(req, res, "/create-wiki.js", "create-wiki.js");
+});
+app.get("/wiki-page.css", (req, res) => {
+    sendFileSafe(req, res, "/wiki-page.css", "wiki-page.css");
+});
 app.get("/", async (req, res) => {
     sendFileSafe(req, res, "/", "index.html");
 });
@@ -75,9 +84,22 @@ app.get("/recap", (req, res) => {
 app.get("/credits", (req, res) => {
     sendFileSafe(req, res, "/credits", "credits.html");
 });
-
-app.get("/comm/new_message", (req, res) => {
-    io.emit("newMessage");
+app.get("/wiki/create", (req, res) => {
+    sendFileSafe(req, res, `/wiki/create`, "create_wiki.html");
+});
+app.get("/wiki", (req, res) => {
+    res.redirect("/wiki/startseite");
+});
+app.get("/wiki/:page", (req, res) => {
+    res.sendFile(join(__dirname, "pages", "wiki_page.html"));
+    //sendFileSafe(req, res, `/wiki/${req.params.page}`, "wiki_page.html");
+});
+app.post("/comm/new_message", (req, res) => {
+    if (!req.body.channel) {
+        res.status(400).send("Bad request");
+        return;
+    }
+    io.emit("newMessage", req.body.channel);
     res.status(200).send("OK");
 });
 

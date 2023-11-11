@@ -7,9 +7,9 @@ import {
 const di1araasTwitchId = 645207159;
 const stegiTwitchId = 51304190;
 const firstTimestampSet = {
-    "stegi": false,
-    "di1araas": false
-}
+    stegi: false,
+    di1araas: false,
+};
 
 export async function loadAllChatMessages() {
     const result = await Promise.all([
@@ -36,6 +36,16 @@ export async function loadAllChatMessages() {
         }
     }
 }
+export async function loadChatMessagesForChannel(channel) {
+    const result = await loadMessages(channel);
+    replaceWithEmotes(
+        result,
+        await get7tvChannelEmotes(
+            channel === "stegi" ? stegiTwitchId : di1araasTwitchId,
+        ),
+        await get7tvGlobalEmotes(),
+    );
+}
 
 async function loadMessages(user) {
     const container = document.querySelector(`.chat-scrollable-${user}`);
@@ -51,7 +61,7 @@ async function loadMessages(user) {
 
     let lastTimestamp = 0;
     const threeDaysAgo = new Date();
-    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3)
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     messages.forEach((message) => {
         if (!isSameDay(lastTimestamp, message.timestamp)) {
             let firstTimestamp = false;
@@ -63,7 +73,9 @@ async function loadMessages(user) {
                 }
             }
 
-            container.appendChild(buildNewDayMessage(message.timestamp, firstTimestamp));
+            container.appendChild(
+                buildNewDayMessage(message.timestamp, firstTimestamp),
+            );
             lastTimestamp = message.timestamp;
         }
         const newElement = buildTextMessage(
@@ -149,9 +161,9 @@ async function getMessages(channel) {
 }
 
 function buildNewDayMessage(timestamp, firstTimestamp) {
-    let timeString = "00:00 "
+    let timeString = "00:00 ";
     if (firstTimestamp) {
-        timeString = getTimeStringFromDate(new Date()) + " "
+        timeString = getTimeStringFromDate(new Date()) + " ";
     }
 
     const dateString = timeString.concat(
@@ -175,7 +187,7 @@ function buildNewDayMessage(timestamp, firstTimestamp) {
 }
 
 function getTimeString(timestamp) {
-    return getTimeStringFromDate(new Date(timestamp))
+    return getTimeStringFromDate(new Date(timestamp));
 }
 
 function getTimeStringFromDate(date) {

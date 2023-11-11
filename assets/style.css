@@ -2,6 +2,63 @@ body {
     font-family: Arial, sans-serif;
     background-color: #0f0f0f;
 }
+
+.nav {
+    position: abolute;
+    top: 10px;
+    left: 10px;
+}
+
+.disconnected-info {
+    display: flex;
+    font-family: system-ui, sans-serif;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    padding: 1rem;
+    width: 100%;
+    bottom: 0;
+    min-height: 25dvh;
+    color: #ffffff;
+    background: #bb2222a0;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    font-size: 24px;
+    animation: slide-up 0.25s ease-in-out;
+}
+
+.disconnected-info.hidden {
+    animation: slide-down 0.25s ease-in-out forwards;
+}
+
+.dots {
+    display: inline-block;
+}
+
+@media (max-width: 768px) {
+    .disconnected-info {
+        font-size: 20px;
+    }
+}
+
+@keyframes slide-up {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+@keyframes slide-down {
+    0% {
+        transform: translateY(0%);
+    }
+    100% {
+        transform: translateY(100%);
+    }
+}
+
 ::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
@@ -22,6 +79,7 @@ a {
 }
 .link {
     text-decoration: none;
+    word-break: break-all;
     color: #3498db;
 }
 .chat-wrapper {
@@ -63,7 +121,16 @@ a {
         transform: rotate(360deg);
     }
 }
-
+.chat-emote {
+    max-width: 200px;
+    max-height: 200px;
+    margin-left: 5px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+.chat-text-fragment {
+    word-wrap: break-word;
+}
 .chat-container {
     display: flex;
     flex-direction: column;
@@ -101,16 +168,17 @@ a {
     top: 0;
     background-color: #1a1a1a;
     z-index: 1;
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
 }
 
-.addon {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
+.header-center {
+    flex: 1;
+    text-align: center;
+}
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .button {
@@ -127,7 +195,6 @@ a {
 
 .viewer-count {
     font-size: 16px;
-    align-self: baseline;
 }
 
 .no-messages-alert  {
@@ -144,18 +211,8 @@ a {
 
 .chat-message {
     font-size: 17px;
-    display: flex;
+    line-height: 1.5;
     padding: 7px;
-    overflow-wrap: break-word;
-    word-break: break-all;
-    align-items: center;
-}
-
-.chat-message img {
-    max-width: 100%;
-    vertical-align: -webkit-baseline-middle;
-    margin-left: 5px;
-    margin-right: 5px;
 }
 
 .chat-username {
@@ -190,7 +247,7 @@ a {
     background-color: #0f0f0f;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
     .chat-wrapper {
         flex-direction: column;
     }
@@ -198,6 +255,7 @@ a {
         width: 100%;
         min-height: 50dvh;
     }
+
 }
 
 #menuToggle {
@@ -206,7 +264,7 @@ a {
     top: 10px;
     left: 10px;
 
-    z-index: 1;
+    z-index: 2;
 
     -webkit-user-select: none;
     user-select: none;
@@ -214,17 +272,21 @@ a {
 
 #menuToggle a {
     text-decoration: none;
-    color: #cdcdcd;
+    color: #adadad;
 
     transition: color 0.3s ease;
 }
 
+#menuToggle li {
+    margin-left: 10px;
+}
+
 #menuToggle a:hover {
-    color: tomato;
+    color: #ffffff;
 }
 
 #menuToggle a.active {
-    color: #4d4d4d;
+    color: #81b8d9;
 }
 
 #menuToggle input {
@@ -254,7 +316,6 @@ a {
     position: relative;
 
     background: #cdcdcd;
-    border-radius: 3px;
 
     z-index: 1;
 
@@ -307,10 +368,10 @@ a {
     position: absolute;
     width: 300px;
     margin: -100px 0 0 -50px;
-    padding-left: 50px;
     padding-top: 100px;
+    height: 100dvh;
 
-    background: #080808f6;
+    background: #080808fa;
     list-style-type: none;
     -webkit-font-smoothing: antialiased;
     /* to stop flickering of text in safari */
@@ -319,6 +380,15 @@ a {
     transform: translate(-100%, 0);
 
     transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+}
+
+@media (max-width: 1000px) {
+    #menu  {
+        width: 100dvw;
+        transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+        text-align: center;
+    }
+    
 }
 
 #menu li {
@@ -333,6 +403,13 @@ a {
     transform: none;
 }
 
-.centered-content {
-    text-align: center; /* Horizontally center the content within the div */
+.prevent-animation {
+    animation-duration: 0s !important;
+}
+.disconnected-info.green {
+    transition: background-color 0.25s ease-in-out;
+}
+
+.green {
+    background: #22aa22a0;
 }

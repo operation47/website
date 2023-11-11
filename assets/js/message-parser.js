@@ -7,7 +7,6 @@ export async function get7tvGlobalEmotes() {
     const json = await response.json();
 
     try {
-
         for (const emote of json.emotes) {
             emotes.push({
                 name: emote.name,
@@ -15,8 +14,7 @@ export async function get7tvGlobalEmotes() {
                 // files: emote.data.host.files, not needed right now because we assume that the emote is always available in 1x webp
             });
         }
-    }
-    catch (err) {
+    } catch (err) {
         console.log(err);
     }
 

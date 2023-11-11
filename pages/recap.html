@@ -27,7 +27,7 @@
                 align-items: center;
                 width: 100vw;
                 height: 50px;
-                padding: 0px 20px;
+                padding: 0px 10px;
                 box-sizing: border-box;
                 position: fixed;
                 top: 0;
@@ -78,56 +78,6 @@
                 height: calc(60vw / (16 / 9));
             }
 
-            @media (max-width: 1000px) {
-                .box-container {
-                    display: block;
-                }
-
-                .box .links {
-                    height: 0px;
-                    overflow-y: auto;
-                }
-
-                .title {
-                    display: none;
-                }
-
-                @keyframes showLinks {
-                    form {
-                        height: 0px;
-                    }
-
-                    to {
-                        height: 300px;
-                    }
-                }
-
-                @keyframes hideLinks {
-                    from {
-                        height: 300px;
-                    }
-
-                    to {
-                        height: 0px;
-                    }
-                }
-
-                #clip-player {
-                    width: 100vw;
-                    height: calc(100vw / (16 / 9));
-                    align-self: flex-start;
-                    margin-top: 100px;
-                }
-
-                .hide-links {
-                    animation: hideLinks 0.5s forwards;
-                }
-
-                .show-links {
-                    animation: showLinks 0.5s forwards;
-                }
-            }
-
             .box {
                 flex: 1;
                 margin: 7px;
@@ -157,10 +107,6 @@
             .box.today h2 {
                 background-color: tomato;
             }
-
-            
-
-            
 
             .links {
                 color: red;
@@ -213,7 +159,7 @@
             .clip.seen {
                 color: #333;
             }
-            .box.today  .clip.seen {
+            .box.today .clip.seen {
                 color: #333;
             }
 
@@ -223,6 +169,60 @@
 
             ul {
                 list-style: none;
+            }
+            @media (max-width: 1000px) {
+                .box-container {
+                    flex-direction: column-reverse;
+                    justify-content: flex-end;
+                }
+
+                .box {
+                    flex: initial;
+                }
+
+                .box .links {
+                    height: 0px;
+                    overflow-y: auto;
+                }
+
+                .title {
+                    display: none;
+                }
+
+                @keyframes showLinks {
+                    form {
+                        height: 0px;
+                    }
+
+                    to {
+                        height: 300px;
+                    }
+                }
+
+                @keyframes hideLinks {
+                    from {
+                        height: 300px;
+                    }
+
+                    to {
+                        height: 0px;
+                    }
+                }
+
+                #clip-player {
+                    width: 100vw;
+                    height: calc(100vw / (16 / 9));
+                    align-self: flex-start;
+                    margin-top: 100px;
+                }
+
+                .hide-links {
+                    animation: hideLinks 0.5s forwards;
+                }
+
+                .show-links {
+                    animation: showLinks 0.5s forwards;
+                }
             }
         </style>
     </head>
@@ -269,23 +269,20 @@
         <div class="header">
             <nav role="navigation">
                 <div id="menuToggle">
+                    <!-- checkbox to use :checked selector-->
                     <input id="menu-checkbox" type="checkbox" />
+
+                    <!--Hamburger-->
                     <span></span>
                     <span></span>
                     <span></span>
+
                     <ul id="menu">
-                        <a href="/">
-                            <li>Chat</li>
-                        </a>
-                        <a href="prime">
-                            <li>Prime</li>
-                        </a>
-                        <a href="recap" class="active">
-                            <li>Recap</li>
-                        </a>
-                        <a href="credits">
-                            <li>Credits</li>
-                        </a>
+                        <a href="/"><li>Chat</li></a>
+                        <a href="prime"><li>Prime</li></a>
+                        <a href="recap" class="active"><li>Recap</li></a>
+                        <a href="/wiki"><li>Wiki (wip)</li></a>
+                        <a href="credits"><li>Credits</li></a>
                     </ul>
                 </div>
             </nav>
@@ -353,7 +350,7 @@
             function setDates() {
                 for (let i = 0; i < dates.length; i++) {
                     dates[i].setDate(today.getDate() - (4 - i));
-                    dates[i].setHours(0,0,0,0);
+                    dates[i].setHours(0, 0, 0, 0);
                     weekdays[i] = getWeekday(dates[i]);
                 }
             }
