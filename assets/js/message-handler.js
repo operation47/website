@@ -17,6 +17,24 @@ export async function loadAllChatMessages() {
         loadMessages("di1araas"),
     ]);
     loadEmotes(result[0], result[1]);
+
+    // no new messages handling
+    for (const r of result) {
+        if (r.length == 0){
+            const channel = result.indexOf(r) == 0 ? "stegi" : "di1araas";
+            const container = document.querySelector(`.chat-scrollable-${channel}`);
+            const div = document.createElement("div");
+            div.classList.add("no-messages-alert");
+            const manno = new Image();
+            manno.src = "https://cdn.7tv.app/emote/609ef9394c18609a1d9b10e1/1x.webp"
+            const text = document.createElement("span");
+            text.innerHTML = "Keine neuen Nachrichten";
+
+            div.appendChild(manno);
+            div.appendChild(text);
+            container.appendChild(div);
+        }
+    }
 }
 
 async function loadMessages(user) {
@@ -58,9 +76,10 @@ async function loadMessages(user) {
             message: message,
             element: newElement,
         });
-        spinner.remove();
-        container.scrollTo(0, container.scrollHeight);
     });
+    spinner.remove();
+    container.scrollTo(0, container.scrollHeight);
+
     return messagesDom;
 }
 
