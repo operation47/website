@@ -24,6 +24,7 @@ app.use(express.static(join(__dirname, "/files")));
 
 const io = new Server(httpServer, { cors: { origin: "*" }, allowEIO3: true });
 
+let clipViews = {}
 let viewerCount = 0;
 io.on("connection", (socket) => {
     viewerCount++;
@@ -33,7 +34,19 @@ io.on("connection", (socket) => {
         viewerCount--;
         io.emit("viewerCount", viewerCount);
     });
+
+    socket.on("getViews", (id) => { 
+        if (!(id in clipViews)) clipViews[id] = 0;
+        io.emit("newView", [id, clipViews[id]]);
+    })
+    socket.on("newView", (id)=> {
+        clipViews[id] = id in clipViews ? clipViews[id] + 1 : 1;
+        io.emit("newView", [id, clipViews[id]]);
+    })
+    
+
 });
+
 
 function sendFileSafe(req, res, url, filepath) {
     let type = filepath.split(".")[1];

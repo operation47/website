@@ -518,10 +518,10 @@
                             let embedURL = `https://clips.twitch.tv/embed?clip=${clipID}&parent=op47.de&parent=www.op47.de&parent=localhost&autoplay=true&muted=false`;
                             clipPlayer.src = embedURL;
                             clipPlayerWrapper.classList.remove("hide");
+                            socket.emit("newView", link.id);
                         };
 
-                        
-                        const viewCount = "0";
+
                         
                         const author = createElementWithClass("span", "author");
                         // will later be replaced by whoever sent the clip in, once theres proper auth...
@@ -529,10 +529,7 @@
                         const dot = createElementWithClass("span", "dot");
                         dot.innerHTML = "·";
                         const views = createElementWithClass("span", "views");
-                        views.innerHTML = "<strike>" + 
-                            (viewCount == 1 ? viewCount + " Aufruf" : viewCount + " Aufrufe")
-                             + "</strike> (wip)";
-
+                        views.innerHTML = "0 Aufrufe";
                         const caption = createElementWithClass("div", "caption");
                         caption.appendChild(author);
                         caption.appendChild(dot);
@@ -540,13 +537,23 @@
                     
                         
                         const wrapper = createElementWithClass("div", "clip-wrapper");
+                        wrapper.id = link.id;
                         wrapper.appendChild(clip);
                         wrapper.appendChild(caption);
 
                         linksDiv.appendChild(wrapper);
+
+                        socket.emit("getViews", link.id);
                     }
                 }
             }
+
+            socket.on("newView", (res)=> {
+                const id = res[0];
+                const viewCount = res[1];
+                const span = document.getElementById(id).getElementsByClassName("views")[0];
+                span.innerHTML = viewCount == 1 ? viewCount + " Aufruf" : viewCount + " Aufrufe";
+            });
 
             function createElementWithClass(element, classname) {
                 const e = document.createElement(element);
