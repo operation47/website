@@ -182,6 +182,16 @@
                 color: #333;
             }
 
+            .caption {
+                color: grey;
+                font-size: 12px;
+            }
+
+            .caption .dot {
+                font-weight: bold;
+                margin: 4px;
+            }
+
             ul {
                 list-style: none;
             }
@@ -478,11 +488,9 @@
 
                     for (const link of json) {
                         // skip the current link if its already loaded
-                        if (linksDiv.children[json.indexOf(link)]) {
-                            continue;
-                        }
+                        if (linksDiv.children[json.indexOf(link)]) continue;
 
-                        let clip = document.createElement("span");
+                        const clip = createElementWithClass("div", "clip");
 
                         // chops off the title if it is too long
                         let linkText;
@@ -491,18 +499,18 @@
                             maxTitleLength + titleLengthBuffer
                         ) {
                             linkText = document.createTextNode(
-                                `#${json.indexOf(link) + 1} ${
+                                `${
                                     link.title.substring(0, maxTitleLength) +
                                     "..."
                                 }`,
                             );
                         } else {
                             linkText = document.createTextNode(
-                                `#${json.indexOf(link) + 1} ${link.title}`,
+                                `${link.title}`,
                             );
                         }
-
-                        clip.classList.add("clip");
+                        
+                        clip.appendChild(linkText);
 
                         clip.onclick = () => {
                             clip.classList.add("seen");
@@ -512,11 +520,38 @@
                             clipPlayerWrapper.classList.remove("hide");
                         };
 
-                        clip.appendChild(linkText);
+                        
+                        const viewCount = "0";
+                        
+                        const author = createElementWithClass("span", "author");
+                        // will later be replaced by whoever sent the clip in, once theres proper auth...
+                        author.innerHTML = link.creator_name;
+                        const dot = createElementWithClass("span", "dot");
+                        dot.innerHTML = "·";
+                        const views = createElementWithClass("span", "views");
+                        views.innerHTML = "<strike>" + 
+                            (viewCount == 1 ? viewCount + " Aufruf" : viewCount + " Aufrufe")
+                             + "</strike> (wip)";
 
-                        linksDiv.appendChild(clip);
+                        const caption = createElementWithClass("div", "caption");
+                        caption.appendChild(author);
+                        caption.appendChild(dot);
+                        caption.appendChild(views);
+                    
+                        
+                        const wrapper = createElementWithClass("div", "clip-wrapper");
+                        wrapper.appendChild(clip);
+                        wrapper.appendChild(caption);
+
+                        linksDiv.appendChild(wrapper);
                     }
                 }
+            }
+
+            function createElementWithClass(element, classname) {
+                const e = document.createElement(element);
+                e.classList.add(classname);
+                return e;
             }
 
             export { loadLinks };
