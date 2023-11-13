@@ -83,9 +83,9 @@ async function loadMessages(user) {
         newAlert.classList.add("no-messages-alert");
         newAlert.classList.add(user);
         const manno = new Image();
-        manno.src = "https://cdn.7tv.app/emote/609ef9394c18609a1d9b10e1/1x.webp";
+        manno.src = "https://cdn.7tv.app/emote/609ef9394c18609a1d9b10e1/4x.webp";
         const text = document.createElement("span");
-        text.innerHTML = "Keine neuen Nachrichten";
+        text.innerHTML = "Keine Nachrichten in den letzten 3 Tagen";
 
         newAlert.appendChild(manno);
         newAlert.appendChild(text);
