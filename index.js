@@ -27,12 +27,19 @@ app.use(express.static(join(__dirname, "/files")));
 const io = new Server(httpServer, { cors: { origin: "*" }, allowEIO3: true });
 
 
-let clipViews = await pool.query("SELECT * FROM clips_aggregate");
-// collect all ids and view counters in one obj with the id used as key
-clipViews = clipViews.rows.reduce((acc, clip) => {
-    acc[clip.id] = { views: clip.views, author: clip.author };
-    return acc;
-}, {})
+let clipViews;
+
+async function loadAllClips() {
+    const res = await pool.query("SELECT * FROM clips_aggregate");
+    // collect all ids and view counters in one obj with the id used as key
+    clipViews = res.rows.reduce((acc, clip) => {
+        acc[clip.id] = { views: clip.views, author: clip.author };
+        return acc;
+    }, {})
+}
+
+loadAllClips();
+
 
 let visitorCount = 0;
 
@@ -133,7 +140,8 @@ app.post("/comm/new_message", (req, res) => {
     res.status(200).send("OK");
 });
 
-app.get("/comm/new_clip", (req, res) => {
+app.get("/comm/new_clip", async (req, res) => {
+    await loadAllClips();
     io.emit("newClip");
     res.status(200).send("OK");
 });
