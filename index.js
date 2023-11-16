@@ -5,6 +5,7 @@ import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import { Server } from "socket.io";
 import cors from "cors";
+import pg from "pg";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -12,6 +13,7 @@ const app = express();
 const port = process.env.PORT || 6969;
 const httpServer = http.createServer(app);
 const API_KEY = process.env.API_KEY;
+const pool = new pg.Pool();
 
 app.use(
     cors({
@@ -24,24 +26,35 @@ app.use(express.static(join(__dirname, "/files")));
 
 const io = new Server(httpServer, { cors: { origin: "*" }, allowEIO3: true });
 
-let clipViews = {}
-let viewerCount = 0;
+
+let clipViews = await pool.query("SELECT * FROM clips_aggregate");
+// collect all ids and view counters in one obj with the id used as key
+clipViews = clipViews.reduce((acc, clip) => {
+    acc[clip.id] = clip.views;
+    return acc;
+}, {})
+
+let visitorCount = 0;
+
 io.on("connection", (socket) => {
-    viewerCount++;
-    io.emit("viewerCount", viewerCount);
+    visitorCount++;
+    io.emit("visitorCount", visitorCount);
 
     socket.on("disconnect", () => {
-        viewerCount--;
-        io.emit("viewerCount", viewerCount);
+        visitorCount--;
+        io.emit("visitorCount", visitorCount);
     });
 
-    socket.on("getViews", (id) => { 
-        if (!(id in clipViews)) clipViews[id] = 0;
-        io.emit("newView", [id, clipViews[id]]);
+    socket.on("getViewsForClip", (id) => { 
+        const views = id in clipViews ? clipViews[id] : 0;
+        socket.emit("newViewForClip", [id, views]);
     })
-    socket.on("newView", (id)=> {
-        clipViews[id] = id in clipViews ? clipViews[id] + 1 : 1;
-        io.emit("newView", [id, clipViews[id]]);
+    socket.on("newViewForClip", async (id)=> {
+        if (id in clipViews) {
+            const views = ++clipViews[id];
+            pool.query(`UPDATE clips_aggregate SET views=${views} WHERE id=${id}`);
+            io.emit("newViewForClip", [id, views]);
+        }
     })
     
 

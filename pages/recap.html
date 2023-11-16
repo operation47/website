@@ -518,7 +518,7 @@
                             let embedURL = `https://clips.twitch.tv/embed?clip=${clipID}&parent=op47.de&parent=www.op47.de&parent=localhost&autoplay=true&muted=false`;
                             clipPlayer.src = embedURL;
                             clipPlayerWrapper.classList.remove("hide");
-                            socket.emit("newView", link.id);
+                            socket.emit("newViewForClip", link.id);
                         };
 
 
@@ -543,12 +543,12 @@
 
                         linksDiv.appendChild(wrapper);
 
-                        socket.emit("getViews", link.id);
+                        socket.emit("getViewsForClip", link.id);
                     }
                 }
             }
 
-            socket.on("newView", (res)=> {
+            socket.on("newViewForClip", (res)=> {
                 const id = res[0];
                 const viewCount = res[1];
                 const span = document.getElementById(id).getElementsByClassName("views")[0];

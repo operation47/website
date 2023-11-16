@@ -9,8 +9,8 @@ async function main() {
 }
 main();
 
-socket.on("viewerCount", (count) => {
-    document.getElementById("viewer-count").textContent = getCountText(count);
+socket.on("visitorCount", (count) => {
+    document.getElementById("visitor-count").textContent = getCountText(count);
 });
 
 socket.on("newMessage", (channel) => {
