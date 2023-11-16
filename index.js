@@ -29,7 +29,7 @@ const io = new Server(httpServer, { cors: { origin: "*" }, allowEIO3: true });
 
 let clipViews = await pool.query("SELECT * FROM clips_aggregate");
 // collect all ids and view counters in one obj with the id used as key
-clipViews = clipViews.reduce((acc, clip) => {
+clipViews = clipViews.rows.reduce((acc, clip) => {
     acc[clip.id] = clip.views;
     return acc;
 }, {})
