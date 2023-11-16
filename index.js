@@ -67,6 +67,9 @@ io.on("connection", (socket) => {
             io.emit("newViewForClip", [id, views]);
         }
     })
+    socket.on("clipDeleted", (id) => {
+        io.emit("clipDeleted", id);
+    })
     
 
 });

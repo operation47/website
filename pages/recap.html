@@ -592,6 +592,7 @@
                             const res = await fetch("https://api.op47.de/v1/removeClip", options);
 
                             if (res.status == 200) {
+                                socket.emit("clipDeleted", link.id);
                                 alert("Clip erfolgreich entfernt!");
                                 document.getElementById(link.id).remove();
                             }
@@ -630,7 +631,11 @@
                 const author = res[1];
                 const span = document.getElementById(id).getElementsByClassName("author")[0];
                 span.innerHTML = author;
-            })
+            });
+
+            socket.on("clipDeleted", (id) => {
+                document.getElementById(id).remove();
+            });
 
             function createElementWithClass(element, classname) {
                 const e = document.createElement(element);
