@@ -528,7 +528,7 @@
 
                     for (const link of json) {
                         // skip the current link if its already loaded
-                        if (linksDiv.children[json.indexOf(link)]) continue;
+                        if (document.getElementById(link.id)) continue;
 
                         const clip = createElementWithClass("div", "clip");
 
