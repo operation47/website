@@ -524,12 +524,9 @@
 
                         
                         const author = createElementWithClass("span", "author");
-                        // will later be replaced by whoever sent the clip in, once theres proper auth...
-                        author.innerHTML = link.creator_name;
                         const dot = createElementWithClass("span", "dot");
                         dot.innerHTML = "·";
                         const views = createElementWithClass("span", "views");
-                        views.innerHTML = "0 Aufrufe";
                         const caption = createElementWithClass("div", "caption");
                         caption.appendChild(author);
                         caption.appendChild(dot);
@@ -544,16 +541,24 @@
                         linksDiv.appendChild(wrapper);
 
                         socket.emit("getViewsForClip", link.id);
+                        socket.emit("getAuthorForClip", link.id);
                     }
                 }
             }
 
-            socket.on("newViewForClip", (res)=> {
+            socket.on("newViewForClip", (res) => {
                 const id = res[0];
                 const viewCount = res[1];
                 const span = document.getElementById(id).getElementsByClassName("views")[0];
                 span.innerHTML = viewCount == 1 ? viewCount + " Aufruf" : viewCount + " Aufrufe";
             });
+
+            socket.on("author", (res) => {
+                const id = res[0];
+                const author = res[1];
+                const span = document.getElementById(id).getElementsByClassName("author")[0];
+                span.innerHTML = author;
+            })
 
             function createElementWithClass(element, classname) {
                 const e = document.createElement(element);

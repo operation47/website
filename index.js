@@ -30,7 +30,7 @@ const io = new Server(httpServer, { cors: { origin: "*" }, allowEIO3: true });
 let clipViews = await pool.query("SELECT * FROM clips_aggregate");
 // collect all ids and view counters in one obj with the id used as key
 clipViews = clipViews.rows.reduce((acc, clip) => {
-    acc[clip.id] = clip.views;
+    acc[clip.id] = { views: clip.views, author: clip.author };
     return acc;
 }, {})
 
@@ -45,13 +45,17 @@ io.on("connection", (socket) => {
         io.emit("visitorCount", visitorCount);
     });
 
+    socket.on("getAuthorForClip", (id) => {
+        const author = id in clipViews ? clipViews[id].author : "unknown";
+        socket.emit("author", [id, author]);
+    })
     socket.on("getViewsForClip", (id) => { 
-        const views = id in clipViews ? clipViews[id] : 0;
+        const views = id in clipViews ? clipViews[id].views : 0;
         socket.emit("newViewForClip", [id, views]);
     })
     socket.on("newViewForClip", async (id)=> {
         if (id in clipViews) {
-            const views = ++clipViews[id];
+            const views = ++clipViews[id].views;
             pool.query(`UPDATE clips_aggregate SET views=${views} WHERE id=${id}`);
             io.emit("newViewForClip", [id, views]);
         }
