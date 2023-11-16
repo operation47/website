@@ -261,11 +261,18 @@
                 const linkInput = document
                     .getElementById("link-input")
                     .value.trim();
+                const nameInput = document
+                    .getElementById("name-input")
+                    .value.trim().substring(0, 30);
 
                 document.getElementById("pw-input").value = "";
                 document.getElementById("link-input").value = "";
+                document.getElementById("name-input").value = "";
 
                 if (!pwInput || !linkInput) return;
+
+                const body = { url: linkInput };
+                if (nameInput) body.author = nameInput;
 
                 const options = {
                     method: "POST",
@@ -273,9 +280,7 @@
                         authorization: pwInput,
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({
-                        url: linkInput,
-                    }),
+                    body: JSON.stringify(body),
                 };
 
                 let res = await fetch(
@@ -323,6 +328,9 @@
                     </li>
                     <li>
                         <input type="url" id="link-input" placeholder="link" />
+                    </li>
+                    <li>
+                        <input type="text" id="name-input" placeholder="username (optional)" />
                     </li>
                 </ul>
                 <div>
