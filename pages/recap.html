@@ -183,13 +183,45 @@
             }
 
             .caption {
+                display: flex;
                 color: grey;
                 font-size: 12px;
+                transform: translateY(4px);
             }
 
             .caption .dot {
                 font-weight: bold;
                 margin: 4px;
+                transform: translateY(-4px);
+            }
+
+            .caption .delete {
+                padding: 1px;
+                background-color: #dd1718;
+                margin: 3px;
+                border-radius: 3px;
+                transform: translateY(-5px);
+                height: 17px;
+                width: 15px;
+                
+            }
+
+            .caption .delete:hover {
+                background-color: #af1314;
+                cursor: pointer;
+            }
+
+            .caption .delete:hover img {
+                filter: saturate(500%) contrast(800%) brightness(500%) 
+                    invert(66%) sepia(50%) hue-rotate(120deg); 
+            }
+
+            .caption .delete img {
+                height: 14px;
+                width: 14px;
+                filter: saturate(500%) contrast(800%) brightness(500%) 
+                    invert(80%) sepia(50%) hue-rotate(120deg); 
+                transform: translate(0, 1px);
             }
 
             ul {
@@ -536,9 +568,41 @@
                         dot.innerHTML = "·";
                         const views = createElementWithClass("span", "views");
                         const caption = createElementWithClass("div", "caption");
+                        const dot2 = createElementWithClass("span", "dot");
+                        dot2.innerHTML = "·";
+                        const deleteButton = createElementWithClass("span", "delete");
+                        deleteButton.innerHTML = 
+                        `
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMyA2djE4aDE4di0xOGgtMTh6bTUgMTRjMCAuNTUyLS40NDggMS0xIDFzLTEtLjQ0OC0xLTF2LTEwYzAtLjU1Mi40NDgtMSAxLTFzMSAuNDQ4IDEgMXYxMHptNSAwYzAgLjU1Mi0uNDQ4IDEtMSAxcy0xLS40NDgtMS0xdi0xMGMwLS41NTIuNDQ4LTEgMS0xczEgLjQ0OCAxIDF2MTB6bTUgMGMwIC41NTItLjQ0OCAxLTEgMXMtMS0uNDQ4LTEtMXYtMTBjMC0uNTUyLjQ0OC0xIDEtMXMxIC40NDggMSAxdjEwem00LTE4djJoLTIwdi0yaDUuNzExYy45IDAgMS42MzEtMS4wOTkgMS42MzEtMmg1LjMxNWMwIC45MDEuNzMgMiAxLjYzMSAyaDUuNzEyeiIvPjwvc3ZnPg==">
+                        `
+                        deleteButton.onclick = async () => {
+                            let password = prompt("Bitte Passwort eingeben, um den Clip zu löschen:").trim();
+                            if (!password) return;  
+
+                            const options = {
+                                method: "DELETE",
+                                headers: {
+                                    authorization: password,
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({
+                                    url: link.url
+                                }),
+                            };
+                            const res = await fetch("https://api.op47.de/v1/removeClip", options);
+
+                            if (res.status == 200) {
+                                alert("Clip erfolgreich entfernt!");
+                                document.getElementById(link.id).remove();
+                            }
+                            else if (res.status == 401) alert("Falsches Passwort!");
+                            else alert("Ein unbekannter Fehler ist aufgetreten.");
+                        }
                         caption.appendChild(author);
                         caption.appendChild(dot);
                         caption.appendChild(views);
+                        caption.appendChild(dot2);
+                        caption.appendChild(deleteButton)
                     
                         
                         const wrapper = createElementWithClass("div", "clip-wrapper");
@@ -570,7 +634,8 @@
 
             function createElementWithClass(element, classname) {
                 const e = document.createElement(element);
-                e.classList.add(classname);
+                const classes = classname.split(" ");
+                for (const c of classes) e.classList.add(c);
                 return e;
             }
 
