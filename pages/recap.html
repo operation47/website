@@ -594,7 +594,6 @@
                             if (res.status == 200) {
                                 socket.emit("clipDeleted", link.id);
                                 alert("Clip erfolgreich entfernt!");
-                                document.getElementById(link.id).remove();
                             }
                             else if (res.status == 401) alert("Falsches Passwort!");
                             else alert("Ein unbekannter Fehler ist aufgetreten.");
