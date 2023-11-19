@@ -555,12 +555,14 @@
                         clip.appendChild(linkText);
 
                         clip.onclick = () => {
-                            clip.classList.add("seen");
+                            if (!clip.classList.contains("seen")) {
+                                clip.classList.add("seen");
+                                socket.emit("newViewForClip", link.id);
+                            }
                             let clipID = link.url.split("/")[3].split("?")[0];
                             let embedURL = `https://clips.twitch.tv/embed?clip=${clipID}&parent=op47.de&parent=www.op47.de&parent=localhost&autoplay=true&muted=false`;
                             clipPlayer.src = embedURL;
                             clipPlayerWrapper.classList.remove("hide");
-                            socket.emit("newViewForClip", link.id);
                         };
 
 
