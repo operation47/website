@@ -533,6 +533,7 @@
                         if (document.getElementById(link.id)) continue;
 
                         const clip = createElementWithClass("div", "clip");
+                        if (localStorage.getItem(link.id)) clip.classList.add("seen");
 
                         // chops off the title if it is too long
                         let linkText;
@@ -555,7 +556,8 @@
                         clip.appendChild(linkText);
 
                         clip.onclick = () => {
-                            if (!clip.classList.contains("seen")) {
+                            if (!localStorage.getItem(link.id)) {
+                                localStorage.setItem(link.id, "seen");
                                 clip.classList.add("seen");
                                 socket.emit("newViewForClip", link.id);
                             }
@@ -625,8 +627,11 @@
             socket.on("newViewForClip", (res) => {
                 const id = res[0];
                 const viewCount = res[1];
-                const span = document.getElementById(id).getElementsByClassName("views")[0];
-                span.innerHTML = viewCount == 1 ? viewCount + " Aufruf" : viewCount + " Aufrufe";
+                const wrapper = document.getElementById(id);
+                const clipDiv = wrapper.getElementsByClassName("clip")[0];
+                const viewSpan = wrapper.getElementsByClassName("views")[0];
+                if (!clipDiv.classList.contains("seen") && localStorage.getItem(id)) clipDiv.classList.add("seen");
+                viewSpan.innerHTML = viewCount == 1 ? viewCount + " Aufruf" : viewCount + " Aufrufe";
             });
 
             socket.on("author", (res) => {
